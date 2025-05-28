@@ -1,8 +1,6 @@
 (lecture10:probability-density-function)=
 # The probability density function
 
-The probability
-
 Take a continuous random variable $X$.
 The *probability density function* (PDF) $f_X(x)$ gives you the probability
 per unit of $x$ that $X$ is in a very small region around $x$.
