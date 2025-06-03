@@ -108,7 +108,7 @@ $$
 or you can condition on one or more of the random variables.
 
 $$
-p(z, w) = \frac{p(x,y,z,w)}{p(x, y)},
+p(z, w|x,y) = \frac{p(x,y,z,w)}{p(x, y)}.
 $$
 
 If they were all independent, then the joint PDF would factorize like this:
@@ -116,5 +116,3 @@ If they were all independent, then the joint PDF would factorize like this:
 $$
 p(x, y, z, w) = p(x)p(y)p(z)p(w).
 $$
-
-There is a lot of meat here, but it is beyond the scope of this class to cover everything...

@@ -30,7 +30,7 @@ $$
 
 Remember this:
 
-> If you data coming from independent measurements, then their joint PDF factorizes conditioned on the background information.
+> If your data are coming from independent measurements, then their joint PDF factorizes conditioned on the background information.
 
 Why is this important?
 Well, it is important because it allows you to describe a supercomplicated object
