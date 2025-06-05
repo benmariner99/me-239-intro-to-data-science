@@ -19,7 +19,8 @@ $$
 Let's introduce the shortcut notation:
 
 $$
-x_{1:N} = (x_1,\dots,x_N).
+x_{1:N} = (x_
+1,\dots,x_N).
 $$
 
 We can rewrite the independence property as:
