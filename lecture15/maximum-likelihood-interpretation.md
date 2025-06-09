@@ -24,7 +24,7 @@ Well, $p(\mathbf{y}_{1:N} | \mathbf{x}_{1:N}, \mathbf{w})$ tells us how plausibl
 
 The most common choice for the likelihood of a single measurement is to pick it to be Normal.
 This corresponds to the belief that our measurement is around the model prediction $\mathbf{w^{T}\boldsymbol{\phi}(\mathbf{x})}$
-but it is contaminated with Gaussian noice of variance $\sigma^2$.
+but it is contaminated with Gaussian noise of variance $\sigma^2$.
 Mathematically, we have:
 
 $$
@@ -98,4 +98,4 @@ $$
 
 In other words, your prediction about the measured output $y$ is that it will be Normally distributed around your model prediction with a variance $\sigma^2$.
 You can use this to find a 95% credible interval.
-Let's demonstrate with an example.s
+Let's demonstrate with an example.
