@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -579,19 +579,6 @@ document.write(`
 <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;ticks&quot;</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">set_matplotlib_formats</span>
 <span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s1">&#39;retina&#39;</span><span class="p">,</span> <span class="s1">&#39;svg&#39;</span><span class="p">)</span>
-
-<span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">os</span>
-
-<span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">local_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Downloads the file in the ``url`` and saves it in the current working directory.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">local_filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">local_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">local_filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
-        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -599,238 +586,18 @@ document.write(`
 </section>
 <section id="problem-1-visual-analysis-of-a-variable-speed-compressor-experiment">
 <h2>Problem 1 - Visual analysis of a variable-speed compressor experiment<a class="headerlink" href="#problem-1-visual-analysis-of-a-variable-speed-compressor-experiment" title="Link to this heading">#</a></h2>
-<p>In this problem we are going to need <a class="reference external" href="https://raw.githubusercontent.com/PurdueMechanicalEngineering/me-297-intro-to-data-science/master/data/compressor_data.xlsx">this</a> dataset. The dataset was kindly provided to us by <a class="reference external" href="https://scholar.google.com/citations?user=gPdAtg0AAAAJ&amp;amp;hl=en">Professor Davide Ziviani</a>.
+<p>In this problem you are going to need <a class="reference external" href="https://raw.githubusercontent.com/PurdueMechanicalEngineering/me-297-intro-to-data-science/master/data/compressor_data.xlsx">this</a> dataset. The dataset was kindly provided to us by <a class="reference external" href="https://scholar.google.com/citations?user=gPdAtg0AAAAJ&amp;amp;hl=en">Professor Davide Ziviani</a>.
 As before, you can either put it on your Google drive or just download it with the code segment below:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/PurdueMechanicalEngineering/me-297-intro-to-data-science/master/data/compressor_data.xlsx&#39;</span>
-<span class="n">download</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;compressor_data.xlsx&#39;</span><span class="p">)</span>
-<span class="n">data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>curl<span class="w"> </span>-O<span class="w"> </span><span class="s1">&#39;https://raw.githubusercontent.com/PurdueMechanicalEngineering/me-239-intro-to-data-science/master/data/compressor_data.xlsx&#39;</span>data
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>T_e</th>
-      <th>DT_sh</th>
-      <th>T_c</th>
-      <th>DT_sc</th>
-      <th>T_amb</th>
-      <th>f</th>
-      <th>m_dot</th>
-      <th>m_dot.1</th>
-      <th>Capacity</th>
-      <th>Power</th>
-      <th>Current</th>
-      <th>COP</th>
-      <th>Efficiency</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>-30</td>
-      <td>11</td>
-      <td>25</td>
-      <td>8</td>
-      <td>35</td>
-      <td>60</td>
-      <td>28.8</td>
-      <td>8.000000</td>
-      <td>1557</td>
-      <td>901</td>
-      <td>4.4</td>
-      <td>1.73</td>
-      <td>0.467</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>-30</td>
-      <td>11</td>
-      <td>30</td>
-      <td>8</td>
-      <td>35</td>
-      <td>60</td>
-      <td>23.0</td>
-      <td>6.388889</td>
-      <td>1201</td>
-      <td>881</td>
-      <td>4.0</td>
-      <td>1.36</td>
-      <td>0.425</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>-30</td>
-      <td>11</td>
-      <td>35</td>
-      <td>8</td>
-      <td>35</td>
-      <td>60</td>
-      <td>17.9</td>
-      <td>4.972222</td>
-      <td>892</td>
-      <td>858</td>
-      <td>3.7</td>
-      <td>1.04</td>
-      <td>0.382</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>-25</td>
-      <td>11</td>
-      <td>25</td>
-      <td>8</td>
-      <td>35</td>
-      <td>60</td>
-      <td>46.4</td>
-      <td>12.888889</td>
-      <td>2509</td>
-      <td>1125</td>
-      <td>5.3</td>
-      <td>2.23</td>
-      <td>0.548</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>-25</td>
-      <td>11</td>
-      <td>30</td>
-      <td>8</td>
-      <td>35</td>
-      <td>60</td>
-      <td>40.2</td>
-      <td>11.166667</td>
-      <td>2098</td>
-      <td>1122</td>
-      <td>5.1</td>
-      <td>1.87</td>
-      <td>0.519</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>60</th>
-      <td>10</td>
-      <td>11</td>
-      <td>45</td>
-      <td>8</td>
-      <td>35</td>
-      <td>60</td>
-      <td>245.2</td>
-      <td>68.111111</td>
-      <td>12057</td>
-      <td>2525</td>
-      <td>11.3</td>
-      <td>4.78</td>
-      <td>0.722</td>
-    </tr>
-    <tr>
-      <th>61</th>
-      <td>10</td>
-      <td>11</td>
-      <td>50</td>
-      <td>8</td>
-      <td>35</td>
-      <td>60</td>
-      <td>234.1</td>
-      <td>65.027778</td>
-      <td>10939</td>
-      <td>2740</td>
-      <td>12.3</td>
-      <td>3.99</td>
-      <td>0.719</td>
-    </tr>
-    <tr>
-      <th>62</th>
-      <td>10</td>
-      <td>11</td>
-      <td>55</td>
-      <td>8</td>
-      <td>35</td>
-      <td>60</td>
-      <td>222.2</td>
-      <td>61.722222</td>
-      <td>9819</td>
-      <td>2929</td>
-      <td>13.1</td>
-      <td>3.35</td>
-      <td>0.709</td>
-    </tr>
-    <tr>
-      <th>63</th>
-      <td>10</td>
-      <td>11</td>
-      <td>60</td>
-      <td>8</td>
-      <td>35</td>
-      <td>60</td>
-      <td>209.3</td>
-      <td>58.138889</td>
-      <td>8697</td>
-      <td>3091</td>
-      <td>13.7</td>
-      <td>2.81</td>
-      <td>0.693</td>
-    </tr>
-    <tr>
-      <th>64</th>
-      <td>10</td>
-      <td>11</td>
-      <td>65</td>
-      <td>8</td>
-      <td>35</td>
-      <td>60</td>
-      <td>195.4</td>
-      <td>54.277778</td>
-      <td>7575</td>
-      <td>3223</td>
-      <td>14.2</td>
-      <td>2.35</td>
-      <td>0.672</td>
-    </tr>
-  </tbody>
-</table>
-<p>65 rows × 13 columns</p>
-</div></div></div>
 </div>
 <p>The data are part of a an experimental study of a variable speed reciprocating compressor.
 The experimentalists varied two temperatures <span class="math notranslate nohighlight">\(T_e\)</span> and <span class="math notranslate nohighlight">\(T_c\)</span> (both in degrees C) and they measured various other quantities.
-Our goal is to understand the experimental design and develop some understanding of the map between <span class="math notranslate nohighlight">\(T_e\)</span> and <span class="math notranslate nohighlight">\(T_c\)</span> and measured Capacity and Power (both in W).
+Your goal is to understand the experimental design and develop some intuition of the map between <span class="math notranslate nohighlight">\(T_e\)</span> and <span class="math notranslate nohighlight">\(T_c\)</span> and measured Capacity and Power (both in W).
 Answer the following questions.</p>
 <ul class="simple">
 <li><p>Do the scatter plot of <span class="math notranslate nohighlight">\(T_e\)</span> and <span class="math notranslate nohighlight">\(T_c\)</span>. This will reveal the experimental design picked by the experimentalists. Make sure you label the axes correctly. Hint: These are columns <code class="docutils literal notranslate"><span class="pre">T_e</span></code> and <code class="docutils literal notranslate"><span class="pre">T_c</span></code> of the data frame <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p></li>
@@ -905,9 +672,6 @@ Answer the following questions.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/845f33c00e2a5e9a1abaeb7be691c2cfbeaed54136477bd4f3de7a3bbb72553d.svg" src="../_images/845f33c00e2a5e9a1abaeb7be691c2cfbeaed54136477bd4f3de7a3bbb72553d.svg" />
-</div>
 </div>
 <p>Now repeat the same thing for the <code class="docutils literal notranslate"><span class="pre">Power</span></code>:</p>
 <div class="cell docutils container">
@@ -921,7 +685,7 @@ Answer the following questions.</p>
 <section id="problem-2-visual-analysis-of-an-airfoil-experiment">
 <h2>Problem 2 - Visual analysis of an airfoil experiment<a class="headerlink" href="#problem-2-visual-analysis-of-an-airfoil-experiment" title="Link to this heading">#</a></h2>
 <p>In this problem, you are going to repeat what you did in Problem 1, but without my guidance!</p>
-<p>The dataset we are going to use is the <a class="reference external" href="https://archive.ics.uci.edu/ml/datasets/Airfoil+Self-Noise#">Airfoil Self-Noise Data Set</a>
+<p>The dataset we are going to use is the <a class="reference external" href="https://archive.ics.uci.edu/dataset/291/airfoil+self+noise">Airfoil Self-Noise Data Set</a>
 From this reference, the descreption of the dataset is as follows:</p>
 <blockquote>
 <div><p>The NASA data set comprises different size NACA 0012 airfoils at various wind tunnel speeds and angles of attack. The span of the airfoil and the observer position were the same in all of the experiments.</p>
@@ -943,11 +707,13 @@ This problem has the following inputs:</p>
 I am going to put them in a dataframe for you.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://archive.ics.uci.edu/ml/machine-learning-databases/00291/airfoil_self_noise.dat&#39;</span>
-<span class="n">download</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>curl<span class="w"> </span>-O<span class="w"> </span><span class="s1">&#39;https://archive.ics.uci.edu/ml/machine-learning-databases/00291/airfoil_self_noise.dat&#39;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">raw_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;airfoil_self_noise.dat&#39;</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">raw_data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;Angle_of_attack&#39;</span><span class="p">,</span> <span class="s1">&#39;Chord_length&#39;</span><span class="p">,</span>
-                                 <span class="s1">&#39;Velocity&#39;</span><span class="p">,</span> <span class="s1">&#39;Suction_thickness&#39;</span><span class="p">,</span> <span class="s1">&#39;Sound_pressure&#39;</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">raw_data</span><span class="p">,</span>
+                  <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;Angle_of_attack&#39;</span><span class="p">,</span> <span class="s1">&#39;Chord_length&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;Velocity&#39;</span><span class="p">,</span> <span class="s1">&#39;Suction_thickness&#39;</span><span class="p">,</span> <span class="s1">&#39;Sound_pressure&#39;</span><span class="p">])</span>
 <span class="n">df</span>
 </pre></div>
 </div>

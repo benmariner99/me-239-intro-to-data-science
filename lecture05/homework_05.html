@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -563,7 +563,7 @@ document.write(`
 <li><p><strong>Last Name:</strong></p></li>
 <li><p><strong>Email:</strong></p></li>
 </ul>
-<p>Again, let me set you up with some code for plotting and downloading files.</p>
+<p>Again, let me set you up with some code for plotting:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -574,19 +574,12 @@ document.write(`
 <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;ticks&quot;</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">set_matplotlib_formats</span>
 <span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s1">&#39;retina&#39;</span><span class="p">,</span> <span class="s1">&#39;svg&#39;</span><span class="p">)</span>
-
-<span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">os</span>
-
-<span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">local_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Downloads the file in the ``url`` and saves it in the current working directory.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">local_filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">local_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">local_filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
-        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/3n/r5vj11ss7lzcdl10vfhb_mw00000gs/T/ipykernel_94937/367591302.py:8: DeprecationWarning: `set_matplotlib_formats` is deprecated since IPython 7.23, directly use `matplotlib_inline.backend_inline.set_matplotlib_formats()`
+  set_matplotlib_formats(&#39;retina&#39;, &#39;svg&#39;)
 </pre></div>
 </div>
 </div>
@@ -594,12 +587,12 @@ document.write(`
 </section>
 <section id="problem-1-analysis-of-experimental-srtess-strain-curves-of-alluminum-6061-t651">
 <h2>Problem 1 - Analysis of experimental srtess-strain curves of alluminum 6061-T651<a class="headerlink" href="#problem-1-analysis-of-experimental-srtess-strain-curves-of-alluminum-6061-t651" title="Link to this heading">#</a></h2>
-<p>We are going to analyze the dataset collected by <span id="id1">[<a class="reference internal" href="../bibliography.html#id3" title="B.S. Aakash, JohnPatrick Connors, and Michael D. Shields. Stress-strain data for aluminum 6061-t651 from 9 lots at 6 temperatures under uniaxial and plane strain tension. Data in Brief, 25:104085, 2019. URL: https://www.sciencedirect.com/science/article/pii/S2352340919304391, doi:https://doi.org/10.1016/j.dib.2019.104085.">Aakash <em>et al.</em>, 2019</a>]</span>.
+<p>You are going to analyze the dataset collected by <span id="id1">[<a class="reference internal" href="../bibliography.html#id3" title="B.S. Aakash, JohnPatrick Connors, and Michael D. Shields. Stress-strain data for aluminum 6061-t651 from 9 lots at 6 temperatures under uniaxial and plane strain tension. Data in Brief, 25:104085, 2019. URL: https://www.sciencedirect.com/science/article/pii/S2352340919304391, doi:https://doi.org/10.1016/j.dib.2019.104085.">Aakash <em>et al.</em>, 2019</a>]</span>.
 They perform two types of experiments.
 We are going to focus on the “uniaxial tension experiment.”
 This is what it is all about:</p>
 <ul class="simple">
-<li><p>They take several speciments of alluminum 6061-T651 (<a class="reference external" href="https://en.wikipedia.org/wiki/6061_aluminium_alloy">a high-temperature alluminum alloy</a>).</p></li>
+<li><p>They took several speciments of alluminum 6061-T651 (<a class="reference external" href="https://en.wikipedia.org/wiki/6061_aluminium_alloy">a high-temperature alluminum alloy</a>).</p></li>
 <li><p>The shape of these speciments is like this:</p></li>
 </ul>
 <figure class="align-default" id="directive-fig">
@@ -610,7 +603,7 @@ This is what it is all about:</p>
 </figcaption>
 </figure>
 <ul class="simple">
-<li><p>They mounted the speciment (using the holes you see on the sides) on a machine that applied tension:</p></li>
+<li><p>They mounted the speciment (using the holes you see on the sides) on a machine that applies tension:</p></li>
 </ul>
 <figure class="align-default" id="directive-fig2">
 <a class="reference internal image-reference" href="https://ars.els-cdn.com/content/image/1-s2.0-S2352340919304391-gr5_lrg.jpg"><img alt="https://ars.els-cdn.com/content/image/1-s2.0-S2352340919304391-gr5_lrg.jpg" src="https://ars.els-cdn.com/content/image/1-s2.0-S2352340919304391-gr5_lrg.jpg" style="height: 300px;" />
@@ -634,10 +627,51 @@ You have two options. Either do it mannually as we did in <a class="reference in
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://md-datasets-cache-zipfiles-prod.s3.eu-west-1.amazonaws.com/rd6jm9tyb6-2.zip&#39;</span>
-<span class="n">download</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>curl<span class="w"> </span>-O<span class="w"> </span><span class="s1">&#39;https://md-datasets-cache-zipfiles-prod.s3.eu-west-1.amazonaws.com/rd6jm9tyb6-2.zip&#39;</span>
 <span class="o">!</span>unzip<span class="w"> </span>-o<span class="w"> </span>rd6jm9tyb6-2.zip
 <span class="o">!</span>unzip<span class="w"> </span>-o<span class="w"> </span>stress-strain-curves-of-aluminum-6061-t651-from-9-lots-at-6-temperatures-under-uniaxial-and-plain-strain-tension.zip
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   489    0   489    0     0    911      0 --:--:-- --:--:-- --:--:--   912
+Archive:  rd6jm9tyb6-2.zip
+  End-of-central-directory signature not found.  Either this file is not
+  a zipfile, or it constitutes one disk of a multi-part archive.  In the
+  latter case the central directory and zipfile comment will be found on
+  the last disk(s) of this archive.
+unzip:  cannot find zipfile directory in one of rd6jm9tyb6-2.zip or
+        rd6jm9tyb6-2.zip.zip, and cannot find rd6jm9tyb6-2.zip.ZIP, period.
+unzip:  cannot find or open stress-strain-curves-of-aluminum-6061-t651-from-9-lots-at-6-temperatures-under-uniaxial-and-plain-strain-tension.zip, stress-strain-curves-of-aluminum-6061-t651-from-9-lots-at-6-temperatures-under-uniaxial-and-plain-strain-tension.zip.zip or stress-strain-curves-of-aluminum-6061-t651-from-9-lots-at-6-temperatures-under-uniaxial-and-plain-strain-tension.zip.ZIP.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The previous unzip command failed because the file might be corrupted or incomplete</span>
+<span class="c1"># Let&#39;s try downloading it again and then unzipping</span>
+<span class="o">!</span>curl<span class="w"> </span>-O<span class="w"> </span><span class="s1">&#39;https://md-datasets-cache-zipfiles-prod.s3.eu-west-1.amazonaws.com/rd6jm9tyb6-2.zip&#39;</span>
+<span class="o">!</span>unzip<span class="w"> </span>-o<span class="w"> </span>rd6jm9tyb6-2.zip
+<span class="c1"># If that still fails, we can try the alternative approach</span>
+<span class="o">!</span>unzip<span class="w"> </span>-o<span class="w"> </span>stress-strain-curves-of-aluminum-6061-t651-from-9-lots-at-6-temperatures-under-uniaxial-and-plain-strain-tension.zip
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   469    0   469    0     0    976      0 --:--:-- --:--:-- --:--:--   977
+Archive:  rd6jm9tyb6-2.zip
+  End-of-central-directory signature not found.  Either this file is not
+  a zipfile, or it constitutes one disk of a multi-part archive.  In the
+  latter case the central directory and zipfile comment will be found on
+  the last disk(s) of this archive.
+unzip:  cannot find zipfile directory in one of rd6jm9tyb6-2.zip or
+        rd6jm9tyb6-2.zip.zip, and cannot find rd6jm9tyb6-2.zip.ZIP, period.
+unzip:  cannot find or open stress-strain-curves-of-aluminum-6061-t651-from-9-lots-at-6-temperatures-under-uniaxial-and-plain-strain-tension.zip, stress-strain-curves-of-aluminum-6061-t651-from-9-lots-at-6-temperatures-under-uniaxial-and-plain-strain-tension.zip.zip or stress-strain-curves-of-aluminum-6061-t651-from-9-lots-at-6-temperatures-under-uniaxial-and-plain-strain-tension.zip.ZIP.
 </pre></div>
 </div>
 </div>
@@ -664,7 +698,7 @@ You have two options. Either do it mannually as we did in <a class="reference in
 </div>
 </div>
 <ul class="simple">
-<li><p>Plot the stress as a function of the strain. Hint: Please label your axes properly.</p></li>
+<li><p>Plot the stress as a function of the strain. Please label your axes properly.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -695,7 +729,7 @@ You have two options. Either do it mannually as we did in <a class="reference in
 </div>
 <ul class="simple">
 <li><p>Observe that the experimental data are behaving strangely at very small strains. As a matter of fact, we are getting a few negative strains at the beginning.
-Let’s throw these observartions away. Start by finding the index <span class="math notranslate nohighlight">\(i\)</span> for which <code class="docutils literal notranslate"><span class="pre">df['Strain'][i]</span></code> becomes positive from the first time. You can do this by a visual inspection of <code class="docutils literal notranslate"><span class="pre">df['Strain'][:30]</span></code>.</p></li>
+Let’s throw these observartions away. Start by finding the index <span class="math notranslate nohighlight">\(i\)</span> for which <code class="docutils literal notranslate"><span class="pre">df['Strain'][i]</span></code> becomes positive for the first time. You can do this by a visual inspection of <code class="docutils literal notranslate"><span class="pre">df['Strain'][:30]</span></code>.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -718,7 +752,7 @@ Let’s throw these observartions away. Start by finding the index <span class="
 <li><p>Observe that initially the stress-strain relation is linear. This is the so-called <em>elastic regime</em>.
 If you deform the material within this regime, it will return to its undeformed state without any permanent deformation effects.
 If you deform the material beyond the elastic regime, then you start having what we call <em>plasticity</em>.
-We are now going to focus exclusively to the linear regime.
+We are now going to focus exclusively on the linear regime.
 Find an index <span class="math notranslate nohighlight">\(j\)</span> so that <code class="docutils literal notranslate"><span class="pre">clean_df[:j]</span></code> is fully within the linear regime.
 Make a new dataframe, say <code class="docutils literal notranslate"><span class="pre">linear_df</span></code> containing only these data.
 You should probably pick <span class="math notranslate nohighlight">\(j\)</span> by visual inspection.
@@ -740,7 +774,7 @@ Just find one.</p></li>
 \sigma = E\epsilon.
 \]</div>
 <p>The constant <span class="math notranslate nohighlight">\(E\)</span> is called Young’s modulus and it has units of GPa (GigaPascal).
-Make a function <code class="docutils literal notranslate"><span class="pre">sigma(epsilon,</span> <span class="pre">E)</span></code> that calculates the stress given the strain for any Young’s modulus. Hint: Properly document the docstring of your function.</p>
+Make a function <code class="docutils literal notranslate"><span class="pre">sigma(epsilon,</span> <span class="pre">E)</span></code> that calculates the stress given the strain for any Young’s modulus. Properly document the docstring of your function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># your code here</span>
@@ -764,7 +798,7 @@ Only the slope of the curve is important for finding <span class="math notransla
 So, let’s make yet another dataframe (I promise you this is the last one) called <code class="docutils literal notranslate"><span class="pre">clean_linear_df</span></code> which removes this systematic bias.
 The dataframe <code class="docutils literal notranslate"><span class="pre">clean_linear_df</span></code> should contain the same data as <code class="docutils literal notranslate"><span class="pre">linear_df</span></code> but</p>
 <ul>
-<li><p>The strains should all shifted by the minimum strain in <code class="docutils literal notranslate"><span class="pre">linear_df</span></code>. In other words, subtract from the strains in <code class="docutils literal notranslate"><span class="pre">clean_linear_df</span></code> the smallest strain in <code class="docutils literal notranslate"><span class="pre">linear_df</span></code>, i.e., subtract <code class="docutils literal notranslate"><span class="pre">linear_df['Strain'].min()</span></code>.</p></li>
+<li><p>The strains should all be shifted by the minimum strain in <code class="docutils literal notranslate"><span class="pre">linear_df</span></code>. In other words, subtract from the strains in <code class="docutils literal notranslate"><span class="pre">clean_linear_df</span></code> the smallest strain in <code class="docutils literal notranslate"><span class="pre">linear_df</span></code>, i.e., subtract <code class="docutils literal notranslate"><span class="pre">linear_df['Strain'].min()</span></code>.</p></li>
 <li><p>The stresses should all be shifted by the minimum stress in <code class="docutils literal notranslate"><span class="pre">linear_df</span></code>.</p></li>
 </ul>
 </li>
@@ -788,7 +822,7 @@ Hints: Remember that the stress <span class="math notranslate nohighlight">\(\si
 </div>
 </div>
 <ul class="simple">
-<li><p>How does what you found compare to the <a class="reference external" href="https://en.wikipedia.org/wiki/6061_aluminium_alloy">wikipedia</a> reported Young’s modulus for this material? Why do you think your is lower/higher? You may want to repeat the analysis above for another experiment with lower temperature (say at room temperature).</p></li>
+<li><p>How does what you found compare to the <a class="reference external" href="https://en.wikipedia.org/wiki/6061_aluminium_alloy">wikipedia</a> reported Young’s modulus for this material? Why do you think yours is lower/higher? You may want to repeat the analysis above for another experiment with lower temperature (say at room temperature).</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

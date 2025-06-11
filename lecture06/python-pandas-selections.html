@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -527,16 +527,10 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-timeseries-data">Plotting timeseries data</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Questions</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#avoid-writing-a-lot-of-code-by-using-loops">Avoid writing a lot of code by using loops</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Questions</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extract-rows-that-satisfy-more-complicated-boolean-expressions">Extract rows that satisfy more complicated boolean expressions</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Questions</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extract-rows-that-satisfy-more-complicated-boolean-expressions">Extract rows that satisfy more complicated boolean expressions</a></li>
 </ul>
             </nav>
         </div>
@@ -562,29 +556,104 @@ Let’s load again the <code class="docutils literal notranslate"><span class="p
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MAKE_BOOK_FIGURES</span><span class="o">=</span><span class="kc">False</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib_inline</span>
+<span class="n">matplotlib_inline</span><span class="o">.</span><span class="n">backend_inline</span><span class="o">.</span><span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;figure.dpi&quot;</span><span class="p">:</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;savefig.dpi&#39;</span><span class="p">:</span><span class="mi">300</span><span class="p">})</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s1">&#39;notebook&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;paper&quot;</span><span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;ticks&quot;</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">set_matplotlib_formats</span>
-<span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s1">&#39;retina&#39;</span><span class="p">,</span> <span class="s1">&#39;svg&#39;</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">local_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="nf">set_book_style</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8-white&#39;</span><span class="p">)</span> 
+    <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;ticks&quot;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s2">&quot;deep&quot;</span><span class="p">)</span>
+
+    <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+        <span class="c1"># Font settings</span>
+        <span class="s1">&#39;font.family&#39;</span><span class="p">:</span> <span class="s1">&#39;serif&#39;</span><span class="p">,</span>  <span class="c1"># For academic publishing</span>
+        <span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>  <span class="c1"># As requested, 10pt font</span>
+        <span class="s1">&#39;axes.labelsize&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="s1">&#39;axes.titlesize&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="s1">&#39;xtick.labelsize&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>  <span class="c1"># Slightly smaller for better readability</span>
+        <span class="s1">&#39;ytick.labelsize&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+        <span class="s1">&#39;legend.fontsize&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+        
+        <span class="c1"># Line and marker settings for consistency</span>
+        <span class="s1">&#39;axes.linewidth&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s1">&#39;grid.linewidth&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s1">&#39;lines.linewidth&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="s1">&#39;lines.markersize&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        
+        <span class="c1"># Layout to prevent clipped labels</span>
+        <span class="s1">&#39;figure.constrained_layout.use&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        
+        <span class="c1"># Default DPI (will override when saving)</span>
+        <span class="s1">&#39;figure.dpi&#39;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+        <span class="s1">&#39;savefig.dpi&#39;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+        
+        <span class="c1"># Despine - remove top and right spines</span>
+        <span class="s1">&#39;axes.spines.top&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">&#39;axes.spines.right&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        
+        <span class="c1"># Remove legend frame</span>
+        <span class="s1">&#39;legend.frameon&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        
+        <span class="c1"># Additional trim settings</span>
+        <span class="s1">&#39;figure.autolayout&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Alternative to constrained_layout</span>
+        <span class="s1">&#39;savefig.bbox&#39;</span><span class="p">:</span> <span class="s1">&#39;tight&#39;</span><span class="p">,</span>    <span class="c1"># Trim when saving</span>
+        <span class="s1">&#39;savefig.pad_inches&#39;</span><span class="p">:</span> <span class="mf">0.1</span>   <span class="c1"># Small padding to ensure nothing gets cut off</span>
+    <span class="p">})</span>
+
+<span class="k">def</span> <span class="nf">save_for_book</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">is_vector</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Downloads the file in the ``url`` and saves it in the current working directory.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">local_filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">local_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">local_filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
-        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
-   
-<span class="c1"># The url of the file we want to download</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/PurdueMechanicalEngineering/me-297-intro-to-data-science/master/data/temperature_raw.xlsx&#39;</span>
-<span class="n">download</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="sd">    Save a figure with book-optimized settings.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    fig : matplotlib figure</span>
+<span class="sd">        The figure to save</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        Filename without extension</span>
+<span class="sd">    is_vector : bool</span>
+<span class="sd">        If True, saves as vector at 1000 dpi. If False, saves as raster at 600 dpi.</span>
+<span class="sd">    **kwargs : dict</span>
+<span class="sd">        Additional kwargs to pass to savefig</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+    <span class="c1"># Set appropriate DPI and format based on figure type</span>
+    <span class="k">if</span> <span class="n">is_vector</span><span class="p">:</span>
+        <span class="n">dpi</span> <span class="o">=</span> <span class="mi">1000</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;.pdf&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dpi</span> <span class="o">=</span> <span class="mi">600</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;.tif&#39;</span>
+    
+    <span class="c1"># Save the figure with book settings</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">make_full_width_fig</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.7</span><span class="p">,</span> <span class="mf">2.9</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">make_half_width_fig</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">2.35</span><span class="p">,</span> <span class="mf">1.45</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">MAKE_BOOK_FIGURES</span><span class="p">:</span>
+    <span class="n">set_book_style</span><span class="p">()</span>
+<span class="n">make_full_width_fig</span> <span class="o">=</span> <span class="n">make_full_width_fig</span> <span class="k">if</span> <span class="n">MAKE_BOOK_FIGURES</span> <span class="k">else</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">make_half_width_fig</span> <span class="o">=</span> <span class="n">make_half_width_fig</span> <span class="k">if</span> <span class="n">MAKE_BOOK_FIGURES</span> <span class="k">else</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>curl<span class="w"> </span>-O<span class="w"> </span><span class="s1">&#39;https://raw.githubusercontent.com/PurdueMechanicalEngineering/me-239-intro-to-data-science/master/data/temperature_raw.xlsx&#39;</span>
+
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;temperature_raw.xlsx&#39;</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -593,8 +662,12 @@ Let’s load again the <code class="docutils literal notranslate"><span class="p
 </pre></div>
 </div>
 </div>
-</details>
 <div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  277k  100  277k    0     0   937k      0 --:--:-- --:--:-- --:--:--  939k
+</pre></div>
+</div>
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -709,10 +782,10 @@ The model was:</p>
 
 <span class="n">a</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="c1"># in kWh / F^2</span>
 <span class="n">b</span> <span class="o">=</span> <span class="mi">50</span> <span class="c1"># in kWh</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_full_width_fig</span><span class="p">()</span>
 
 <span class="c1"># First the scatter plot of all the data we have</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Observed data&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Observed data&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;t_out (F)&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;hvac (kWh)&#39;</span><span class="p">)</span>
 
@@ -726,7 +799,7 @@ The model was:</p>
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/3e8df721479ec0e0c712797ea031f4245c71b78418f51b3d8536f0c0962d368f.svg" src="../_images/3e8df721479ec0e0c712797ea031f4245c71b78418f51b3d8536f0c0962d368f.svg" />
+<img alt="../_images/a8875a6aee49c6be3f4468305d7ba09d9e71bf941f76ad3a6241a24fb5766006.svg" src="../_images/a8875a6aee49c6be3f4468305d7ba09d9e71bf941f76ad3a6241a24fb5766006.svg" />
 </div>
 </div>
 <p>Clearly, this model represents some sort of average behavior.
@@ -781,7 +854,7 @@ Name: household, Length: 4887, dtype: bool
 Here it is:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;household&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;a1&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;household&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;a1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -818,45 +891,45 @@ Here it is:</p>
       <td>a1</td>
       <td>2018-01-07</td>
       <td>100.0</td>
-      <td>4.283373</td>
-      <td>66.693229</td>
-      <td>246.473231</td>
+      <td>4.28</td>
+      <td>66.69</td>
+      <td>246.47</td>
     </tr>
     <tr>
       <th>50</th>
       <td>a1</td>
       <td>2018-01-14</td>
       <td>98.0</td>
-      <td>33.444172</td>
-      <td>67.812649</td>
-      <td>116.952821</td>
+      <td>33.44</td>
+      <td>67.81</td>
+      <td>116.95</td>
     </tr>
     <tr>
       <th>100</th>
       <td>a1</td>
       <td>2018-01-21</td>
       <td>100.0</td>
-      <td>19.584102</td>
-      <td>66.512783</td>
-      <td>116.128585</td>
+      <td>19.58</td>
+      <td>66.51</td>
+      <td>116.13</td>
     </tr>
     <tr>
       <th>150</th>
       <td>a1</td>
       <td>2018-01-28</td>
       <td>96.0</td>
-      <td>41.076513</td>
-      <td>69.575546</td>
-      <td>61.086148</td>
+      <td>41.08</td>
+      <td>69.58</td>
+      <td>61.09</td>
     </tr>
     <tr>
       <th>200</th>
       <td>a1</td>
       <td>2018-02-04</td>
       <td>96.0</td>
-      <td>30.065774</td>
-      <td>70.085743</td>
-      <td>61.349374</td>
+      <td>30.07</td>
+      <td>70.09</td>
+      <td>61.35</td>
     </tr>
     <tr>
       <th>...</th>
@@ -872,45 +945,45 @@ Here it is:</p>
       <td>a1</td>
       <td>2019-10-27</td>
       <td>97.0</td>
-      <td>54.829439</td>
-      <td>73.619056</td>
-      <td>8.560911</td>
+      <td>54.83</td>
+      <td>73.62</td>
+      <td>8.56</td>
     </tr>
     <tr>
       <th>4750</th>
       <td>a1</td>
       <td>2019-11-03</td>
       <td>98.0</td>
-      <td>45.925446</td>
-      <td>72.456811</td>
-      <td>14.331006</td>
+      <td>45.93</td>
+      <td>72.46</td>
+      <td>14.33</td>
     </tr>
     <tr>
       <th>4800</th>
       <td>a1</td>
       <td>2019-11-10</td>
       <td>97.0</td>
-      <td>40.175345</td>
-      <td>72.450988</td>
-      <td>10.756552</td>
+      <td>40.18</td>
+      <td>72.45</td>
+      <td>10.76</td>
     </tr>
     <tr>
       <th>4850</th>
       <td>a1</td>
       <td>2019-11-17</td>
       <td>99.0</td>
-      <td>32.199504</td>
-      <td>71.451835</td>
-      <td>11.828865</td>
+      <td>32.20</td>
+      <td>71.45</td>
+      <td>11.83</td>
     </tr>
     <tr>
       <th>4900</th>
       <td>a1</td>
       <td>2019-11-24</td>
       <td>97.0</td>
-      <td>39.327257</td>
-      <td>70.896187</td>
-      <td>8.457236</td>
+      <td>39.33</td>
+      <td>70.90</td>
+      <td>8.46</td>
     </tr>
   </tbody>
 </table>
@@ -921,7 +994,7 @@ Here it is:</p>
 If you wanted to find rows of another household, say <code class="docutils literal notranslate"><span class="pre">b17</span></code>, you do this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;household&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;b17&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;household&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;b17&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -958,45 +1031,45 @@ If you wanted to find rows of another household, say <code class="docutils liter
       <td>b17</td>
       <td>2018-01-07</td>
       <td>73.0</td>
-      <td>4.283373</td>
-      <td>74.913484</td>
-      <td>330.891743</td>
+      <td>4.28</td>
+      <td>74.91</td>
+      <td>330.89</td>
     </tr>
     <tr>
       <th>66</th>
       <td>b17</td>
       <td>2018-01-14</td>
       <td>70.0</td>
-      <td>33.444172</td>
-      <td>75.113492</td>
-      <td>163.867247</td>
+      <td>33.44</td>
+      <td>75.11</td>
+      <td>163.87</td>
     </tr>
     <tr>
       <th>116</th>
       <td>b17</td>
       <td>2018-01-21</td>
       <td>69.0</td>
-      <td>19.584102</td>
-      <td>74.962054</td>
-      <td>296.645428</td>
+      <td>19.58</td>
+      <td>74.96</td>
+      <td>296.65</td>
     </tr>
     <tr>
       <th>166</th>
       <td>b17</td>
       <td>2018-01-28</td>
       <td>70.0</td>
-      <td>41.076513</td>
-      <td>74.628770</td>
-      <td>146.174333</td>
+      <td>41.08</td>
+      <td>74.63</td>
+      <td>146.17</td>
     </tr>
     <tr>
       <th>216</th>
       <td>b17</td>
       <td>2018-02-04</td>
       <td>79.0</td>
-      <td>30.065774</td>
-      <td>74.340575</td>
-      <td>244.354832</td>
+      <td>30.07</td>
+      <td>74.34</td>
+      <td>244.35</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1012,45 +1085,45 @@ If you wanted to find rows of another household, say <code class="docutils liter
       <td>b17</td>
       <td>2020-02-02</td>
       <td>92.0</td>
-      <td>33.655308</td>
-      <td>70.938269</td>
-      <td>101.666995</td>
+      <td>33.66</td>
+      <td>70.94</td>
+      <td>101.67</td>
     </tr>
     <tr>
       <th>5466</th>
       <td>b17</td>
       <td>2020-02-09</td>
       <td>95.0</td>
-      <td>38.123983</td>
-      <td>71.553150</td>
-      <td>109.245547</td>
+      <td>38.12</td>
+      <td>71.55</td>
+      <td>109.25</td>
     </tr>
     <tr>
       <th>5516</th>
       <td>b17</td>
       <td>2020-02-16</td>
       <td>92.0</td>
-      <td>28.548760</td>
-      <td>71.428274</td>
-      <td>182.109547</td>
+      <td>28.55</td>
+      <td>71.43</td>
+      <td>182.11</td>
     </tr>
     <tr>
       <th>5566</th>
       <td>b17</td>
       <td>2020-02-23</td>
       <td>92.0</td>
-      <td>33.930233</td>
-      <td>69.286012</td>
-      <td>139.912270</td>
+      <td>33.93</td>
+      <td>69.29</td>
+      <td>139.91</td>
     </tr>
     <tr>
       <th>5616</th>
       <td>b17</td>
       <td>2020-02-25</td>
       <td>95.0</td>
-      <td>43.642388</td>
-      <td>72.251038</td>
-      <td>8.293659</td>
+      <td>43.64</td>
+      <td>72.25</td>
+      <td>8.29</td>
     </tr>
   </tbody>
 </table>
@@ -1062,20 +1135,16 @@ The difference in the entries is likely due to sensor malfunction.
 Now, let’s redo our scatter plot but using different colors for <code class="docutils literal notranslate"><span class="pre">a1</span></code> and <code class="docutils literal notranslate"><span class="pre">b17</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_full_width_fig</span><span class="p">()</span>
 
-<span class="c1"># First the scatter plot of all the data we have.</span>
-<span class="c1"># Notice the keyword argument aplha=0.25. This makes the points transparent.</span>
-<span class="c1"># alpha=1 means opaque and alpha=0 means invisible. So, something in between</span>
-<span class="c1"># is transparent.</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;All households&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;All households&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 
 <span class="c1"># Do the scatter plot for a1</span>
 <span class="n">a1_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;household&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;a1&#39;</span><span class="p">]</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">a1_df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">a1_df</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Household a1&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">a1_df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">a1_df</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Household a1&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">)</span>
 <span class="c1"># and the scatter plot for b17</span>
 <span class="n">b17_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;household&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;b17&#39;</span><span class="p">]</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">b17_df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">b17_df</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Household b17&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">b17_df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">b17_df</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Household b17&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
 
 <span class="c1"># The labels</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;t_out (F)&#39;</span><span class="p">)</span>
@@ -1084,14 +1153,18 @@ Now, let’s redo our scatter plot but using different colors for <code class="d
 <span class="c1"># Plot also our model.</span>
 <span class="n">predicted_hvac</span> <span class="o">=</span> <span class="n">hvac_model</span><span class="p">(</span><span class="n">t_outs</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_outs</span><span class="p">,</span> <span class="n">predicted_hvac</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Model predictons&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+
+<span class="n">save_for_book</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s1">&#39;ch6.fig1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b3b1a95777afad79eb936db069d85a51bd393beade4e4a41af1f8092c10fcb43.svg" src="../_images/b3b1a95777afad79eb936db069d85a51bd393beade4e4a41af1f8092c10fcb43.svg" />
+<img alt="../_images/75e319edcf724be28e8c9a10e3c96c0766915d9f01a24e5145b2277e5869eaab.svg" src="../_images/75e319edcf724be28e8c9a10e3c96c0766915d9f01a24e5145b2277e5869eaab.svg" />
 </div>
 </div>
+<p>Notice the difference in behavior between the two households.
+Household <code class="docutils literal notranslate"><span class="pre">a1</span></code> is using less energy during the heating season, but more during the cooling season.</p>
 <section id="questions">
 <h3>Questions<a class="headerlink" href="#questions" title="Link to this heading">#</a></h3>
 <ul class="simple">
@@ -1107,109 +1180,119 @@ Let’s do it step by step.
 First, see this plot:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a1_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;t_unit&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Household a1&#39;</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">a1_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;t_unit&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Household a1&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8eccad6e823e529e91401631dfc0999bb35965ca9b84784509b0c11faef3b284.svg" src="../_images/8eccad6e823e529e91401631dfc0999bb35965ca9b84784509b0c11faef3b284.svg" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;date&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/1e96e1ce38b5a53a3084514892782de66a7f7acb5f60846df8fb55f9057910cf.svg" src="../_images/1e96e1ce38b5a53a3084514892782de66a7f7acb5f60846df8fb55f9057910cf.svg" />
 </div>
 </div>
 <p>Now, there are some data missing during Spring of 2019 and the dataframe is automatically interpolating.
 We could change the style of the plot so that we see the individual data points.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a1_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;t_unit&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Household a1&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;.-&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/2de47dc0c5a088581633e05afdcc8d6edda801da34d0ac424189c18ca8d15e25.svg" src="../_images/2de47dc0c5a088581633e05afdcc8d6edda801da34d0ac424189c18ca8d15e25.svg" />
-</div>
-</div>
-<p>Sometimes, you may want to use your own figure object so that you can plot more stuff in it (e.g., titles, labels).
-You can do this by passing the <code class="docutils literal notranslate"><span class="pre">ax</span></code> keyword argument:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">a1_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;t_unit&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Household a1&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;.-&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Unit temperature (degrees F)&#39;</span><span class="p">);</span>
+<span class="n">a1_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;t_unit&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Household a1&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;.-&#39;</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8ca27e41383343ed1236a8743ed933de1392dd0855a356b55ef8b7cf6c709399.svg" src="../_images/8ca27e41383343ed1236a8743ed933de1392dd0855a356b55ef8b7cf6c709399.svg" />
+<img alt="../_images/7d4c05ec6216365c83a8e5e6529a63c01db766baac8ca2ade0bfe2c23b913548.svg" src="../_images/7d4c05ec6216365c83a8e5e6529a63c01db766baac8ca2ade0bfe2c23b913548.svg" />
 </div>
 </div>
 <p>And here is how you can add the temperature of another unit:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_full_width_fig</span><span class="p">()</span>
 <span class="n">a1_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;t_unit&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Household a1&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;.-&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">b17_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;t_unit&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Household b17&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;d--&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Unit temperature (degrees F)&#39;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Unit temperature (degrees F)&#39;</span><span class="p">)</span>
+<span class="n">save_for_book</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s1">&#39;ch6.fig2&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d32d66fa9fb8a67c3a68ded5b261424420eb55d8ca7c766e51d04061a08691de.svg" src="../_images/d32d66fa9fb8a67c3a68ded5b261424420eb55d8ca7c766e51d04061a08691de.svg" />
+<img alt="../_images/51df8825890c869a7c49fbdb6d79087631a1072c0baad889b04e18aec40587d0.svg" src="../_images/51df8825890c869a7c49fbdb6d79087631a1072c0baad889b04e18aec40587d0.svg" />
 </div>
 </div>
+<p>We confirm that</p>
 <section id="id1">
 <h3>Questions<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>In the figure of <code class="docutils literal notranslate"><span class="pre">t_unit</span></code> vs <code class="docutils literal notranslate"><span class="pre">date</span></code> above, add data from household <code class="docutils literal notranslate"><span class="pre">c36</span></code>.</p></li>
-<li><p>For households <code class="docutils literal notranslate"><span class="pre">a1</span></code>, <code class="docutils literal notranslate"><span class="pre">b17</span></code> and <code class="docutils literal notranslate"><span class="pre">c36</span></code> plot <code class="docutils literal notranslate"><span class="pre">hvac</span></code> as a function of the <code class="docutils literal notranslate"><span class="pre">date</span></code>. Hint: Change the keyword <code class="docutils literal notranslate"><span class="pre">y</span></code> in <code class="docutils literal notranslate"><span class="pre">Dataframe.plot()</span></code>.</p></li>
+<li><p>For households <code class="docutils literal notranslate"><span class="pre">a1</span></code>, <code class="docutils literal notranslate"><span class="pre">b17</span></code> and <code class="docutils literal notranslate"><span class="pre">c36</span></code> plot <code class="docutils literal notranslate"><span class="pre">hvac</span></code> as a function of the <code class="docutils literal notranslate"><span class="pre">date</span></code>.</p></li>
 </ul>
-</section>
-</section>
-<section id="avoid-writing-a-lot-of-code-by-using-loops">
-<h2>Avoid writing a lot of code by using loops<a class="headerlink" href="#avoid-writing-a-lot-of-code-by-using-loops" title="Link to this heading">#</a></h2>
-<p>So, far we manually extracted the data we need for each unit.
-Now, I will show you how you can do it for as many usints as you like using a for loop.
-Let’s redo our scatter plot for a list of households:</p>
+<p>So far we manually extracted the data we needed for each unit.
+Now, I will show you how you can do it for as many units as you like using a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop.
+Let’s say we have a list of households we want to plot.
+We need to plot the data for each household using a different marker.
+How can we loop over pairs of household names and markers?
+The most elegant way to do this is by using the <code class="docutils literal notranslate"><span class="pre">zip</span></code> function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;All households&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
-
-<span class="c1"># Loop over household names</span>
-<span class="k">for</span> <span class="n">household_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;a1&#39;</span><span class="p">,</span> <span class="s1">&#39;a2&#39;</span><span class="p">,</span> <span class="s1">&#39;a3&#39;</span><span class="p">,</span> <span class="s1">&#39;a4&#39;</span><span class="p">,</span> <span class="s1">&#39;a5&#39;</span><span class="p">]:</span>
-    <span class="c1"># Extract the relevant data</span>
-    <span class="n">df_tmp</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;household&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">household_name</span><span class="p">]</span>
-    <span class="c1"># Plot the relevant data</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_tmp</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df_tmp</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Household &#39;</span> <span class="o">+</span> <span class="n">household_name</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;t_out (F)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;hvac (kWh)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">households</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a1&#39;</span><span class="p">,</span> <span class="s1">&#39;a2&#39;</span><span class="p">,</span> <span class="s1">&#39;a3&#39;</span><span class="p">,</span> <span class="s1">&#39;a4&#39;</span><span class="p">,</span> <span class="s1">&#39;a5&#39;</span><span class="p">]</span>
+<span class="n">markers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">h</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">households</span><span class="p">,</span> <span class="n">markers</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/40c3b0fc97bb0039b7c9bfa21d49d4b532070a712ce7afbdc61456ed990a36c3.svg" src="../_images/40c3b0fc97bb0039b7c9bfa21d49d4b532070a712ce7afbdc61456ed990a36c3.svg" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a1 o
+a2 s
+a3 d
+a4 p
+a5 x
+</pre></div>
 </div>
 </div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">zip</span></code> function takes two lists and returns a list of pairs. Actually, you get back a object called an \emph{iterator}, but you can think of it as a list of pairs.
+Each pair contains one element from the first list and one from the second.
+Let’s redo our scatter plot for a list of households:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_full_width_fig</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;All households&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">households</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a1&#39;</span><span class="p">,</span> <span class="s1">&#39;a2&#39;</span><span class="p">,</span> <span class="s1">&#39;a3&#39;</span><span class="p">,</span> <span class="s1">&#39;a4&#39;</span><span class="p">,</span> <span class="s1">&#39;a5&#39;</span><span class="p">]</span>
+<span class="n">markers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">h</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">households</span><span class="p">,</span> <span class="n">markers</span><span class="p">):</span>
+    <span class="n">df_tmp</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;household&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">h</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_tmp</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df_tmp</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Household &#39;</span> <span class="o">+</span> <span class="n">h</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="n">m</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;t_out (F)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;hvac (kWh)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<span class="n">save_for_book</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s1">&#39;ch6.fig3&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/71c1c15d14d45a64087d625a3219c123557ae8cf94f36bf541501ab9f499332f.svg" src="../_images/71c1c15d14d45a64087d625a3219c123557ae8cf94f36bf541501ab9f499332f.svg" />
+</div>
+</div>
+</section>
 <section id="id2">
 <h3>Questions<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Modify the code above so that you plot the scatter plot for households <code class="docutils literal notranslate"><span class="pre">c34</span></code> to <code class="docutils literal notranslate"><span class="pre">c359</span></code>.</p></li>
+<li><p>Modify the code above so that you plot the scatter plot for the first 5 of the <code class="docutils literal notranslate"><span class="pre">c??</span></code> households.</p></li>
 <li><p>For the same households as above, plot <code class="docutils literal notranslate"><span class="pre">hvac</span></code> as a function of <code class="docutils literal notranslate"><span class="pre">date</span></code>.</p></li>
 </ul>
 </section>
 </section>
 <section id="extract-rows-that-satisfy-more-complicated-boolean-expressions">
 <h2>Extract rows that satisfy more complicated boolean expressions<a class="headerlink" href="#extract-rows-that-satisfy-more-complicated-boolean-expressions" title="Link to this heading">#</a></h2>
-<p>There is really no lilmit to how complicated the boolean expression you use can be.
-Let me give you some examples.
-Let’s say that we want to see how the selection of <code class="docutils literal notranslate"><span class="pre">t_unit</span></code> (temperature setpoint) affects energy consumption during the heating season.
+<p>Let’s say that we want to see how the selection of <code class="docutils literal notranslate"><span class="pre">t_unit</span></code> (temperature setpoint) affects <code class="docutils literal notranslate"><span class="pre">hvac</span></code> (energy consumption) during the heating season.
 We are on heating season for sure when the external temperature is smaller than 55 degrees F.
-Okay, so we need to extract all the rows with <code class="docutils literal notranslate"><span class="pre">df['t_unit']</span> <span class="pre">&lt;</span> <span class="pre">55</span></code>.
-Let’s do that:</p>
+So, we need to extract all the rows with <code class="docutils literal notranslate"><span class="pre">df['t_out']</span> <span class="pre">&lt;</span> <span class="pre">55</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_heating</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">55</span><span class="p">]</span>
-<span class="n">df_heating</span>
+<span class="n">df_heating</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1246,45 +1329,45 @@ Let’s do that:</p>
       <td>a1</td>
       <td>2018-01-07</td>
       <td>100.0</td>
-      <td>4.283373</td>
-      <td>66.693229</td>
-      <td>246.473231</td>
+      <td>4.28</td>
+      <td>66.69</td>
+      <td>246.47</td>
     </tr>
     <tr>
       <th>1</th>
       <td>a10</td>
       <td>2018-01-07</td>
       <td>100.0</td>
-      <td>4.283373</td>
-      <td>66.356134</td>
-      <td>5.492116</td>
+      <td>4.28</td>
+      <td>66.36</td>
+      <td>5.49</td>
     </tr>
     <tr>
       <th>2</th>
       <td>a11</td>
       <td>2018-01-07</td>
       <td>58.0</td>
-      <td>4.283373</td>
-      <td>71.549132</td>
-      <td>402.094327</td>
+      <td>4.28</td>
+      <td>71.55</td>
+      <td>402.09</td>
     </tr>
     <tr>
       <th>3</th>
       <td>a12</td>
       <td>2018-01-07</td>
       <td>64.0</td>
-      <td>4.283373</td>
-      <td>73.429514</td>
-      <td>211.692244</td>
+      <td>4.28</td>
+      <td>73.43</td>
+      <td>211.69</td>
     </tr>
     <tr>
       <th>4</th>
       <td>a13</td>
       <td>2018-01-07</td>
       <td>100.0</td>
-      <td>4.283373</td>
-      <td>63.923937</td>
-      <td>0.850536</td>
+      <td>4.28</td>
+      <td>63.92</td>
+      <td>0.85</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1300,53 +1383,53 @@ Let’s do that:</p>
       <td>c44</td>
       <td>2020-02-25</td>
       <td>59.0</td>
-      <td>43.642388</td>
-      <td>76.494637</td>
-      <td>19.135139</td>
+      <td>43.64</td>
+      <td>76.49</td>
+      <td>19.14</td>
     </tr>
     <tr>
       <th>5644</th>
       <td>c45</td>
       <td>2020-02-25</td>
       <td>87.0</td>
-      <td>43.642388</td>
-      <td>71.165052</td>
-      <td>30.794281</td>
+      <td>43.64</td>
+      <td>71.17</td>
+      <td>30.79</td>
     </tr>
     <tr>
       <th>5646</th>
       <td>c47</td>
       <td>2020-02-25</td>
       <td>97.0</td>
-      <td>43.642388</td>
-      <td>68.603287</td>
-      <td>5.339391</td>
+      <td>43.64</td>
+      <td>68.60</td>
+      <td>5.34</td>
     </tr>
     <tr>
       <th>5647</th>
       <td>c48</td>
       <td>2020-02-25</td>
       <td>92.0</td>
-      <td>43.642388</td>
-      <td>73.429239</td>
-      <td>18.040078</td>
+      <td>43.64</td>
+      <td>73.43</td>
+      <td>18.04</td>
     </tr>
     <tr>
       <th>5649</th>
       <td>c50</td>
       <td>2020-02-25</td>
       <td>59.0</td>
-      <td>43.642388</td>
-      <td>77.716955</td>
-      <td>14.405155</td>
+      <td>43.64</td>
+      <td>77.72</td>
+      <td>14.41</td>
     </tr>
   </tbody>
 </table>
 <p>2741 rows × 6 columns</p>
 </div></div></div>
 </div>
-<p>Now, we are going to draw the same scatter plot, but we are going to color the points according to the unit temperature <code class="docutils literal notranslate"><span class="pre">t_unit</span></code>.
-Let’s have pick the rows with <code class="docutils literal notranslate"><span class="pre">t_unit</span></code> between 70 and 72 degrees F.</p>
+<p>Now, we are going to draw the scatter plot between <code class="docutils literal notranslate"><span class="pre">t_out</span></code> and <code class="docutils literal notranslate"><span class="pre">hvac</span></code>, but we are going to color the points according to the unit temperature <code class="docutils literal notranslate"><span class="pre">t_unit</span></code>.
+Let’s first pick the rows with <code class="docutils literal notranslate"><span class="pre">t_unit</span></code> between 70 and 72 degrees F.</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_heating_70to72</span> <span class="o">=</span> <span class="n">df_heating</span><span class="p">[</span><span class="n">df_heating</span><span class="p">[</span><span class="s1">&#39;t_unit&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">70</span> <span class="ow">and</span>
@@ -1358,25 +1441,26 @@ Let’s have pick the rows with <code class="docutils literal notranslate"><span
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">27</span><span class="o">-</span><span class="mi">2</span><span class="n">b2ecdc642cb</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nn">/var/folders/3n/r5vj11ss7lzcdl10vfhb_mw00000gs/T/ipykernel_93904/3118749747.py</span> in <span class="ni">?</span><span class="nt">()</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">df_heating_70to72</span> <span class="o">=</span> <span class="n">df_heating</span><span class="p">[</span><span class="n">df_heating</span><span class="p">[</span><span class="s1">&#39;t_unit&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">70</span> <span class="ow">and</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span>                                <span class="n">df_heating</span><span class="p">[</span><span class="s1">&#39;t_unit&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">72</span><span class="p">]</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">df_heating_70to72</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 
-<span class="nn">~/opt/anaconda3/lib/python3.8/site-packages/pandas/core/generic.py</span> in <span class="ni">__nonzero__</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1440</span>     <span class="nd">@final</span>
-<span class="g g-Whitespace">   </span><span class="mi">1441</span>     <span class="k">def</span> <span class="nf">__nonzero__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="ne">-&gt; </span><span class="mi">1442</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1443</span>             <span class="sa">f</span><span class="s2">&quot;The truth value of a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> is ambiguous. &quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1444</span>             <span class="s2">&quot;Use a.empty, a.bool(), a.item(), a.any() or a.all().&quot;</span>
+<span class="nn">~/.pyenv/versions/3.12.5/lib/python3.12/site-packages/pandas/core/generic.py</span> in <span class="ni">?</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1575</span>     <span class="nd">@final</span>
+<span class="g g-Whitespace">   </span><span class="mi">1576</span>     <span class="k">def</span> <span class="nf">__nonzero__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NoReturn</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1577</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1578</span>             <span class="sa">f</span><span class="s2">&quot;The truth value of a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> is ambiguous. &quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1579</span>             <span class="s2">&quot;Use a.empty, a.bool(), a.item(), a.any() or a.all().&quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1580</span>         <span class="p">)</span>
 
 <span class="ne">ValueError</span>: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
 </pre></div>
 </div>
 </div>
 </div>
-<p>The problem here is that the on the left and on the right of the logical <code class="docutils literal notranslate"><span class="pre">and</span></code> operator you have arrays of booleans not just booleans.
-So, Python does not know what to do with them.
+<p>The problem here is that on the left and on the right of the logical <code class="docutils literal notranslate"><span class="pre">and</span></code> operator you have arrays of booleans not just booleans.
+Python does not know what to do with them.
 The correct operator to use to represent logical <code class="docutils literal notranslate"><span class="pre">AND</span></code> in this situation is <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> (which you can also read as <code class="docutils literal notranslate"><span class="pre">AND</span></code>).
 Let’s try again.
 This time we are going to get a really big error message.
@@ -1397,72 +1481,85 @@ I’m going to hide it.</p>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="nn">~/opt/anaconda3/lib/python3.8/site-packages/pandas/core/ops/array_ops.py</span> in <span class="ni">na_logical_op</span><span class="nt">(x, y, op)</span>
-<span class="g g-Whitespace">    </span><span class="mi">264</span>         <span class="c1">#  (xint or xbool) and (yint or bool)</span>
-<span class="ne">--&gt; </span><span class="mi">265</span>         <span class="n">result</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">266</span>     <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+<span class="nn">File ~/.pyenv/versions/3.12.5/lib/python3.12/site-packages/pandas/core/ops/array_ops.py:362,</span> in <span class="ni">na_logical_op</span><span class="nt">(x, y, op)</span>
+<span class="g g-Whitespace">    </span><span class="mi">353</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">354</span>     <span class="c1"># For exposition, write:</span>
+<span class="g g-Whitespace">    </span><span class="mi">355</span>     <span class="c1">#  yarr = isinstance(y, np.ndarray)</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">360</span>     <span class="c1"># Then Cases where this goes through without raising include:</span>
+<span class="g g-Whitespace">    </span><span class="mi">361</span>     <span class="c1">#  (xint or xbool) and (yint or bool)</span>
+<span class="ne">--&gt; </span><span class="mi">362</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">363</span> <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
 
-<span class="nn">~/opt/anaconda3/lib/python3.8/site-packages/pandas/core/ops/roperator.py</span> in <span class="ni">rand_</span><span class="nt">(left, right)</span>
-<span class="g g-Whitespace">     </span><span class="mi">51</span> <span class="k">def</span> <span class="nf">rand_</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
-<span class="ne">---&gt; </span><span class="mi">52</span>     <span class="k">return</span> <span class="n">operator</span><span class="o">.</span><span class="n">and_</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">left</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">53</span> 
+<span class="nn">File ~/.pyenv/versions/3.12.5/lib/python3.12/site-packages/pandas/core/roperator.py:54,</span> in <span class="ni">rand_</span><span class="nt">(left, right)</span>
+<span class="g g-Whitespace">     </span><span class="mi">53</span> <span class="k">def</span> <span class="nf">rand_</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">54</span>     <span class="k">return</span> <span class="n">operator</span><span class="o">.</span><span class="n">and_</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">left</span><span class="p">)</span>
 
 <span class="ne">TypeError</span>: ufunc &#39;bitwise_and&#39; not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule &#39;&#39;safe&#39;&#39;
 
 <span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
 
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="nn">~/opt/anaconda3/lib/python3.8/site-packages/pandas/core/ops/array_ops.py</span> in <span class="ni">na_logical_op</span><span class="nt">(x, y, op)</span>
-<span class="g g-Whitespace">    </span><span class="mi">278</span>             <span class="k">try</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">279</span>                 <span class="n">result</span> <span class="o">=</span> <span class="n">libops</span><span class="o">.</span><span class="n">scalar_binop</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">op</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">280</span>             <span class="k">except</span> <span class="p">(</span>
+<span class="nn">File ~/.pyenv/versions/3.12.5/lib/python3.12/site-packages/pandas/core/ops/array_ops.py:376,</span> in <span class="ni">na_logical_op</span><span class="nt">(x, y, op)</span>
+<span class="g g-Whitespace">    </span><span class="mi">375</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">376</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">libops</span><span class="o">.</span><span class="n">scalar_binop</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">op</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">377</span> <span class="k">except</span> <span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">378</span>     <span class="ne">TypeError</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">379</span>     <span class="ne">ValueError</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">382</span>     <span class="ne">NotImplementedError</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">383</span> <span class="p">)</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
 
-<span class="nn">pandas/_libs/ops.pyx</span> in <span class="ni">pandas._libs.ops.scalar_binop</span><span class="nt">()</span>
+<span class="nn">File ops.pyx:180,</span> in <span class="ni">pandas._libs.ops.scalar_binop</span><span class="nt">()</span>
 
 <span class="ne">ValueError</span>: Buffer dtype mismatch, expected &#39;Python object&#39; but got &#39;double&#39;
 
 <span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
 
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">28</span><span class="o">-</span><span class="mi">530</span><span class="n">d5ff944c3</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">72</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">df_heating_70to72</span> <span class="o">=</span> <span class="n">df_heating</span><span class="p">[</span><span class="n">df_heating</span><span class="p">[</span><span class="s1">&#39;t_unit&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">70</span> <span class="o">&amp;</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span>                                <span class="n">df_heating</span><span class="p">[</span><span class="s1">&#39;t_unit&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">72</span><span class="p">]</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">df_heating_70to72</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 
-<span class="nn">~/opt/anaconda3/lib/python3.8/site-packages/pandas/core/ops/common.py</span> in <span class="ni">new_method</span><span class="nt">(self, other)</span>
-<span class="g g-Whitespace">     </span><span class="mi">63</span>         <span class="n">other</span> <span class="o">=</span> <span class="n">item_from_zerodim</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">64</span> 
-<span class="ne">---&gt; </span><span class="mi">65</span>         <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">66</span> 
-<span class="g g-Whitespace">     </span><span class="mi">67</span>     <span class="k">return</span> <span class="n">new_method</span>
+<span class="nn">File ~/.pyenv/versions/3.12.5/lib/python3.12/site-packages/pandas/core/ops/common.py:76,</span> in <span class="ni">_unpack_zerodim_and_defer.&lt;locals&gt;.new_method</span><span class="nt">(self, other)</span>
+<span class="g g-Whitespace">     </span><span class="mi">72</span>             <span class="k">return</span> <span class="bp">NotImplemented</span>
+<span class="g g-Whitespace">     </span><span class="mi">74</span> <span class="n">other</span> <span class="o">=</span> <span class="n">item_from_zerodim</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">76</span> <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
 
-<span class="nn">~/opt/anaconda3/lib/python3.8/site-packages/pandas/core/arraylike.py</span> in <span class="ni">__rand__</span><span class="nt">(self, other)</span>
-<span class="g g-Whitespace">     </span><span class="mi">61</span>     <span class="nd">@unpack_zerodim_and_defer</span><span class="p">(</span><span class="s2">&quot;__rand__&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">62</span>     <span class="k">def</span> <span class="fm">__rand__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="ne">---&gt; </span><span class="mi">63</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_logical_method</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">roperator</span><span class="o">.</span><span class="n">rand_</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">64</span> 
-<span class="g g-Whitespace">     </span><span class="mi">65</span>     <span class="nd">@unpack_zerodim_and_defer</span><span class="p">(</span><span class="s2">&quot;__or__&quot;</span><span class="p">)</span>
+<span class="nn">File ~/.pyenv/versions/3.12.5/lib/python3.12/site-packages/pandas/core/arraylike.py:74,</span> in <span class="ni">OpsMixin.__rand__</span><span class="nt">(self, other)</span>
+<span class="g g-Whitespace">     </span><span class="mi">72</span> <span class="nd">@unpack_zerodim_and_defer</span><span class="p">(</span><span class="s2">&quot;__rand__&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">73</span> <span class="k">def</span> <span class="fm">__rand__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">74</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_logical_method</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">roperator</span><span class="o">.</span><span class="n">rand_</span><span class="p">)</span>
 
-<span class="nn">~/opt/anaconda3/lib/python3.8/site-packages/pandas/core/series.py</span> in <span class="ni">_logical_method</span><span class="nt">(self, other, op)</span>
-<span class="g g-Whitespace">   </span><span class="mi">4987</span>         <span class="n">rvalues</span> <span class="o">=</span> <span class="n">extract_array</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">extract_numpy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">4988</span> 
-<span class="ne">-&gt; </span><span class="mi">4989</span>         <span class="n">res_values</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">logical_op</span><span class="p">(</span><span class="n">lvalues</span><span class="p">,</span> <span class="n">rvalues</span><span class="p">,</span> <span class="n">op</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">4990</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_construct_result</span><span class="p">(</span><span class="n">res_values</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">res_name</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">4991</span> 
+<span class="nn">File ~/.pyenv/versions/3.12.5/lib/python3.12/site-packages/pandas/core/series.py:6130,</span> in <span class="ni">Series._logical_method</span><span class="nt">(self, other, op)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6127</span> <span class="n">lvalues</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_values</span>
+<span class="g g-Whitespace">   </span><span class="mi">6128</span> <span class="n">rvalues</span> <span class="o">=</span> <span class="n">extract_array</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">extract_numpy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">extract_range</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">6130</span> <span class="n">res_values</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">logical_op</span><span class="p">(</span><span class="n">lvalues</span><span class="p">,</span> <span class="n">rvalues</span><span class="p">,</span> <span class="n">op</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6131</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_construct_result</span><span class="p">(</span><span class="n">res_values</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">res_name</span><span class="p">)</span>
 
-<span class="nn">~/opt/anaconda3/lib/python3.8/site-packages/pandas/core/ops/array_ops.py</span> in <span class="ni">logical_op</span><span class="nt">(left, right, op)</span>
-<span class="g g-Whitespace">    </span><span class="mi">353</span>         <span class="n">filler</span> <span class="o">=</span> <span class="n">fill_int</span> <span class="k">if</span> <span class="n">is_self_int_dtype</span> <span class="ow">and</span> <span class="n">is_other_int_dtype</span> <span class="k">else</span> <span class="n">fill_bool</span>
-<span class="g g-Whitespace">    </span><span class="mi">354</span> 
-<span class="ne">--&gt; </span><span class="mi">355</span>         <span class="n">res_values</span> <span class="o">=</span> <span class="n">na_logical_op</span><span class="p">(</span><span class="n">lvalues</span><span class="p">,</span> <span class="n">rvalues</span><span class="p">,</span> <span class="n">op</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">356</span>         <span class="c1"># error: Cannot call function of unknown type</span>
-<span class="g g-Whitespace">    </span><span class="mi">357</span>         <span class="n">res_values</span> <span class="o">=</span> <span class="n">filler</span><span class="p">(</span><span class="n">res_values</span><span class="p">)</span>  <span class="c1"># type: ignore[operator]</span>
+<span class="nn">File ~/.pyenv/versions/3.12.5/lib/python3.12/site-packages/pandas/core/ops/array_ops.py:454,</span> in <span class="ni">logical_op</span><span class="nt">(left, right, op)</span>
+<span class="g g-Whitespace">    </span><span class="mi">450</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">451</span>     <span class="c1"># i.e. scalar</span>
+<span class="g g-Whitespace">    </span><span class="mi">452</span>     <span class="n">is_other_int_dtype</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">is_integer</span><span class="p">(</span><span class="n">rvalues</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">454</span> <span class="n">res_values</span> <span class="o">=</span> <span class="n">na_logical_op</span><span class="p">(</span><span class="n">lvalues</span><span class="p">,</span> <span class="n">rvalues</span><span class="p">,</span> <span class="n">op</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">456</span> <span class="c1"># For int vs int `^`, `|`, `&amp;` are bitwise operators and return</span>
+<span class="g g-Whitespace">    </span><span class="mi">457</span> <span class="c1">#   integer dtypes.  Otherwise these are boolean ops</span>
+<span class="g g-Whitespace">    </span><span class="mi">458</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">left</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="ow">in</span> <span class="s2">&quot;iu&quot;</span> <span class="ow">and</span> <span class="n">is_other_int_dtype</span><span class="p">):</span>
 
-<span class="nn">~/opt/anaconda3/lib/python3.8/site-packages/pandas/core/ops/array_ops.py</span> in <span class="ni">na_logical_op</span><span class="nt">(x, y, op)</span>
-<span class="g g-Whitespace">    </span><span class="mi">286</span>             <span class="p">)</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">287</span>                 <span class="n">typ</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
-<span class="ne">--&gt; </span><span class="mi">288</span>                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">289</span>                     <span class="sa">f</span><span class="s2">&quot;Cannot perform &#39;</span><span class="si">{</span><span class="n">op</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; with a dtyped [</span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">] array &quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">290</span>                     <span class="sa">f</span><span class="s2">&quot;and scalar of type [</span><span class="si">{</span><span class="n">typ</span><span class="si">}</span><span class="s2">]&quot;</span>
+<span class="nn">File ~/.pyenv/versions/3.12.5/lib/python3.12/site-packages/pandas/core/ops/array_ops.py:385,</span> in <span class="ni">na_logical_op</span><span class="nt">(x, y, op)</span>
+<span class="g g-Whitespace">    </span><span class="mi">377</span>         <span class="k">except</span> <span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">378</span>             <span class="ne">TypeError</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">379</span>             <span class="ne">ValueError</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">382</span>             <span class="ne">NotImplementedError</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">383</span>         <span class="p">)</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">384</span>             <span class="n">typ</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+<span class="ne">--&gt; </span><span class="mi">385</span>             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">386</span>                 <span class="sa">f</span><span class="s2">&quot;Cannot perform &#39;</span><span class="si">{</span><span class="n">op</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; with a dtyped [</span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">] array &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">387</span>                 <span class="sa">f</span><span class="s2">&quot;and scalar of type [</span><span class="si">{</span><span class="n">typ</span><span class="si">}</span><span class="s2">]&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">388</span>             <span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
+<span class="g g-Whitespace">    </span><span class="mi">390</span> <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
 <span class="ne">TypeError</span>: Cannot perform &#39;rand_&#39; with a dtyped [float64] array and scalar of type [bool]
 </pre></div>
@@ -1470,7 +1567,7 @@ I’m going to hide it.</p>
 </div>
 </details>
 </div>
-<p>The problem here is that Python is the order in which the expression is evaluated.
+<p>The problem here is the order in which the expression is evaluated.
 The operator <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> has a special meaning in Python (we are not going to get into it) and it has high priority.
 So, python tries to evaluate first <code class="docutils literal notranslate"><span class="pre">68</span> <span class="pre">&amp;</span> <span class="pre">df_heating['t_unit']</span></code> which is meanigless.
 What needs to happen here is that is should first evaluate <code class="docutils literal notranslate"><span class="pre">df_heating['t_unit']</span> <span class="pre">&gt;=</span> <span class="pre">68</span></code> to get an array of booleans, then evaluate <code class="docutils literal notranslate"><span class="pre">df_heating['t_unit']</span> <span class="pre">&lt;</span> <span class="pre">70</span></code> to get another array of booleans, and the use <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> to logically compare the arrays pointwise.
@@ -1481,7 +1578,7 @@ So, here is the correct way to do it:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_heating_70to72</span> <span class="o">=</span> <span class="n">df_heating</span><span class="p">[(</span><span class="n">df_heating</span><span class="p">[</span><span class="s1">&#39;t_unit&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">70</span><span class="p">)</span> <span class="o">&amp;</span>
                                <span class="p">(</span><span class="n">df_heating</span><span class="p">[</span><span class="s1">&#39;t_unit&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">72</span><span class="p">)]</span>
-<span class="n">df_heating_70to72</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">df_heating_70to72</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1518,80 +1615,89 @@ So, here is the correct way to do it:</p>
       <td>a11</td>
       <td>2018-01-07</td>
       <td>58.0</td>
-      <td>4.283373</td>
-      <td>71.549132</td>
-      <td>402.094327</td>
+      <td>4.28</td>
+      <td>71.55</td>
+      <td>402.09</td>
     </tr>
     <tr>
       <th>17</th>
       <td>b18</td>
       <td>2018-01-07</td>
       <td>87.0</td>
-      <td>4.283373</td>
-      <td>70.608333</td>
-      <td>368.153883</td>
+      <td>4.28</td>
+      <td>70.61</td>
+      <td>368.15</td>
     </tr>
     <tr>
       <th>25</th>
       <td>b26</td>
       <td>2018-01-07</td>
       <td>97.0</td>
-      <td>4.283373</td>
-      <td>70.014178</td>
-      <td>36.645884</td>
+      <td>4.28</td>
+      <td>70.01</td>
+      <td>36.65</td>
     </tr>
     <tr>
       <th>29</th>
       <td>b30</td>
       <td>2018-01-07</td>
       <td>99.0</td>
-      <td>4.283373</td>
-      <td>71.423206</td>
-      <td>23.679263</td>
+      <td>4.28</td>
+      <td>71.42</td>
+      <td>23.68</td>
     </tr>
     <tr>
       <th>34</th>
       <td>c35</td>
       <td>2018-01-07</td>
       <td>96.0</td>
-      <td>4.283373</td>
-      <td>70.558912</td>
-      <td>349.025111</td>
+      <td>4.28</td>
+      <td>70.56</td>
+      <td>349.03</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>And let’s plot the scatter plot highlighting the different unit temeprature ranges with different colors:</p>
+<p>Here is the plot:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_heating</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df_heating</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;All households&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_full_width_fig</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_heating</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df_heating</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;All households&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_heating_70to72</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df_heating_70to72</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> 
-           <span class="n">label</span><span class="o">=</span><span class="s1">&#39;t_unit in [70, 72)&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+           <span class="n">label</span><span class="o">=</span><span class="s1">&#39;t_unit in [70, 72)&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;t_out (F)&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;hvac (kWh)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<span class="n">save_for_book</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s1">&#39;ch6.fig4&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/109cbbd60f0e0b48a93c418d119852b26b2dc45eab3dc5ab51bb5aaed6261db3.svg" src="../_images/109cbbd60f0e0b48a93c418d119852b26b2dc45eab3dc5ab51bb5aaed6261db3.svg" />
+<img alt="../_images/117dc7b7917c74b1f19d9ddb7c95875a71597d988302ecbc0b5efd5b6a77aa0f.svg" src="../_images/117dc7b7917c74b1f19d9ddb7c95875a71597d988302ecbc0b5efd5b6a77aa0f.svg" />
 </div>
 </div>
-<p>Let’s finish this section by demonstrating logical <code class="docutils literal notranslate"><span class="pre">OR</span></code> for selecting rows.
+<p>We see that the units with <code class="docutils literal notranslate"><span class="pre">t_unit</span></code> between 70 and 72 degrees F tend to consume less energy. There are some outliers, but the trend is clear.
+What can explain the outliers though?
+How can two households with the same internal temperature <code class="docutils literal notranslate"><span class="pre">t_unit</span></code> have very different energy consumption?
+There are other variables here that we are not observing.
+For example, the location of the unit in the building.
+A unit that is at the corner of the building will have different heat loss than a unit that is in the middle of the building.
+Another explanation is that the occupants may be opening the windows more often in one of the appartments.
+Such variables are called \emph{confounding variables}.
+You should always be on the lookout for them.</p>
+<p>Let’s demonstrate a logical-or for selecting rows.
 As you may have guessed <code class="docutils literal notranslate"><span class="pre">or</span></code> does not work.
 We need to use the operator <code class="docutils literal notranslate"><span class="pre">|</span></code>.
 And yes, we need to enclose everything in parentheses.
-Let’s select the entries that exhibit bad energy consuming behavior.
-That would be units that have a very high <code class="docutils literal notranslate"><span class="pre">t_unit</span></code> (say above 78) during heating or a very low <code class="docutils literal notranslate"><span class="pre">t_unit</span></code> during cooling (say below 70).
+Let’s select the entries that highlight wasteful energy consuming behavior.
+That would be units that have a very high <code class="docutils literal notranslate"><span class="pre">t_unit</span></code> (say above 78 degrees F) during heating or a very low <code class="docutils literal notranslate"><span class="pre">t_unit</span></code> during cooling (say below 70 degrees F).
 Let’s see how much energy they consume.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_bad_behavior</span> <span class="o">=</span> <span class="n">df</span><span class="p">[((</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">55</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_unit&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">78</span><span class="p">))</span> <span class="o">|</span>
                      <span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">55</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_unit&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">70</span><span class="p">))]</span>
-<span class="n">df_bad_behavior</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">df_bad_behavior</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1628,45 +1734,45 @@ Let’s see how much energy they consume.</p>
       <td>a9</td>
       <td>2018-01-07</td>
       <td>39.0</td>
-      <td>4.283373</td>
-      <td>78.709433</td>
-      <td>495.227311</td>
+      <td>4.28</td>
+      <td>78.71</td>
+      <td>495.23</td>
     </tr>
     <tr>
       <th>22</th>
       <td>b23</td>
       <td>2018-01-07</td>
       <td>44.0</td>
-      <td>4.283373</td>
-      <td>78.618808</td>
-      <td>359.167522</td>
+      <td>4.28</td>
+      <td>78.62</td>
+      <td>359.17</td>
     </tr>
     <tr>
       <th>65</th>
       <td>a9</td>
       <td>2018-01-14</td>
       <td>41.0</td>
-      <td>33.444172</td>
-      <td>78.557192</td>
-      <td>321.834468</td>
+      <td>33.44</td>
+      <td>78.56</td>
+      <td>321.83</td>
     </tr>
     <tr>
       <th>72</th>
       <td>b23</td>
       <td>2018-01-14</td>
       <td>43.0</td>
-      <td>33.444172</td>
-      <td>78.684325</td>
-      <td>197.924672</td>
+      <td>33.44</td>
+      <td>78.68</td>
+      <td>197.92</td>
     </tr>
     <tr>
       <th>115</th>
       <td>a9</td>
       <td>2018-01-21</td>
       <td>41.0</td>
-      <td>19.584102</td>
-      <td>78.572321</td>
-      <td>431.236407</td>
+      <td>19.58</td>
+      <td>78.57</td>
+      <td>431.24</td>
     </tr>
   </tbody>
 </table>
@@ -1674,24 +1780,23 @@ Let’s see how much energy they consume.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;All households&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_full_width_fig</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;All households&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_bad_behavior</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df_bad_behavior</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> 
-           <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Bad behavior&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-
+           <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Bad behavior&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;t_out (F)&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;hvac (kWh)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<span class="n">save_for_book</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s1">&#39;ch6.fig5&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2683aa97925b78a69dc61a62cccb194a86114caaaa56c3bdb634537c33bfd24d.svg" src="../_images/2683aa97925b78a69dc61a62cccb194a86114caaaa56c3bdb634537c33bfd24d.svg" />
+<img alt="../_images/613b4d54f29099e32689946c14320b638b739a1f69dc2e2f670ba7d3ca3fb1c8.svg" src="../_images/613b4d54f29099e32689946c14320b638b739a1f69dc2e2f670ba7d3ca3fb1c8.svg" />
 </div>
 </div>
-<p>Notice that they are some entries that exhibit bad behavior without being penalized by excessive energy consumption.
-This is because of a third variable that affects energy consumption, i.e., the location of the unit in the building.
+<p>Notice that they are some entries that exhibit bad behavior without being penalized with excessive energy consumption.
+Can you think of a confounding variable that could explain this?
 Here is what is happening:</p>
 <ul class="simple">
 <li><p>Units that are at the corners of the building expose at least two sides to the external environment.</p></li>
@@ -1703,15 +1808,15 @@ The final group is basically insulated from the environment and on top of that t
 Behaving badly in a top floor, corner unit will be reflected on your energy bill.
 Behaving badly in an insulated unit may have no effect on your energy bill.</p></li>
 </ul>
-<p>Let’s end with logical <code class="docutils literal notranslate"><span class="pre">NOT</span></code>.
+<p>Let’s end with logical-not for selecting rows.
 Say we wanted to negate the previous selection so that we highlight all those who behaved well.
 For this, you use the <code class="docutils literal notranslate"><span class="pre">~</span></code> operator in front of the logical expression you want to negate.
 Like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_good_behavior</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="p">(((</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">55</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_unit&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">78</span><span class="p">))</span> <span class="o">|</span>
-                        <span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">55</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_unit&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">70</span><span class="p">)))]</span>
-<span class="n">df_bad_behavior</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_good_behavior</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="p">(((</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">55</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_unit&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">72</span><span class="p">))</span> <span class="o">|</span>
+                     <span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">55</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_unit&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">75</span><span class="p">)))]</span>
+<span class="n">df_good_behavior</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1744,49 +1849,49 @@ Like this:</p>
   </thead>
   <tbody>
     <tr>
-      <th>15</th>
-      <td>a9</td>
+      <th>0</th>
+      <td>a1</td>
       <td>2018-01-07</td>
-      <td>39.0</td>
-      <td>4.283373</td>
-      <td>78.709433</td>
-      <td>495.227311</td>
+      <td>100.0</td>
+      <td>4.28</td>
+      <td>66.69</td>
+      <td>246.47</td>
     </tr>
     <tr>
-      <th>22</th>
-      <td>b23</td>
+      <th>1</th>
+      <td>a10</td>
       <td>2018-01-07</td>
-      <td>44.0</td>
-      <td>4.283373</td>
-      <td>78.618808</td>
-      <td>359.167522</td>
+      <td>100.0</td>
+      <td>4.28</td>
+      <td>66.36</td>
+      <td>5.49</td>
     </tr>
     <tr>
-      <th>65</th>
-      <td>a9</td>
-      <td>2018-01-14</td>
-      <td>41.0</td>
-      <td>33.444172</td>
-      <td>78.557192</td>
-      <td>321.834468</td>
+      <th>2</th>
+      <td>a11</td>
+      <td>2018-01-07</td>
+      <td>58.0</td>
+      <td>4.28</td>
+      <td>71.55</td>
+      <td>402.09</td>
     </tr>
     <tr>
-      <th>72</th>
-      <td>b23</td>
-      <td>2018-01-14</td>
-      <td>43.0</td>
-      <td>33.444172</td>
-      <td>78.684325</td>
-      <td>197.924672</td>
+      <th>4</th>
+      <td>a13</td>
+      <td>2018-01-07</td>
+      <td>100.0</td>
+      <td>4.28</td>
+      <td>63.92</td>
+      <td>0.85</td>
     </tr>
     <tr>
-      <th>115</th>
-      <td>a9</td>
-      <td>2018-01-21</td>
-      <td>41.0</td>
-      <td>19.584102</td>
-      <td>78.572321</td>
-      <td>431.236407</td>
+      <th>7</th>
+      <td>a16</td>
+      <td>2018-01-07</td>
+      <td>56.0</td>
+      <td>4.28</td>
+      <td>66.91</td>
+      <td>529.84</td>
     </tr>
   </tbody>
 </table>
@@ -1795,28 +1900,23 @@ Like this:</p>
 <p>Again, pay attention to the parentheses because they are critical for the correct evaluation of the expression.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;All households&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_full_width_fig</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;All households&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_good_behavior</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df_good_behavior</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">],</span> 
-           <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Good behavior&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-
+           <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Good behavior&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">()[</span><span class="mi">2</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;t_out (F)&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;hvac (kWh)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<span class="n">save_for_book</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s1">&#39;ch6.fig6&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ebed6e204db0134b688e5db7f4f3b6a209148fd1ca1a8532cab7214656f0538f.svg" src="../_images/ebed6e204db0134b688e5db7f4f3b6a209148fd1ca1a8532cab7214656f0538f.svg" />
+<img alt="../_images/042621ecc2d4af3c86f017be1d071aa2f429938abdfe7bcfccfab705ea0ad6d3.svg" src="../_images/042621ecc2d4af3c86f017be1d071aa2f429938abdfe7bcfccfab705ea0ad6d3.svg" />
 </div>
 </div>
-<section id="id3">
-<h3>Questions<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p>The final histogram highlighting units with good behavior is not very useful because the range of <code class="docutils literal notranslate"><span class="pre">t_unit</span></code> temperatures we considered as good is too wide. Rerun the code block above using a narrower range of temperatures. Say a bad choice for heating is <code class="docutils literal notranslate"><span class="pre">t_unit</span></code> &gt; 72 and a bad for cooling is <code class="docutils literal notranslate"><span class="pre">t_unit</span></code> &lt; 75. Then, redo the scatter plot.</p></li>
-</ul>
-</section>
+<p>Most households behaving well consume less than 100 kWh of energy per week.
+However, there are some units that are using excellent temperature set points, but they are still consuming a lot of energy. This could be because of the confounding variables we discussed earlier. For example, the unit could be in a corner and the occupants could be opening the windows more often.</p>
 </section>
 </section>
 
@@ -1890,16 +1990,10 @@ Like this:</p>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-timeseries-data">Plotting timeseries data</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Questions</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#avoid-writing-a-lot-of-code-by-using-loops">Avoid writing a lot of code by using loops</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Questions</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extract-rows-that-satisfy-more-complicated-boolean-expressions">Extract rows that satisfy more complicated boolean expressions</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Questions</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extract-rows-that-satisfy-more-complicated-boolean-expressions">Extract rows that satisfy more complicated boolean expressions</a></li>
 </ul>
   </nav></div>
 

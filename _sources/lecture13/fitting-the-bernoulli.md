@@ -32,7 +32,7 @@ $$
 p(X_i = x_i|\theta) = \theta^{x_i}(1-\theta)^{1-x_i}.
 $$
 
-Mediate a bit on this.
+Meditate a bit on this.
 If $x_i = 1$, then $1-x_i=0$ so the second part of the product becomes
 $(1-\theta)^0 = 1$ and you get $\theta$.
 Similarly, if $x_i=0$, the first part of the product becomes $\theta^0=1$ and thus you get $1-\theta$.
@@ -62,7 +62,7 @@ This has a nice intuitive meaning.
 Note that $\sum_{i=1}^Nx_i$ is the number of successes in $N$ experiments.
 Similarly, $N - \sum_{i=1}^Nx_i$ is the number of failures in $N$ experiments.
 
-Want to find the maximum likelihood estimator of the parameter $\theta$.
+We want to find the maximum likelihood estimate of the parameter $\theta$.
 Just like before, we will maximize the logarithm of the likelihood:
 
 $$

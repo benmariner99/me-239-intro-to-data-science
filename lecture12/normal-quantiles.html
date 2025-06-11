@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -618,10 +618,9 @@ x_{0.999} \approx \mu + 3.09\sigma \approx = \mu + 3 \sigma,
 <span class="n">X</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
 <span class="n">x_025</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span>
 <span class="n">x_975</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;X is between </span><span class="si">{0:1.2f}</span><span class="s1"> and </span><span class="si">{1:1.2f}</span><span class="s1"> with probability 95%&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_025</span><span class="p">,</span> <span class="n">x_975</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;X is between </span><span class="si">{</span><span class="n">x_025</span><span class="si">:</span><span class="s1">1.2f</span><span class="si">}</span><span class="s1"> and </span><span class="si">{</span><span class="n">x_975</span><span class="si">:</span><span class="s1">1.2f</span><span class="si">}</span><span class="s1"> with probability 95%&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Compare to the interval found through the standard normal&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;** X is between </span><span class="si">{0:1.2f}</span><span class="s1"> and </span><span class="si">{1:1.2f}</span><span class="s1"> with probability 95%&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mu</span> <span class="o">-</span> <span class="n">sigma</span> <span class="o">*</span> <span class="mf">1.96</span><span class="p">,</span> 
-                                                                          <span class="n">mu</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">*</span> <span class="mf">1.96</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;** X is between </span><span class="si">{</span><span class="n">mu</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">sigma</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1.96</span><span class="si">:</span><span class="s1">1.2f</span><span class="si">}</span><span class="s1"> and </span><span class="si">{</span><span class="n">mu</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sigma</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1.96</span><span class="si">:</span><span class="s1">1.2f</span><span class="si">}</span><span class="s1"> with probability 95%&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

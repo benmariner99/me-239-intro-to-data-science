@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -549,7 +549,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>We could have also used double quotes:</p>
+<p>We could have also used single quotes:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;This is the same string&#39;</span>
@@ -607,12 +607,12 @@ document.write(`
 <p>Here is how you can center a string:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">z</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span> <span class="c1"># 80 is the total number of characters in a row:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">z</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;                  This is the same string, and another string.                  &#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;        This is the same string, and another string.        &#39;
 </pre></div>
 </div>
 </div>
@@ -620,12 +620,12 @@ document.write(`
 <p>You can also multiply a string with a number to repeat it many times:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">80</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">60</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;================================================================================&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;============================================================&#39;
 </pre></div>
 </div>
 </div>
@@ -777,7 +777,7 @@ This is not the best way it doesn’t allow us to change the number of significa
 The <em>best</em> way to do it is to use <em>string formating</em>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;After my calculation I found out that a=</span><span class="si">{0:d}</span><span class="s1"> and that b=</span><span class="si">{1:1.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;After my calculation I found out that a=</span><span class="si">{</span><span class="n">a</span><span class="si">:</span><span class="s1">d</span><span class="si">}</span><span class="s1"> and that b=</span><span class="si">{</span><span class="n">b</span><span class="si">:</span><span class="s1">1.2f</span><span class="si">}</span><span class="s1">&#39;</span>
 <span class="n">x</span>
 </pre></div>
 </div>
@@ -788,12 +788,18 @@ The <em>best</em> way to do it is to use <em>string formating</em>:</p>
 </div>
 </div>
 </div>
-<p>Let me explain what this does. First notice the brackets: <code class="docutils literal notranslate"><span class="pre">{0:d}</span></code> and <code class="docutils literal notranslate"><span class="pre">{1:1.2f}</span></code>. The  number in the bracket before the <code class="docutils literal notranslate"><span class="pre">:</span></code> matches an input variable in the <code class="docutils literal notranslate"><span class="pre">format(a,</span> <span class="pre">b)</span></code> function that follows. For example, the <code class="docutils literal notranslate"><span class="pre">0</span></code> of <code class="docutils literal notranslate"><span class="pre">{0:d}</span></code> matches the first input of <code class="docutils literal notranslate"><span class="pre">format</span></code> which is <code class="docutils literal notranslate"><span class="pre">a</span></code>. The first <code class="docutils literal notranslate"><span class="pre">1</span></code> (before the <code class="docutils literal notranslate"><span class="pre">:</span></code>) of <code class="docutils literal notranslate"><span class="pre">{1:1.2f}</span></code> matches the second input of <code class="docutils literal notranslate"><span class="pre">format</span></code> which is <code class="docutils literal notranslate"><span class="pre">b</span></code>.
-The characters after the <code class="docutils literal notranslate"><span class="pre">:</span></code> in the brackets tell Python how you would like to turn that variable into a string. The <code class="docutils literal notranslate"><span class="pre">d</span></code> means that you are expecting a decimal integer. The <code class="docutils literal notranslate"><span class="pre">1.2f</span></code> means that you are expecting a floating point number and that you want to keep two significant digits.</p>
+<p>Let me explain what this does.
+First notice the <code class="docutils literal notranslate"><span class="pre">f</span></code> at the beginning of the string, which indicates this is an f-string (formatted string literal).
+Inside the f-string, we have expressions in curly brackets: <code class="docutils literal notranslate"><span class="pre">a:d</span></code> and <code class="docutils literal notranslate"><span class="pre">b:1.2f</span></code>.
+These expressions are evaluated at runtime.
+The variable name before the colon (e.g., <code class="docutils literal notranslate"><span class="pre">a</span></code> in <code class="docutils literal notranslate"><span class="pre">a:d</span></code>) refers directly to the variable we want to include in the string.
+The characters after the colon in the brackets tell Python how you would like to turn that variable into a string.
+The <code class="docutils literal notranslate"><span class="pre">d</span></code> means that you are expecting a decimal integer.
+The <code class="docutils literal notranslate"><span class="pre">1.2f</span></code> means that you are expecting a floating point number and that you want to keep two significant digits.</p>
 <p>Here are some other examples of formating:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;This is a=</span><span class="si">{0:5d}</span><span class="s1"> with five characters in total padding with empty space&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sa">f</span><span class="s1">&#39;This is a=</span><span class="si">{</span><span class="mi">12</span><span class="si">:</span><span class="s1">5d</span><span class="si">}</span><span class="s1"> with five characters in total padding with empty space&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -806,7 +812,7 @@ The characters after the <code class="docutils literal notranslate"><span class=
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
-<span class="s1">&#39;This is pi=</span><span class="si">{0:1.30f}</span><span class="s1"> (thirty digits of pi)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="sa">f</span><span class="s1">&#39;This is pi=</span><span class="si">{</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="si">:</span><span class="s1">1.30f</span><span class="si">}</span><span class="s1"> (thirty digits of pi)&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -818,7 +824,7 @@ The characters after the <code class="docutils literal notranslate"><span class=
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;This is b=</span><span class="si">{0:1.3e}</span><span class="s1"> in scientific notation with three significant digits&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sa">f</span><span class="s1">&#39;This is b=</span><span class="si">{</span><span class="n">b</span><span class="si">:</span><span class="s1">1.3e</span><span class="si">}</span><span class="s1"> in scientific notation with three significant digits&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -830,7 +836,7 @@ The characters after the <code class="docutils literal notranslate"><span class=
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;This is a=</span><span class="si">{0:o}</span><span class="s1"> in octal format.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sa">f</span><span class="s1">&#39;This is a=</span><span class="si">{</span><span class="n">a</span><span class="si">:</span><span class="s1">o</span><span class="si">}</span><span class="s1"> in octal format.&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -842,7 +848,7 @@ The characters after the <code class="docutils literal notranslate"><span class=
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;And this is a=</span><span class="si">{0:x}</span><span class="s1"> in hex format&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sa">f</span><span class="s1">&#39;And this is a=</span><span class="si">{</span><span class="n">a</span><span class="si">:</span><span class="s1">x</span><span class="si">}</span><span class="s1"> in hex format&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -852,10 +858,15 @@ The characters after the <code class="docutils literal notranslate"><span class=
 </div>
 </div>
 </div>
-<p>A complete overview of the formating language is, of course, beyond the scope of this tutorial. You can find it <a class="reference external" href="https://www.geeksforgeeks.org/python-format-function/">here</a>.</p>
+<p>A complete overview of the formating language is, of course, beyond the scope of this tutorial. You can find it <a class="reference external" href="https://www.geeksforgeeks.org/formatted-string-literals-f-strings-python/">here</a>.</p>
 <section id="questions">
 <h2>Questions<a class="headerlink" href="#questions" title="Link to this heading">#</a></h2>
 <ul class="simple">
+<li><p>Given variables <code class="docutils literal notranslate"><span class="pre">material</span> <span class="pre">=</span> <span class="pre">&quot;Steel&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">tensile_strength</span> <span class="pre">=</span> <span class="pre">400</span></code>, create an f-string that outputs: “The tensile strength of Steel is 400 MPa.”</p></li>
+<li><p>Create an f-string that displays the part number 42 with a width of 5 characters, padded with zeros on the left (e.g., “00042”).</p></li>
+<li><p>Given a variable <code class="docutils literal notranslate"><span class="pre">efficiency</span> <span class="pre">=</span> <span class="pre">0.8756</span></code>, create an f-string that formats it as a percentage with 2 decimal places: “87.56%”.</p></li>
+<li><p>Create an f-string that displays the result of calculating the area of a circle with radius 2.5 cm, showing 3 decimal places. Include units.</p></li>
+<li><p>Given variables <code class="docutils literal notranslate"><span class="pre">voltage</span> <span class="pre">=</span> <span class="pre">120.45</span></code> and <code class="docutils literal notranslate"><span class="pre">uncertainty</span> <span class="pre">=</span> <span class="pre">0.32</span></code>, create an f-string that displays the measurement with its uncertainty as: “120.45 ± 0.32 V”. Make sure to format both values to 2 decimal places.</p></li>
 <li><p>Rerun the code blocks above playing with the formatting brackets. Increase/decrease the number of digits. Change from decimal to float and vice versa. Add a third number ‘c=whatever you like’ in our <code class="docutils literal notranslate"><span class="pre">x</span></code> string above.</p></li>
 </ul>
 </section>

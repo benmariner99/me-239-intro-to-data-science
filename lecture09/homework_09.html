@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -621,9 +621,7 @@ Go over each decade and count the occurence of a major earthquake (i.e., count t
 <img alt="../_images/a1549af9aeeb6fe30b81ed2bde579244d154f3eb2e80300ac42e0bfcfcbfa59a.svg" src="../_images/a1549af9aeeb6fe30b81ed2bde579244d154f3eb2e80300ac42e0bfcfcbfa59a.svg" />
 </div>
 </div>
-<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Poisson_distribution">Poisson distribution</a> is a discrete distribution with values <span class="math notranslate nohighlight">\(\{0,1,2,\dots\}\)</span> which is commonly used to model the number of events occuring in a certain time period.
-It is the right choice when these events are happening independently and the probability of any event happening over a small period of time is constant.
-Let’s use the Poisson to model the number of earthquakes <span class="math notranslate nohighlight">\(X\)</span> occuring in a decade.
+<p>Let’s use the Poisson to model the number of earthquakes <span class="math notranslate nohighlight">\(X\)</span> occuring in a decade.
 We write:
 $<span class="math notranslate nohighlight">\(
 X \sim \operatorname{Poisson}(r),
@@ -632,7 +630,7 @@ where \)</span>r<span class="math notranslate nohighlight">\( is the *rate param
 The rate is the number of events per time period.
 Here, \)</span>r$ is the number of earthquakes per decade.</p>
 <ul class="simple">
-<li><p>Using the <code class="docutils literal notranslate"><span class="pre">eq_data</span></code> to find the rate <span class="math notranslate nohighlight">\(r\)</span> of the Poisson. We can set it as the empirical average of the observed number of earthquakes per decade:</p></li>
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">eq_data</span></code> to find the rate <span class="math notranslate nohighlight">\(r\)</span> of the Poisson. We can set it as the empirical average of the observed number of earthquakes per decade:</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

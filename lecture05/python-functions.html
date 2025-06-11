@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -553,12 +553,13 @@ We have also used some standard mathematical functions like <code class="docutil
 Functions are extremely important in data science.
 The models we build are essentially functions with parameters that are tuned to the data.
 So, we have to understand how functions work.</p>
-<p>To syntax for defining a function in Python is as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">function_name</span><span class="p">(</span><span class="n">some_inputs</span><span class="p">):</span>
+<p>The syntax for defining a function in Python is as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">function_name</span><span class="p">(</span><span class="n">some_inputs</span><span class="p">):</span>
     <span class="n">some</span> <span class="n">expressions</span>
     <span class="k">return</span> <span class="n">something</span> <span class="p">(</span><span class="n">optional</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Inputs are also called <em>arguments</em>.</p>
 <p>Let’s start with very simple functions.</p>
 <section id="functions-with-no-inputs-that-return-nothing">
 <h2>Functions with no inputs that return nothing<a class="headerlink" href="#functions-with-no-inputs-that-return-nothing" title="Link to this heading">#</a></h2>
@@ -638,14 +639,18 @@ Res is:  None
 </div>
 </div>
 <p>Alright! Now you see why <code class="docutils literal notranslate"><span class="pre">None</span></code> is useful. A function that returns nothing, returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
-<p>Let me end this section by saying a few things about how I chose the function name.
-I could have called the function <code class="docutils literal notranslate"><span class="pre">f()</span></code> or <code class="docutils literal notranslate"><span class="pre">ph()</span></code> or <code class="docutils literal notranslate"><span class="pre">banana()</span></code>.
-Why did I choose the name <code class="docutils literal notranslate"><span class="pre">print_hello()</span></code>. Well, because this is what the function does.
-It print hello. In general, it is a good idea to pick nice discreptive names for your functions.
-Since the functions typically do something, you should use a verb in its name.
-Also, use complete words. Do not abbriviate the words.
-Notice also that I am using underscore to separate the words. Do that as well.
-It’s a style preference and it makes your code looks better.
+<p>I could have called the function <code class="docutils literal notranslate"><span class="pre">f()</span></code> or <code class="docutils literal notranslate"><span class="pre">ph()</span></code> or <code class="docutils literal notranslate"><span class="pre">banana()</span></code>.
+Why did I choose the name <code class="docutils literal notranslate"><span class="pre">print_hello()</span></code>?
+Well, because this is what the function does.
+It prints ``hello’’.
+In general, it is a good idea to pick nice descriptive names for your functions.
+Since the functions typically do something, you should use a verb in the function’s name.
+Also, use complete words.
+Do not abbriviate the words.
+Write <code class="docutils literal notranslate"><span class="pre">print_hello()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">prnt_hello()</span></code>.
+Notice also that I am using underscore to separate the words.
+Do that as well.
+It’s a style preference, but it makes your code looks better.
 Also, do not use any capital letters unless it is absolutely justified.
 For example, do not use <code class="docutils literal notranslate"><span class="pre">Print_hello()</span></code> or <code class="docutils literal notranslate"><span class="pre">print_Hello()</span></code> or <code class="docutils literal notranslate"><span class="pre">Print_Hello()</span></code>.
 You will not remember which one you picked and you would have to go back and check wasting your time.
@@ -722,11 +727,11 @@ Here you go:</p>
 
 print_hello_to(name)
     Prints hello using the name provided.
-    
+
     Arguments:
-    
+
     name    -   The name of a person.
-    
+
     Returns: Nothing
 </pre></div>
 </div>
@@ -810,10 +815,10 @@ Here are some examples:</p>
 
 square(x)
     Calculates the square of ``x``.
-    
+
     Arguments:
     x     -   The real number you wish to square
-    
+
     Returns: The square of ``x``.
 </pre></div>
 </div>
@@ -897,13 +902,18 @@ Let’s give square a string to see what happens:</p>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">33</span><span class="o">-</span><span class="mi">1674</span><span class="n">fed473a2</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">23</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">square</span><span class="p">(</span><span class="s1">&#39;one&#39;</span><span class="p">)</span>
 
-<span class="nn">&lt;ipython-input-26-412f27890e5e&gt;</span> in <span class="ni">square</span><span class="nt">(x)</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">Returns</span><span class="p">:</span> <span class="n">The</span> <span class="n">square</span> <span class="n">of</span> <span class="err">``</span><span class="n">x</span><span class="err">``</span><span class="o">.</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="s2">&quot;&quot;&quot;</span>
-<span class="ne">---&gt; </span><span class="mi">10</span><span class="s2">     return x ** 2</span>
+<span class="nn">Cell In[16], line 10,</span> in <span class="ni">square</span><span class="nt">(x)</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span><span class="sd">     Calculates the square of ``x``.</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span><span class="sd">     </span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span><span class="sd">     Returns: The square of ``x``.</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">---&gt; </span><span class="mi">10</span>     <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span>
 
 <span class="ne">TypeError</span>: unsupported operand type(s) for ** or pow(): &#39;str&#39; and &#39;int&#39;
 </pre></div>
@@ -925,7 +935,7 @@ Let’s replicate the error directly:</p>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">34</span><span class="o">-</span><span class="n">eafaa763ebf3</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">24</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="s1">&#39;one&#39;</span> <span class="o">**</span> <span class="mi">2</span>
 
 <span class="ne">TypeError</span>: unsupported operand type(s) for ** or pow(): &#39;str&#39; and &#39;int&#39;
@@ -938,28 +948,123 @@ Be careful with the inputs you pass to your functions.</p>
 </section>
 <section id="default-parameters">
 <h2>Default parameters<a class="headerlink" href="#default-parameters" title="Link to this heading">#</a></h2>
-<p>Some times you may have a function with multiple inputs and some of them have unique values.
-Let’s make a function that makes a plot of a numerical function on a given range.</p>
+<p>Some times you may have a function with a lot of inputs.
+It is very annoying to have to provide a value for each input.
+If some of the inputs are used very often, you can provide a default value.
+The syntax for achieving this is as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">function_name</span><span class="p">(</span><span class="n">input1</span><span class="p">,</span> <span class="n">input2</span><span class="o">=</span><span class="n">default_value</span><span class="p">,</span> <span class="n">input3</span><span class="o">=</span><span class="n">default_value</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>Let’s demonstrate this by making a function that makes a plot of a numerical function on a given range.</p>
 <p>First, load some libraries we are going to need:</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MAKE_BOOK_FIGURES</span><span class="o">=</span><span class="kc">False</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib_inline</span>
+<span class="n">matplotlib_inline</span><span class="o">.</span><span class="n">backend_inline</span><span class="o">.</span><span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;figure.dpi&quot;</span><span class="p">:</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;savefig.dpi&#39;</span><span class="p">:</span><span class="mi">300</span><span class="p">})</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s1">&#39;notebook&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;paper&quot;</span><span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;ticks&quot;</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">set_matplotlib_formats</span>
-<span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s1">&#39;retina&#39;</span><span class="p">,</span> <span class="s1">&#39;svg&#39;</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">set_book_style</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8-white&#39;</span><span class="p">)</span> 
+    <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;ticks&quot;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s2">&quot;deep&quot;</span><span class="p">)</span>
+
+    <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+        <span class="c1"># Font settings</span>
+        <span class="s1">&#39;font.family&#39;</span><span class="p">:</span> <span class="s1">&#39;serif&#39;</span><span class="p">,</span>  <span class="c1"># For academic publishing</span>
+        <span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>  <span class="c1"># As requested, 10pt font</span>
+        <span class="s1">&#39;axes.labelsize&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="s1">&#39;axes.titlesize&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="s1">&#39;xtick.labelsize&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>  <span class="c1"># Slightly smaller for better readability</span>
+        <span class="s1">&#39;ytick.labelsize&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+        <span class="s1">&#39;legend.fontsize&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+        
+        <span class="c1"># Line and marker settings for consistency</span>
+        <span class="s1">&#39;axes.linewidth&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s1">&#39;grid.linewidth&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s1">&#39;lines.linewidth&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="s1">&#39;lines.markersize&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        
+        <span class="c1"># Layout to prevent clipped labels</span>
+        <span class="s1">&#39;figure.constrained_layout.use&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        
+        <span class="c1"># Default DPI (will override when saving)</span>
+        <span class="s1">&#39;figure.dpi&#39;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+        <span class="s1">&#39;savefig.dpi&#39;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+        
+        <span class="c1"># Despine - remove top and right spines</span>
+        <span class="s1">&#39;axes.spines.top&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">&#39;axes.spines.right&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        
+        <span class="c1"># Remove legend frame</span>
+        <span class="s1">&#39;legend.frameon&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        
+        <span class="c1"># Additional trim settings</span>
+        <span class="s1">&#39;figure.autolayout&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Alternative to constrained_layout</span>
+        <span class="s1">&#39;savefig.bbox&#39;</span><span class="p">:</span> <span class="s1">&#39;tight&#39;</span><span class="p">,</span>    <span class="c1"># Trim when saving</span>
+        <span class="s1">&#39;savefig.pad_inches&#39;</span><span class="p">:</span> <span class="mf">0.1</span>   <span class="c1"># Small padding to ensure nothing gets cut off</span>
+    <span class="p">})</span>
+
+<span class="k">def</span> <span class="nf">save_for_book</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">is_vector</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Save a figure with book-optimized settings.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    fig : matplotlib figure</span>
+<span class="sd">        The figure to save</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        Filename without extension</span>
+<span class="sd">    is_vector : bool</span>
+<span class="sd">        If True, saves as vector at 1000 dpi. If False, saves as raster at 600 dpi.</span>
+<span class="sd">    **kwargs : dict</span>
+<span class="sd">        Additional kwargs to pass to savefig</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+    <span class="c1"># Set appropriate DPI and format based on figure type</span>
+    <span class="k">if</span> <span class="n">is_vector</span><span class="p">:</span>
+        <span class="n">dpi</span> <span class="o">=</span> <span class="mi">1000</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;.pdf&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dpi</span> <span class="o">=</span> <span class="mi">600</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;.tif&#39;</span>
+    
+    <span class="c1"># Save the figure with book settings</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">make_full_width_fig</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.7</span><span class="p">,</span> <span class="mf">2.9</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">make_half_width_fig</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">2.35</span><span class="p">,</span> <span class="mf">1.45</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">MAKE_BOOK_FIGURES</span><span class="p">:</span>
+    <span class="n">set_book_style</span><span class="p">()</span>
+<span class="n">make_full_width_fig</span> <span class="o">=</span> <span class="n">make_full_width_fig</span> <span class="k">if</span> <span class="n">MAKE_BOOK_FIGURES</span> <span class="k">else</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">make_half_width_fig</span> <span class="o">=</span> <span class="n">make_half_width_fig</span> <span class="k">if</span> <span class="n">MAKE_BOOK_FIGURES</span> <span class="k">else</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+</details>
 </div>
 <p>And here is the function definition:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_func</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">plot_func</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plot function f over the range of values [left, right] using color.</span>
 <span class="sd">    </span>
@@ -968,26 +1073,36 @@ Let’s make a function that makes a plot of a numerical function on a given ran
 <span class="sd">               as in input to another function!</span>
 <span class="sd">    left  -    The left side of the interval over which you plot.</span>
 <span class="sd">    right -    The right side of the interval over which you plot.</span>
-<span class="sd">    color -    The color you want to use.</span>
+<span class="sd">    style -    The style you want to use.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_full_width_fig</span><span class="p">()</span>
     <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="n">style</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$f(x)$&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Let’s try it out. First, notice that you can call it by just providing a function:</p>
+<p>There are two wierd things here.
+First, notice that the input <code class="docutils literal notranslate"><span class="pre">f</span></code> is a function!
+Yes, you can have a function as an input to another function.
+No problem!
+Second, notice that the inputs <code class="docutils literal notranslate"><span class="pre">left</span></code> and <code class="docutils literal notranslate"><span class="pre">right</span></code>, and <code class="docutils literal notranslate"><span class="pre">style</span></code> have <em>default values</em>.
+Such inputs are called <em>keyword arguments</em>.
+What does this mean?
+It means that if you do not provide a value for these inputs, then Python will use the default value.
+Let’s see how it works:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_func</span><span class="p">(</span><span class="n">square</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_func</span><span class="p">(</span><span class="n">square</span><span class="p">)</span>
+<span class="n">save_for_book</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s1">&#39;ch5.fig1&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/fd8605959fd01e4e39fa888edf2067641a0ffa4c0683f77ad9cac6681e7920d8.svg" src="../_images/fd8605959fd01e4e39fa888edf2067641a0ffa4c0683f77ad9cac6681e7920d8.svg" />
+<img alt="../_images/4f105b7ee2666db5d873706591a953bb6d63a2d2415fb9783e6c88032079b4c3.svg" src="../_images/4f105b7ee2666db5d873706591a953bb6d63a2d2415fb9783e6c88032079b4c3.svg" />
 </div>
 </div>
 <p>Let’s call it with another function as well:</p>
@@ -995,50 +1110,52 @@ Let’s make a function that makes a plot of a numerical function on a given ran
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cube</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">3</span>
 
-<span class="n">plot_func</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_func</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span>
+<span class="n">save_for_book</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s1">&#39;ch5.fig2&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f5f2a4ed8caf56430cd463cb298a0c006bb263804b4574426a6a315ba22287ea.svg" src="../_images/f5f2a4ed8caf56430cd463cb298a0c006bb263804b4574426a6a315ba22287ea.svg" />
+<img alt="../_images/230ae9eb78b73722345c6be2d6ab7fcab30122c2e11aa8bd2d33c9f1733f9e37.svg" src="../_images/230ae9eb78b73722345c6be2d6ab7fcab30122c2e11aa8bd2d33c9f1733f9e37.svg" />
 </div>
 </div>
 <p>Notice the default plotting range was used <code class="docutils literal notranslate"><span class="pre">[left,</span> <span class="pre">right]</span> <span class="pre">=</span> <span class="pre">[0,</span> <span class="pre">1]</span></code> and the color was also the default one (red).
 Let’s change the left side of the interval to -1 and the color to blue:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_func</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">left</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_func</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">left</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">save_for_book</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s1">&#39;ch5.fig3&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d75f550aa5351820851a7898c6582eccd6fd686dff47a16761c9def5603a782b.svg" src="../_images/d75f550aa5351820851a7898c6582eccd6fd686dff47a16761c9def5603a782b.svg" />
+<img alt="../_images/5629a59ae28d6b2e4f3123a7aa48b16033d30354a1dd9774c4aae9b104d94ecf.svg" src="../_images/5629a59ae28d6b2e4f3123a7aa48b16033d30354a1dd9774c4aae9b104d94ecf.svg" />
 </div>
 </div>
-<p>Notice that the order of the so-called “keyword arguments” does not matter.
+<p>Notice that the order of the keyword arguments does not matter.
 The following produces the same result:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_func</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">left</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_func</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">left</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f595007f83af4209167678a719f5b9e086c9b6af7433397c8b1a27469fb6ea45.svg" src="../_images/f595007f83af4209167678a719f5b9e086c9b6af7433397c8b1a27469fb6ea45.svg" />
+<img alt="../_images/63cb0013adb67d66cec7d173fb5cd60a7a4b7d8aac72eaa1a14a1293bb4cc6a2.svg" src="../_images/63cb0013adb67d66cec7d173fb5cd60a7a4b7d8aac72eaa1a14a1293bb4cc6a2.svg" />
 </div>
 </div>
 <p>But you cannot provide a keyword argument before an regular one.
 The following results in an error:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_func</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">cube</span><span class="p">,</span> <span class="n">left</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_func</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">cube</span><span class="p">,</span> <span class="n">left</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-43-828534a920ca&gt;&quot;</span><span class="gt">, line </span><span class="mi">1</span>
-    <span class="n">plot_func</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">cube</span><span class="p">,</span> <span class="n">left</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-                            <span class="o">^</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>  <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">54</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+    <span class="n">plot_func</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">cube</span><span class="p">,</span> <span class="n">left</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+                                       <span class="o">^</span>
 <span class="ne">SyntaxError</span>: positional argument follows keyword argument
 </pre></div>
 </div>
@@ -1051,7 +1168,7 @@ So, remember that regular arguments (otherwise known as positional arguments) mu
 <section id="id2">
 <h2>Questions<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Extend <code class="docutils literal notranslate"><span class="pre">plot_func</span></code> so that you can also change the style with which it plots a function.</p></li>
+<li><p>Extend <code class="docutils literal notranslate"><span class="pre">plot_func</span></code> so that you can also change the color with which it plots a function.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

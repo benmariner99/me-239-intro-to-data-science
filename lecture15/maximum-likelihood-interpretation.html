@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -497,7 +497,7 @@ In particular, we <em>model the measurement process</em> using a <strong>likelih
 Well, <span class="math notranslate nohighlight">\(p(\mathbf{y}_{1:N} | \mathbf{x}_{1:N}, \mathbf{w})\)</span> tells us how plausible is it to observe <span class="math notranslate nohighlight">\(\mathbf{y}_{1:N}\)</span> at inputs <span class="math notranslate nohighlight">\(\mathbf{x}_{1:N}\)</span>, if we know that the model parameters are <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>.</p>
 <p>The most common choice for the likelihood of a single measurement is to pick it to be Normal.
 This corresponds to the belief that our measurement is around the model prediction <span class="math notranslate nohighlight">\(\mathbf{w^{T}\boldsymbol{\phi}(\mathbf{x})}\)</span>
-but it is contaminated with Gaussian noice of variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>.
+but it is contaminated with Gaussian noise of variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>.
 Mathematically, we have:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -563,7 +563,7 @@ p(y|\mathbf{x}, \mathbf{w}, \sigma^2) =
 \]</div>
 <p>In other words, your prediction about the measured output <span class="math notranslate nohighlight">\(y\)</span> is that it will be Normally distributed around your model prediction with a variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>.
 You can use this to find a 95% credible interval.
-Let’s demonstrate with an example.s</p>
+Let’s demonstrate with an example.</p>
 </section>
 
     <script type="text/x-thebe-config">

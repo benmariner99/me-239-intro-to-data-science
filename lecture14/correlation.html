@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -564,8 +564,7 @@ Then <span class="math notranslate nohighlight">\(\lambda = 100\)</span> and <sp
 The covariance between the new variable <span class="math notranslate nohighlight">\(X'\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> would be 100 times bigger!
 As I said, the covariance is not an absolute measure.</p>
 <p>How can we fix this?
-Well, we fix it using the concept of correlation.
-The correlation betwene two random variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> is defined by:</p>
+Well, we fix it using the concept of correlation.</p>
 <section id="mathematical-definition-of-the-correlation-coefficient">
 <h2>Mathematical definition of the correlation coefficient<a class="headerlink" href="#mathematical-definition-of-the-correlation-coefficient" title="Link to this heading">#</a></h2>
 <p>The correlation coefficient between two random variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> is defined to be the covariance between the two random variables divided by the product of their standard deviations, i.e,</p>
@@ -644,7 +643,7 @@ Let’s see what correlation coefficient we get when we plug in <span class="mat
 </section>
 <section id="property-4-the-minimum-possible-correlation-between-two-random-variables-is-minus-one">
 <h2>Property 4: The minimum possible correlation between two random variables is minus one<a class="headerlink" href="#property-4-the-minimum-possible-correlation-between-two-random-variables-is-minus-one" title="Link to this heading">#</a></h2>
-<p>This proved in a similar manner as the previous property.
+<p>This property is proved in a similar manner the previous one.
 What is the random variable <span class="math notranslate nohighlight">\(Y\)</span> that is most negatively correlated with <span class="math notranslate nohighlight">\(X\)</span>?
 It is <span class="math notranslate nohighlight">\(Y=-X\)</span>.
 If you plug this in the correlation formula, you will get:</p>
@@ -658,9 +657,9 @@ If you plug this in the correlation formula, you will get:</p>
 <p>So, the correlation is a much better measure than the covariance when you want to assess how tow random variables vary together.
 You have the following possibilities.</p>
 <ul class="simple">
-<li><p>If the correlation is zero, then the two are uncorrelated. This doesn’t mean that they are independent though. It just means that they may be indpendent. We will elaborate on this later.</p></li>
+<li><p>If the correlation is zero, then the two random variables are uncorrelated. This doesn’t mean that they are independent though. It just means that they may be indpendent. We will elaborate on this later.</p></li>
 <li><p>The closer the correlation coefficient is to plus one, the more positively correlated the random variables are.</p></li>
-<li><p>The clsoer the correlation coefficient is to minus one, the more negatively correlated the random variables are.</p></li>
+<li><p>The closer the correlation coefficient is to minus one, the more negatively correlated the random variables are.</p></li>
 </ul>
 </section>
 <section id="empirical-estimation-of-the-correlation-coefficient">
@@ -696,25 +695,14 @@ We start with cooling.</p>
 <span class="collapsed">Show code cell source</span>
 <span class="expanded">Hide code cell source</span>
 </summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
-<span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">local_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Downloads the file in the ``url`` and saves it in the current working directory.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">local_filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">local_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">local_filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
-        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
-   
-<span class="c1"># The url of the file we want to download</span>
+<div class="cell_input above-output-prompt docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The url of the file we want to download</span>
 <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/PurdueMechanicalEngineering/me-297-intro-to-data-science/master/data/temperature_raw.xlsx&#39;</span>
-<span class="n">download</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="o">!</span>curl<span class="w"> </span>-O<span class="w"> </span><span class="nv">$url</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;temperature_raw.xlsx&#39;</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -725,17 +713,30 @@ We start with cooling.</p>
 </div>
 </div>
 </details>
+<details class="hide below-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell output</span>
+<span class="expanded">Hide code cell output</span>
+</summary>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  277k  100  277k    0     0  1045k      0 --:--:-- --:--:-- --:--:-- 1048k
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">df_cooling</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df_cooling</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">])</span>
-<span class="n">rho</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.        , 0.24617791],
-       [0.24617791, 1.        ]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1.         0.24617791]
+ [0.24617791 1.        ]]
 </pre></div>
 </div>
 </div>
@@ -751,7 +752,7 @@ It has the same format as the matrix returned by <code class="docutils literal n
 <p>Okay. Here is what we were after:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;rho[&#39;t_out&#39;, &#39;hvac&#39;|cooling] = </span><span class="si">{0:1.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rho</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rho[&#39;t_out&#39;, &#39;hvac&#39;|cooling] = </span><span class="si">{</span><span class="n">rho</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">1.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -766,7 +767,7 @@ It has the same format as the matrix returned by <code class="docutils literal n
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">df_heating</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df_heating</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;rho[&#39;t_out&#39;, &#39;hvac&#39;|heating] = </span><span class="si">{0:1.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rho</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rho[&#39;t_out&#39;, &#39;hvac&#39;|heating] = </span><span class="si">{</span><span class="n">rho</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">1.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -782,7 +783,7 @@ And it is much closer to the minimum possible value (-1) than the cooling correl
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">df_off</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">],</span> <span class="n">df_off</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;rho[&#39;t_out&#39;, &#39;hvac&#39;|off] = </span><span class="si">{0:1.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rho</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rho[&#39;t_out&#39;, &#39;hvac&#39;|off] = </span><span class="si">{</span><span class="n">rho</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">1.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -792,7 +793,7 @@ And it is much closer to the minimum possible value (-1) than the cooling correl
 </div>
 </div>
 </div>
-<p>This is tiny and we are happy because it is indepenent of the units we are using!</p>
+<p>This is tiny and it makes sense because the HVAC system is off during off setting.</p>
 </section>
 </section>
 

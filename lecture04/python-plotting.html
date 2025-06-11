@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -540,32 +540,123 @@ document.write(`
 <span id="lecture04-plotting-simple-functions"></span><h1>Plotting simple functions<a class="headerlink" href="#plotting-simple-functions" title="Link to this heading">#</a></h1>
 <p>We plot using the <a class="reference external" href="https://matplotlib.org/">matplotlib</a> Python library.
 Again, this is a <em>huge</em> topic and we cannot cover everything here.
-In general, if you know the type of plot that you want to do a simple Google search of the type “X matplotlib” will probably send you to an example that you can adjust to your needs.</p>
+In general,
+if you know the type of plot that you want to do a simple Google search of the type “X matplotlib” will probably send you to an example that you can adjust to your needs.</p>
 <p>Here is how to import <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib_inline</span>
+<span class="n">matplotlib_inline</span><span class="o">.</span><span class="n">backend_inline</span><span class="o">.</span><span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Both lines are necessary in a Jupyter notebook
-The second line tells the Jupyter notebook that the plots should just appear within it.</p>
-<p>Now, the following lines are optional but they produce better-looking graphics.
-See <a class="reference external" href="https://blakeaw.github.io/2020-05-25-improve-matplotlib-notebook-inline-res/">here</a> why.
-I suggest using them.</p>
+<p>This code is sufficient to make all the figures in this notebook. But I want to make certain style choices that I will enforce throughout the jupyter notebook. For this, we are going to rely on the library <a class="reference external" href="https://seaborn.pydata.org/">seaborn</a>. Do not worry at this point about the details below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;figure.dpi&quot;</span><span class="p">:</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;savefig.dpi&#39;</span><span class="p">:</span><span class="mi">300</span><span class="p">})</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s1">&#39;notebook&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;paper&quot;</span><span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;ticks&quot;</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">set_matplotlib_formats</span>
-<span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s1">&#39;retina&#39;</span><span class="p">,</span> <span class="s1">&#39;svg&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+</div>
+<p>I will be hiding this code block from now on, but you will still have to run it to get consistent style settings. Now, I am also going to need some helper functions to make it easier to save figures in a format that is suitable for publication.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MAKE_BOOK_FIGURES</span><span class="o">=</span><span class="kc">False</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+
+<span class="k">def</span> <span class="nf">set_book_style</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8-white&#39;</span><span class="p">)</span> 
+    <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;ticks&quot;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s2">&quot;deep&quot;</span><span class="p">)</span>
+
+    <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+        <span class="c1"># Font settings</span>
+        <span class="s1">&#39;font.family&#39;</span><span class="p">:</span> <span class="s1">&#39;serif&#39;</span><span class="p">,</span>  <span class="c1"># For academic publishing</span>
+        <span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>  <span class="c1"># As requested, 10pt font</span>
+        <span class="s1">&#39;axes.labelsize&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="s1">&#39;axes.titlesize&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="s1">&#39;xtick.labelsize&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>  <span class="c1"># Slightly smaller for better readability</span>
+        <span class="s1">&#39;ytick.labelsize&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+        <span class="s1">&#39;legend.fontsize&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+        
+        <span class="c1"># Line and marker settings for consistency</span>
+        <span class="s1">&#39;axes.linewidth&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s1">&#39;grid.linewidth&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s1">&#39;lines.linewidth&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="s1">&#39;lines.markersize&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        
+        <span class="c1"># Layout to prevent clipped labels</span>
+        <span class="s1">&#39;figure.constrained_layout.use&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        
+        <span class="c1"># Default DPI (will override when saving)</span>
+        <span class="s1">&#39;figure.dpi&#39;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+        <span class="s1">&#39;savefig.dpi&#39;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+        
+        <span class="c1"># Despine - remove top and right spines</span>
+        <span class="s1">&#39;axes.spines.top&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">&#39;axes.spines.right&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        
+        <span class="c1"># Remove legend frame</span>
+        <span class="s1">&#39;legend.frameon&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        
+        <span class="c1"># Additional trim settings</span>
+        <span class="s1">&#39;figure.autolayout&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Alternative to constrained_layout</span>
+        <span class="s1">&#39;savefig.bbox&#39;</span><span class="p">:</span> <span class="s1">&#39;tight&#39;</span><span class="p">,</span>    <span class="c1"># Trim when saving</span>
+        <span class="s1">&#39;savefig.pad_inches&#39;</span><span class="p">:</span> <span class="mf">0.1</span>   <span class="c1"># Small padding to ensure nothing gets cut off</span>
+    <span class="p">})</span>
+
+<span class="k">def</span> <span class="nf">save_for_book</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">is_vector</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Save a figure with book-optimized settings.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    fig : matplotlib figure</span>
+<span class="sd">        The figure to save</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        Filename without extension</span>
+<span class="sd">    is_vector : bool</span>
+<span class="sd">        If True, saves as vector at 1000 dpi. If False, saves as raster at 600 dpi.</span>
+<span class="sd">    **kwargs : dict</span>
+<span class="sd">        Additional kwargs to pass to savefig</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+    <span class="c1"># Set appropriate DPI and format based on figure type</span>
+    <span class="k">if</span> <span class="n">is_vector</span><span class="p">:</span>
+        <span class="n">dpi</span> <span class="o">=</span> <span class="mi">1000</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;.pdf&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dpi</span> <span class="o">=</span> <span class="mi">600</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;.tif&#39;</span>
+    
+    <span class="c1"># Save the figure with book settings</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">make_full_width_fig</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.7</span><span class="p">,</span> <span class="mf">2.9</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">make_half_width_fig</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">2.35</span><span class="p">,</span> <span class="mf">1.45</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">MAKE_BOOK_FIGURES</span><span class="p">:</span>
+    <span class="n">set_book_style</span><span class="p">()</span>
+<span class="n">make_full_width_fig</span> <span class="o">=</span> <span class="n">make_full_width_fig</span> <span class="k">if</span> <span class="n">MAKE_BOOK_FIGURES</span> <span class="k">else</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">make_half_width_fig</span> <span class="o">=</span> <span class="n">make_half_width_fig</span> <span class="k">if</span> <span class="n">MAKE_BOOK_FIGURES</span> <span class="k">else</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 <p>Let’s start by plotting simple 1D functions.
 We are going to plot this function:</p>
@@ -582,7 +673,7 @@ f(t) = e^{-0.1t}\left[\cos(\pi t) + 0.5\sin(\pi t)\right],
 </div>
 </div>
 </div>
-<p>First you generate the data that you want to plot. Here is a dense set of x’s:</p>
+<p>First you generate the data that you want to plot. Here is a dense set of <span class="math notranslate nohighlight">\(t\)</span>’s:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -656,18 +747,21 @@ f(t) = e^{-0.1t}\left[\cos(\pi t) + 0.5\sin(\pi t)\right],
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9b2aad30aa0cab63857baa5de5e3d3534563a6b353994f89ca69a6599f0baea8.svg" src="../_images/9b2aad30aa0cab63857baa5de5e3d3534563a6b353994f89ca69a6599f0baea8.svg" />
+<img alt="../_images/4bff0d14d532b14958f644310b656a7db08becd1302ed33a7f85de63ada50fc6.svg" src="../_images/4bff0d14d532b14958f644310b656a7db08becd1302ed33a7f85de63ada50fc6.svg" />
 </div>
 </div>
 <p>Wait a minute! If you are paying attention you should have noticed that I added a “;” at the end of the line. Was this really necessary? What would happen if I did not do that?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">ys</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/a0c245ea12e9cb11aa8bc8c73009c3654af35a9b8f860b8746906febafb26bd0.svg" src="../_images/a0c245ea12e9cb11aa8bc8c73009c3654af35a9b8f860b8746906febafb26bd0.svg" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x31fbd5b80&gt;]
+</pre></div>
+</div>
+<img alt="../_images/382412afc891d7896c62171f29dc99cb47b9ed65dfe53fd97d57c4483831a755.svg" src="../_images/382412afc891d7896c62171f29dc99cb47b9ed65dfe53fd97d57c4483831a755.svg" />
 </div>
 </div>
 <p>It seems to work, but some text is also printed before the figure. Aha! This is because plot returns a list of the objects that have been plotted for future reference. But what does the “;” do. Well, all it does is it suppresses this output so that it is not printed. I will be using it from now on if I only want to see the figure and nothing else.</p>
@@ -680,7 +774,7 @@ f(t) = e^{-0.1t}\left[\cos(\pi t) + 0.5\sin(\pi t)\right],
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d72725dd5e9b0e66f99e7e63fc239ad3c68a8faac1b5637bcd8f25d4b68c7ed8.svg" src="../_images/d72725dd5e9b0e66f99e7e63fc239ad3c68a8faac1b5637bcd8f25d4b68c7ed8.svg" />
+<img alt="../_images/0ca6d77dbb90dde30722be1aaf60a1be491053e08e3ffb4cff6b3055902d12ea.svg" src="../_images/0ca6d77dbb90dde30722be1aaf60a1be491053e08e3ffb4cff6b3055902d12ea.svg" />
 </div>
 </div>
 <p>Let’s now add some more details in the plot.
@@ -696,7 +790,7 @@ Let’s add x and y labels, and a title.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ffc3342a9808973d90f5db28c8573dd8d2b783f4ff6a1200de9b601dac3a1757.svg" src="../_images/ffc3342a9808973d90f5db28c8573dd8d2b783f4ff6a1200de9b601dac3a1757.svg" />
+<img alt="../_images/91996916e39026be76c4b3a67b8d369d9374630d5f16f6256cab37a7361ab5bf.svg" src="../_images/91996916e39026be76c4b3a67b8d369d9374630d5f16f6256cab37a7361ab5bf.svg" />
 </div>
 </div>
 <p>You may have guessed it, but you just plotted the position of a harmonic oscillator with dumping! Think of the response of a spring-mass system with some dashpot taking out energy (e.g., the suspension system of car).</p>
@@ -710,21 +804,33 @@ v(t) &amp;=&amp; f'(t) = -0.1 e^{-0.1t}\left[\cos(\pi t) + 0.5\sin(\pi t)\right]
 &amp;=&amp;-0.1f(t) + e^{-0.1t}\left[-\pi\sin(\pi t)+0.5\pi\cos(\pi t)\right].
 \end{array}
 \end{split}\]</div>
+<p>Also, to make it easier to make figures that are in the correct size for the printed version of the book, I am going to use the following helper functions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_full_width_fig</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.7</span><span class="p">,</span> <span class="mf">2.9</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">make_half_width_fig</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">2.35</span><span class="p">,</span> <span class="mf">1.45</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The sizes are in inches. You do not have to use these in your own work though. You can replace all occurances of these with any other size you like or we just use the default size.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vs</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">ys</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">ts</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">ts</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">ts</span><span class="p">))</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_full_width_fig</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$f(t)$&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$v(t)$&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$t$&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Some title&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<span class="c1"># This is how you save the figure for the book - you don&#39;t need it to</span>
+<span class="c1"># display the figure in the notebook.</span>
+<span class="n">save_for_book</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s1">&#39;ch4.fig1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/912452f0ea5ba55a3c9a60654ea9ebb82012418e3f9978207dc6a7b1c620e3c0.svg" src="../_images/912452f0ea5ba55a3c9a60654ea9ebb82012418e3f9978207dc6a7b1c620e3c0.svg" />
+<img alt="../_images/07817615773b5a7701405dcedde5b61d9aaff5d1ebe9af67ceb226cf6bd9f3f9.svg" src="../_images/07817615773b5a7701405dcedde5b61d9aaff5d1ebe9af67ceb226cf6bd9f3f9.svg" />
 </div>
 </div>
 <p>Notice that the colors are automatically different for the two curves.
@@ -732,7 +838,7 @@ However, you have to specify a different style.
 You can also change the colors:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_full_width_fig</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$f(t)$&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$v(t)$&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$t$&#39;</span><span class="p">)</span>
@@ -743,22 +849,44 @@ You can also change the colors:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/a676a16b96d483c2057070ca9250a90437d2f50e55870864d3594455660fc6dd.svg" src="../_images/a676a16b96d483c2057070ca9250a90437d2f50e55870864d3594455660fc6dd.svg" />
+<img alt="../_images/f660070476d32df82631e616ba9b44cb062f15c3fe07efce6e4550be2346eebd.svg" src="../_images/f660070476d32df82631e616ba9b44cb062f15c3fe07efce6e4550be2346eebd.svg" />
 </div>
 </div>
 <p>You don’t have to memorize the details of the style right now. A simple Google search can reveal the info you need and you will eventually start to remember the details.</p>
-<p>Let’s plot the same data on the so-called <strong>phase space</strong> (position vs velocity).</p>
+<p>Now, let’s talk a bit about plotting style. According to <a class="reference external" href="https://www.edwardtufte.com/book/the-visual-display-of-quantitative-information/">Tufte</a>, the most important thing about a plot is the data-ink ratio - or in our case, the data-pixel ratio. The data-pixel ratio is the ratio of the area of the pixels used to display the data to the area of the pixels used to display the axes, labels, and titles. Tufte argues that the data-pixel ratio should be as high as possible. In other words, we should use as much of the space as possible to display the data.</p>
+<p>Let’s try to apply the principles of Tufte to our plot.
+What can we cut? Well, we don’t really need the bounded box around the plot. This is gone. But we do need the horizontal and vertical axes. We will keep them. But we only need the ticks that correspond to data. So, we can draw the axes from the minimum to the maximum of the data for each axis. What else? Look at the legend. It is a box around it. This is not needed. Let’s get rid of it. Here we go:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">vs</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$f(t)$ (position)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$v(t)$ (velocity)&#39;</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_full_width_fig</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$f(t)$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$v(t)$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$t$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Some title&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">(</span><span class="n">trim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/1ba5e38c56f2ad462f9c130b60b21bd6d3c679133bc4fc9e73707865b73ce1d6.svg" src="../_images/1ba5e38c56f2ad462f9c130b60b21bd6d3c679133bc4fc9e73707865b73ce1d6.svg" />
+<img alt="../_images/cf1efb2a1e354d9249df30ef98afee0b7be39e7c05af5ef43155538c87ce1b04.svg" src="../_images/cf1efb2a1e354d9249df30ef98afee0b7be39e7c05af5ef43155538c87ce1b04.svg" />
+</div>
+</div>
+<p>We are not going to bother to despine every single plot though. Too much work.</p>
+<p>Let’s plot the same data on the so-called <strong>phase space</strong> (position vs velocity).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_full_width_fig</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">vs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$f(t)$ (position)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$v(t)$ (velocity)&#39;</span><span class="p">)</span>
+<span class="n">save_for_book</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s1">&#39;ch4.fig2&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/7dea5949d0adda50c916c9641395544d26fa1f3dcdd63cd87a7ff5e388a7e35b.svg" src="../_images/7dea5949d0adda50c916c9641395544d26fa1f3dcdd63cd87a7ff5e388a7e35b.svg" />
 </div>
 </div>
 <p>We get a nice spiral centered around <span class="math notranslate nohighlight">\((0, 0)\)</span>.
@@ -787,7 +915,7 @@ Here it is:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-rw-r--r--@ 1 iliasbilionis  staff   202K Aug  9 09:32 pendulum.png
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-rw-r--r--@ 1 ibilion  staff   556K Mar 19 12:40 pendulum.png
 </pre></div>
 </div>
 </div>
@@ -803,10 +931,10 @@ Here it is:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-rw-r--r--@ 1 iliasbilionis  staff   239K Aug  8 12:53 pendulum.jpg
--rw-r--r--  1 iliasbilionis  staff    15K Aug  8 12:53 pendulum.pdf
--rw-r--r--@ 1 iliasbilionis  staff   202K Aug  8 12:53 pendulum.png
--rw-r--r--  1 iliasbilionis  staff    27K Aug  8 12:53 pendulum.svg
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-rw-r--r--@ 1 ibilion  staff   433K Mar 19 12:40 pendulum.jpg
+-rw-r--r--@ 1 ibilion  staff    16K Mar 19 12:40 pendulum.pdf
+-rw-r--r--@ 1 ibilion  staff   556K Mar 19 12:40 pendulum.png
+-rw-r--r--@ 1 ibilion  staff    23K Mar 19 12:40 pendulum.svg
 </pre></div>
 </div>
 </div>

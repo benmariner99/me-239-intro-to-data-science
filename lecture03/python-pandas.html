@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -544,7 +544,7 @@ Typically, we import the library like this:</p>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-100   261  100   261    0     0    544      0 --:--:-- --:--:-- --:--:--   544
+100   258  100   258    0     0    742      0 --:--:-- --:--:-- --:--:--   741
 </pre></div>
 </div>
 </div>
@@ -589,7 +589,7 @@ Typically, we import the library like this:</p>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th># Time</th>
+      <th>Time</th>
       <th>NO3</th>
       <th>NO2</th>
       <th>N2</th>
@@ -678,21 +678,6 @@ Typically, we import the library like this:</p>
 </div>
 </div>
 </div>
-<p>We do not particularly like the fact that the first column is has the “#” symbol. Let’s remove it by renaming the column:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;# Time&quot;</span><span class="p">:</span> <span class="s2">&quot;Time&quot;</span><span class="p">})</span>
-<span class="n">data</span><span class="o">.</span><span class="n">columns</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;Time&#39;, &#39;NO3&#39;, &#39;NO2&#39;, &#39;N2&#39;, &#39;NH3&#39;, &#39;N2O&#39;], dtype=&#39;object&#39;)
-</pre></div>
-</div>
-</div>
-</div>
-<p>That’s better!</p>
 <p>Let’s summarize the data. The function <code class="docutils literal notranslate"><span class="pre">DataFrame.describe()</span></code> provides a summary of the data. It shows the mean, standard deviation, minimum, maximum, and quartiles of the data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -725,13 +710,11 @@ Typically, we import the library like this:</p>
       <th>N2</th>
       <th>NH3</th>
       <th>N2O</th>
-      <th>X</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>count</th>
-      <td>7.000000</td>
       <td>7.000000</td>
       <td>7.000000</td>
       <td>7.000000</td>
@@ -747,7 +730,6 @@ Typically, we import the library like this:</p>
       <td>158.735714</td>
       <td>13.525714</td>
       <td>35.198571</td>
-      <td>89.035714</td>
     </tr>
     <tr>
       <th>std</th>
@@ -757,13 +739,11 @@ Typically, we import the library like this:</p>
       <td>129.625326</td>
       <td>10.498362</td>
       <td>26.626079</td>
-      <td>44.289176</td>
     </tr>
     <tr>
       <th>min</th>
       <td>0.000000</td>
       <td>13.540000</td>
-      <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
@@ -777,7 +757,6 @@ Typically, we import the library like this:</p>
       <td>46.680000</td>
       <td>5.335000</td>
       <td>12.560000</td>
-      <td>82.825000</td>
     </tr>
     <tr>
       <th>50%</th>
@@ -787,7 +766,6 @@ Typically, we import the library like this:</p>
       <td>166.190000</td>
       <td>13.140000</td>
       <td>42.100000</td>
-      <td>95.290000</td>
     </tr>
     <tr>
       <th>75%</th>
@@ -797,7 +775,6 @@ Typically, we import the library like this:</p>
       <td>271.050000</td>
       <td>21.805000</td>
       <td>58.315000</td>
-      <td>110.315000</td>
     </tr>
     <tr>
       <th>max</th>
@@ -807,7 +784,6 @@ Typically, we import the library like this:</p>
       <td>309.500000</td>
       <td>27.260000</td>
       <td>62.540000</td>
-      <td>141.680000</td>
     </tr>
   </tbody>
 </table>
@@ -950,7 +926,6 @@ Name: NO3, dtype: float64
       <th>N2</th>
       <th>NH3</th>
       <th>N2O</th>
-      <th>X</th>
     </tr>
   </thead>
   <tbody>
@@ -958,7 +933,6 @@ Name: NO3, dtype: float64
       <th>0</th>
       <td>0</td>
       <td>500.00</td>
-      <td>0.00</td>
       <td>0.00</td>
       <td>0.00</td>
       <td>0.00</td>
@@ -972,7 +946,6 @@ Name: NO3, dtype: float64
       <td>18.51</td>
       <td>3.33</td>
       <td>4.98</td>
-      <td>114.91</td>
     </tr>
     <tr>
       <th>2</th>
@@ -982,7 +955,6 @@ Name: NO3, dtype: float64
       <td>74.85</td>
       <td>7.34</td>
       <td>20.14</td>
-      <td>141.68</td>
     </tr>
     <tr>
       <th>3</th>
@@ -992,7 +964,6 @@ Name: NO3, dtype: float64
       <td>166.19</td>
       <td>13.14</td>
       <td>42.10</td>
-      <td>95.29</td>
     </tr>
   </tbody>
 </table>
@@ -1051,7 +1022,6 @@ Name: Time, dtype: bool
       <th>N2</th>
       <th>NH3</th>
       <th>N2O</th>
-      <th>X</th>
     </tr>
   </thead>
   <tbody>
@@ -1063,7 +1033,6 @@ Name: Time, dtype: bool
       <td>74.85</td>
       <td>7.34</td>
       <td>20.14</td>
-      <td>141.68</td>
     </tr>
     <tr>
       <th>3</th>
@@ -1073,7 +1042,6 @@ Name: Time, dtype: bool
       <td>166.19</td>
       <td>13.14</td>
       <td>42.10</td>
-      <td>95.29</td>
     </tr>
     <tr>
       <th>4</th>
@@ -1083,7 +1051,6 @@ Name: Time, dtype: bool
       <td>249.78</td>
       <td>19.54</td>
       <td>55.98</td>
-      <td>105.72</td>
     </tr>
     <tr>
       <th>5</th>
@@ -1093,7 +1060,6 @@ Name: Time, dtype: bool
       <td>292.32</td>
       <td>24.07</td>
       <td>60.65</td>
-      <td>84.60</td>
     </tr>
   </tbody>
 </table>
@@ -1132,7 +1098,6 @@ Name: Time, dtype: bool
       <th>N2</th>
       <th>NH3</th>
       <th>N2O</th>
-      <th>X</th>
     </tr>
   </thead>
   <tbody>
@@ -1140,7 +1105,6 @@ Name: Time, dtype: bool
       <th>0</th>
       <td>0</td>
       <td>500.00</td>
-      <td>0.00</td>
       <td>0.00</td>
       <td>0.00</td>
       <td>0.00</td>
@@ -1154,7 +1118,6 @@ Name: Time, dtype: bool
       <td>18.51</td>
       <td>3.33</td>
       <td>4.98</td>
-      <td>114.91</td>
     </tr>
     <tr>
       <th>6</th>
@@ -1164,7 +1127,6 @@ Name: Time, dtype: bool
       <td>309.50</td>
       <td>27.26</td>
       <td>62.54</td>
-      <td>81.05</td>
     </tr>
   </tbody>
 </table>
@@ -1203,7 +1165,6 @@ Name: Time, dtype: bool
       <th>N2</th>
       <th>NH3</th>
       <th>N2O</th>
-      <th>X</th>
     </tr>
   </thead>
   <tbody>
@@ -1211,7 +1172,6 @@ Name: Time, dtype: bool
       <th>0</th>
       <td>0</td>
       <td>500.00</td>
-      <td>0.00</td>
       <td>0.00</td>
       <td>0.00</td>
       <td>0.00</td>
@@ -1225,7 +1185,6 @@ Name: Time, dtype: bool
       <td>18.51</td>
       <td>3.33</td>
       <td>4.98</td>
-      <td>114.91</td>
     </tr>
   </tbody>
 </table>

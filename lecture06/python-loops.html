@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -527,7 +527,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#while-loops"><code class="docutils literal notranslate"><span class="pre">while</span></code> loops</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-while-loop">The <code class="docutils literal notranslate"><span class="pre">while</span></code> loop</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Questions</a></li>
 </ul>
 </li>
@@ -544,7 +544,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="python-loops">
 <span id="lecture06-python-loops"></span><h1>Python loops<a class="headerlink" href="#python-loops" title="Link to this heading">#</a></h1>
-<p>Loops are used when you need to run the same expression of similar data.
+<p>Loops are used when you need to run the same expression repeatedly for similar data.
 There are two kinds of loops in Python: <code class="docutils literal notranslate"><span class="pre">for</span></code> loops and <code class="docutils literal notranslate"><span class="pre">while</span></code> loops.</p>
 <section id="for-loops">
 <h2><code class="docutils literal notranslate"><span class="pre">for</span></code> loops<a class="headerlink" href="#for-loops" title="Link to this heading">#</a></h2>
@@ -559,24 +559,7 @@ Here are a few examples:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;x = </span><span class="si">{0:d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x = 1
-x = 5
-x = 6
-x = 10
-x = 20
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;x = </span><span class="si">{0:d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;x = </span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s1">d</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -593,7 +576,7 @@ x = 20
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="s1">&#39;This is a string&#39;</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;c = </span><span class="se">\&#39;</span><span class="si">{0:s}</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;c = &#39;</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -623,7 +606,7 @@ We can do this with <code class="docutils literal notranslate"><span class="pre"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;i = </span><span class="si">{0:d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;i = </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s1">d</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -646,7 +629,7 @@ i = 9
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;i = </span><span class="si">{0:d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;i = </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s1">d</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -667,7 +650,7 @@ i = 9
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;i = </span><span class="si">{0:d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;i = </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s1">d</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -684,7 +667,7 @@ i = 8
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;i = </span><span class="si">{0:d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;i = </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s1">d</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -703,13 +686,10 @@ i = 1
 </div>
 </div>
 </div>
-<p>Let’s now create some random data and write code to calculate the average:</p>
+<p>Let’s now create some data and write code to calculate the average using a <code class="docutils literal notranslate"><span class="pre">for</span></code>loop:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.16295757</span><span class="p">,</span> <span class="mf">0.06804887</span><span class="p">,</span> <span class="mf">0.76082389</span><span class="p">,</span> <span class="mf">0.39089033</span><span class="p">,</span> <span class="mf">0.63845432</span><span class="p">,</span>
-       <span class="mf">0.12555193</span><span class="p">,</span> <span class="mf">0.98251807</span><span class="p">,</span> <span class="mf">0.38759292</span><span class="p">,</span> <span class="mf">0.75819177</span><span class="p">,</span> <span class="mf">0.63329008</span><span class="p">,</span>
-       <span class="mf">0.94419572</span><span class="p">,</span> <span class="mf">0.95363126</span><span class="p">,</span> <span class="mf">0.60753037</span><span class="p">,</span> <span class="mf">0.55727347</span><span class="p">,</span> <span class="mf">0.55989237</span><span class="p">,</span>
-       <span class="mf">0.2482676</span> <span class="p">,</span> <span class="mf">0.13208943</span><span class="p">,</span> <span class="mf">0.25090889</span><span class="p">,</span> <span class="mf">0.7912593</span> <span class="p">,</span> <span class="mf">0.30045856</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">15.0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">5.1</span><span class="p">,</span> <span class="mf">21.16</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -733,12 +713,12 @@ i = 1
     <span class="c1"># This is just a shortcut for s = s + x</span>
     <span class="n">s</span> <span class="o">+=</span> <span class="n">x</span>
 <span class="n">average</span> <span class="o">=</span> <span class="n">s</span> <span class="o">/</span> <span class="n">N</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Average = </span><span class="si">{0:1.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">average</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Average = </span><span class="si">{</span><span class="n">average</span><span class="si">:</span><span class="s1">1.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average = 0.51
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average = 9.00
 </pre></div>
 </div>
 </div>
@@ -746,12 +726,12 @@ i = 1
 <p>Let’s compare this to the other way we have learned:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Average the other way = </span><span class="si">{0:1.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Average the other way = </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">N</span><span class="si">:</span><span class="s1">1.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average the other way = 0.51
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average the other way = 9.00
 </pre></div>
 </div>
 </div>
@@ -763,12 +743,12 @@ i = 1
 <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
     <span class="n">s</span> <span class="o">+=</span> <span class="n">x</span>
 <span class="n">average</span> <span class="o">=</span> <span class="n">s</span> <span class="o">/</span> <span class="n">N</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Average = </span><span class="si">{0:1.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">average</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Average = </span><span class="si">{</span><span class="n">average</span><span class="si">:</span><span class="s1">1.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average = 0.51
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average = 9.00
 </pre></div>
 </div>
 </div>
@@ -776,7 +756,7 @@ i = 1
 <section id="questions">
 <h3>Questions<a class="headerlink" href="#questions" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Write a code block that calculates the average of all the <code class="docutils literal notranslate"><span class="pre">data</span></code> elements that are greater than 0.5.</p></li>
+<li><p>Write a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop that calculates the average of all the <code class="docutils literal notranslate"><span class="pre">data</span></code> elements that are greater than 5.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -786,7 +766,7 @@ i = 1
 </div>
 </div>
 <ul class="simple">
-<li><p>Write a for loop to calculate the second moment of the <code class="docutils literal notranslate"><span class="pre">data</span></code>, i.e., this expression:</p></li>
+<li><p>Write a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop to calculate the second moment of the <code class="docutils literal notranslate"><span class="pre">data</span></code>, i.e., this expression:</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[
@@ -800,7 +780,7 @@ i = 1
 </div>
 </div>
 <ul class="simple">
-<li><p>In the code block provided below, write a for loop that finds the maximum of the <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p></li>
+<li><p>Write a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop that finds the maximum of the <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -811,10 +791,10 @@ i = 1
 </div>
 </section>
 </section>
-<section id="while-loops">
-<h2><code class="docutils literal notranslate"><span class="pre">while</span></code> loops<a class="headerlink" href="#while-loops" title="Link to this heading">#</a></h2>
-<p>While loops are a bit more general than for loops as stopping depends on a boolean expression.
-Their syntax is like this:</p>
+<section id="the-while-loop">
+<h2>The <code class="docutils literal notranslate"><span class="pre">while</span></code> loop<a class="headerlink" href="#the-while-loop" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">while</span></code> loop is a bit more general than the <code class="docutils literal notranslate"><span class="pre">for</span></code> loop as stopping depends on a boolean expression.
+Its syntax is like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="o">&lt;</span><span class="n">boolean_expression</span><span class="o">&gt;</span><span class="p">:</span>
     <span class="c1"># Some expressions to execute</span>
     <span class="c1"># Some other epxression to execute</span>
@@ -825,7 +805,7 @@ Their syntax is like this:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;i = </span><span class="si">{0:d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;i = </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s1">d</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
 </pre></div>
 </div>
@@ -880,12 +860,12 @@ In terms of the <span class="math notranslate nohighlight">\(\alpha_n\)</span> n
     <span class="n">a</span> <span class="o">+=</span> <span class="n">a_n</span>
     <span class="c1"># and increase the counter</span>
     <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;4 * a ~= </span><span class="si">{0:1.12f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">a</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;pi ~= </span><span class="si">{</span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="si">:</span><span class="s1">1.12f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4 * a ~= 3.141602653490
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pi ~= 3.141602653490
 </pre></div>
 </div>
 </div>
@@ -907,77 +887,70 @@ In terms of the <span class="math notranslate nohighlight">\(\alpha_n\)</span> n
     <span class="n">a</span> <span class="o">+=</span> <span class="n">a_n</span>
     <span class="c1"># Print something about the current iteration</span>
     <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">10000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Current iteration n = </span><span class="si">{0:10d}</span><span class="s1">, pi estimate so far: </span><span class="si">{1:1.12f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">a</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Current iteration n = </span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s1">10d</span><span class="si">}</span><span class="s1">, pi ~= </span><span class="si">{</span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="si">:</span><span class="s1">1.12f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="c1"># and increase the counter</span>
     <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;4 * a ~= </span><span class="si">{0:1.12f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">a</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;pi ~= </span><span class="si">{</span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="si">:</span><span class="s1">1.12f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Current iteration n =          0, pi estimate so far: 4.000000000000
-Current iteration n =      10000, pi estimate so far: 3.141692643591
-Current iteration n =      20000, pi estimate so far: 3.141642651090
-Current iteration n =      30000, pi estimate so far: 3.141625985812
-Current iteration n =      40000, pi estimate so far: 3.141617652965
-Current iteration n =      50000, pi estimate so far: 3.141612653190
-Current iteration n =      60000, pi estimate so far: 3.141609319979
-Current iteration n =      70000, pi estimate so far: 3.141606939100
-Current iteration n =      80000, pi estimate so far: 3.141605153434
-Current iteration n =      90000, pi estimate so far: 3.141603764577
-Current iteration n =     100000, pi estimate so far: 3.141602653490
-
-4 * a ~= 3.141602653490
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Current iteration n =          0, pi ~= 4.000000000000
+Current iteration n =      10000, pi ~= 3.141692643591
+Current iteration n =      20000, pi ~= 3.141642651090
+Current iteration n =      30000, pi ~= 3.141625985812
+Current iteration n =      40000, pi ~= 3.141617652965
+Current iteration n =      50000, pi ~= 3.141612653190
+Current iteration n =      60000, pi ~= 3.141609319979
+Current iteration n =      70000, pi ~= 3.141606939100
+Current iteration n =      80000, pi ~= 3.141605153434
+Current iteration n =      90000, pi ~= 3.141603764577
+Current iteration n =     100000, pi ~= 3.141602653490
+pi ~= 3.141602653490
 </pre></div>
 </div>
 </div>
 </div>
-<p>Now, let’s not run forever. We are going to modify the code so that it loops over <span class="math notranslate nohighlight">\(n\)</span> until <span class="math notranslate nohighlight">\(|a_{n+1}| &lt; \epsilon\)</span>, where <span class="math notranslate nohighlight">\(\epsilon\)</span> is a small positive number typically called a <em>tolerance</em>. We are going to use the keyword <code class="docutils literal notranslate"><span class="pre">break</span></code> to achieve this.
-<code class="docutils literal notranslate"><span class="pre">break</span></code> is a command to exit the loop (note that it also works in <code class="docutils literal notranslate"><span class="pre">for</span></code> loops).
+<p>We are going to end with a final modification: a convergence test.
+We are going to modify the code so that it loops over <span class="math notranslate nohighlight">\(n\)</span> until</p>
+<p>$<span class="math notranslate nohighlight">\(
+|a_{n+1}| &lt; \epsilon,
+\)</span>$,</p>
+<p>where <span class="math notranslate nohighlight">\(\epsilon\)</span> is a small positive number typically called a <em>tolerance</em>.
+We can test for this condition using an <code class="docutils literal notranslate"><span class="pre">if</span></code> statement.
+But how can we stop the loop when this condition is met?
+We can do this by using the <code class="docutils literal notranslate"><span class="pre">break</span></code> command.
+The <code class="docutils literal notranslate"><span class="pre">break</span></code> command exits the loop immediately (note that it also works in <code class="docutils literal notranslate"><span class="pre">for</span></code> loops).
 Here we go:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The maximum number of iterations you are willing to do.</span>
-<span class="c1"># You always add something like this to avoid looping forever</span>
-<span class="n">max_iter</span> <span class="o">=</span> <span class="mi">10000000</span>
-<span class="c1"># The tolerance you wish to reach:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_iter</span> <span class="o">=</span> <span class="mi">10000000</span>
 <span class="n">epsilon</span> <span class="o">=</span> <span class="mf">1e-6</span>
-<span class="c1"># The result</span>
-<span class="n">a</span> <span class="o">=</span> <span class="mf">0.0</span>
-<span class="c1"># Start a counter</span>
 <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="c1"># Start the loop</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mf">0.0</span>
 <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="n">max_iter</span><span class="p">:</span>
-    <span class="c1"># Compute the new term</span>
     <span class="n">a_n</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="n">n</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="c1"># Check if the absolute value of the new term is smaller than the tolerance</span>
     <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">a_n</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">:</span>
-        <span class="c1"># If it is indeed smaller, exit the loop</span>
-        <span class="c1"># you do this with the command</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;*** Converged in </span><span class="si">{0:d}</span><span class="s1"> iterations! ***&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;*** Converged in </span><span class="si">{</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="si">:</span><span class="s1">d</span><span class="si">}</span><span class="s1"> iterations! ***&#39;</span><span class="p">)</span>
         <span class="k">break</span>
-    <span class="c1"># Otherwise we just add the new term to our running sum</span>
     <span class="n">a</span> <span class="o">+=</span> <span class="n">a_n</span>
-    <span class="c1"># Print something about the current iteration</span>
     <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">100000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Current iteration n = </span><span class="si">{0:10d}</span><span class="s1">, sum so far: </span><span class="si">{1:1.12f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">a</span><span class="p">))</span>
-    <span class="c1"># and increase the counter</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Current iteration n = </span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s1">10d</span><span class="si">}</span><span class="s1">, pi ~= </span><span class="si">{</span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="si">:</span><span class="s1">1.12f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
 <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="n">max_iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;*** Stopped when maximum number of iterations (</span><span class="si">{0:d}</span><span class="s1">) were reached! ***&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">max_iter</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;4 * a ~= </span><span class="si">{0:1.12f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">a</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;*** Stopped when maximum number of iterations (</span><span class="si">{</span><span class="n">max_iter</span><span class="si">:</span><span class="s1">d</span><span class="si">}</span><span class="s1">) were reached! ***&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;pi ~= </span><span class="si">{</span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="si">:</span><span class="s1">1.12f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Current iteration n =          0, sum so far: 4.000000000000
-Current iteration n =     100000, sum so far: 3.141602653490
-Current iteration n =     200000, sum so far: 3.141597653565
-Current iteration n =     300000, sum so far: 3.141595986912
-Current iteration n =     400000, sum so far: 3.141595153583
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Current iteration n =          0, pi ~= 4.000000000000
+Current iteration n =     100000, pi ~= 3.141602653490
+Current iteration n =     200000, pi ~= 3.141597653565
+Current iteration n =     300000, pi ~= 3.141595986912
+Current iteration n =     400000, pi ~= 3.141595153583
 *** Converged in 500001 iterations! ***
-4 * a ~= 3.141590653590
+pi ~= 3.141590653590
 </pre></div>
 </div>
 </div>
@@ -1064,7 +1037,7 @@ Current iteration n =     400000, sum so far: 3.141595153583
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#while-loops"><code class="docutils literal notranslate"><span class="pre">while</span></code> loops</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-while-loop">The <code class="docutils literal notranslate"><span class="pre">while</span></code> loop</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Questions</a></li>
 </ul>
 </li>

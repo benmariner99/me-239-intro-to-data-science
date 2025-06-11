@@ -46,7 +46,7 @@ We read the expression $p(A|BI)$ as:
 ```
 
 Note that the mathematical theory is not unique.
-The is some indeterminacy equivalent to picking probability units.
+There is some indeterminacy equivalent to picking units.
 Of course, we will follow the common assumption of using zero for impossibility and one for certainty.
 
 ```{important}

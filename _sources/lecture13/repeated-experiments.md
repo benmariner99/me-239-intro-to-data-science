@@ -19,7 +19,8 @@ $$
 Let's introduce the shortcut notation:
 
 $$
-x_{1:N} = (x_1,\dots,x_N).
+x_{1:N} = (x_
+1,\dots,x_N).
 $$
 
 We can rewrite the independence property as:
@@ -30,7 +31,7 @@ $$
 
 Remember this:
 
-> If you data coming from independent measurements, then their joint PDF factorizes conditioned on the background information.
+> If your data are coming from independent measurements, then their joint PDF factorizes conditioned on the background information.
 
 Why is this important?
 Well, it is important because it allows you to describe a supercomplicated object

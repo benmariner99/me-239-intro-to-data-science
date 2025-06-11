@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -493,29 +493,29 @@ document.write(`
 <p>The variance operator satisfies certain important properties.
 Let’s go over the most important once with some proofs.
 In what follows <span class="math notranslate nohighlight">\(X\)</span> is either a discrete or a continuous random variable
-and <span class="math notranslate nohighlight">\(\mu = \mathbb{E}[X]\)</span> is its expected value.</p>
+and <span class="math notranslate nohighlight">\(\mu = \mathbf{E}[X]\)</span> is its expected value.</p>
 <section id="variance-property-1-the-variance-of-a-random-variable-times-a-scalar-is-the-square-of-the-scalar-times-the-variance-of-the-random-variable">
 <span id="lecture11-variance-property-1"></span><h2>Variance Property 1: The variance of a random variable times a scalar is the square of the scalar times the variance of the random variable<a class="headerlink" href="#variance-property-1-the-variance-of-a-random-variable-times-a-scalar-is-the-square-of-the-scalar-times-the-variance-of-the-random-variable" title="Link to this heading">#</a></h2>
 <p>Let <span class="math notranslate nohighlight">\(\lambda\)</span> be any scalar value.
 Then:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbb{V}[\lambda X] = \lambda^2\mathbb{V}[X].
+\mathbf{V}[\lambda X] = \lambda^2\mathbf{V}[X].
 \]</div>
 <p>To prove this, we need to invoke the definition of the variance.
 First, notice from from the <a class="reference internal" href="properties-of-expectations.html#lecture11-expectation-property-1"><span class="std std-ref">first property of expectations</span></a>, we have:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbb{E}[\lambda X] = \lambda\mathbb{E}[X] = \lambda \mu.
+\mathbf{E}[\lambda X] = \lambda\mathbf{E}[X] = \lambda \mu.
 \]</div>
 <p>So, the variance of <span class="math notranslate nohighlight">\(\lambda X\)</span> is by definition:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
-\mathbb{V}[\lambda X] &amp;= \mathbb{E}\left[\left(\lambda X - \lambda \mu\right)^2\right]\\
-&amp;= \mathbb{E}\left[\lambda^2\left(X - \mu\right)^2\right]\\
-&amp;= \lambda^2\mathbb{E}\left[\left(X - \mu\right)^2\right]\\
-&amp;= \lambda^2\mathbb{V}[X].
+\mathbf{V}[\lambda X] &amp;= \mathbf{E}\left[\left(\lambda X - \lambda \mu\right)^2\right]\\
+&amp;= \mathbf{E}\left[\lambda^2\left(X - \mu\right)^2\right]\\
+&amp;= \lambda^2\mathbf{E}\left[\left(X - \mu\right)^2\right]\\
+&amp;= \lambda^2\mathbf{V}[X].
 \end{split}
 \end{split}\]</div>
 </section>
@@ -524,21 +524,21 @@ First, notice from from the <a class="reference internal" href="properties-of-ex
 <p>Let <span class="math notranslate nohighlight">\(\lambda\)</span> be any number. Then:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbb{V}[X + \lambda] = \mathbb{V}[X].
+\mathbf{V}[X + \lambda] = \mathbf{V}[X].
 \]</div>
 <p>And here is the proof.
 The expectation of <span class="math notranslate nohighlight">\(X + \lambda\)</span> is (see the <a class="reference internal" href="properties-of-expectations.html#lecture11-expectation-property-3"><span class="std std-ref">third property of expectations</span></a>):</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbb{E}[X + \lambda] = \mathbb{E}[X] + \lambda = \mu + \lambda.
+\mathbf{E}[X + \lambda] = \mathbf{E}[X] + \lambda = \mu + \lambda.
 \]</div>
 <p>Then, by definition, the variance of <span class="math notranslate nohighlight">\(X + \lambda\)</span> is:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
-\mathbb{V}[X + \lambda] &amp;= \mathbb{E}\left[\left(X + \lambda - \mu - \lambda\right)^2\right]\\
-&amp;=\mathbb{E}\left[\left(X - \mu \right)^2\right]\\
-&amp;= \mathbb{V}[X].
+\mathbf{V}[X + \lambda] &amp;= \mathbf{E}\left[\left(X + \lambda - \mu - \lambda\right)^2\right]\\
+&amp;=\mathbf{E}\left[\left(X - \mu \right)^2\right]\\
+&amp;= \mathbf{V}[X].
 \end{split}
 \end{split}\]</div>
 </section>
@@ -547,7 +547,7 @@ The expectation of <span class="math notranslate nohighlight">\(X + \lambda\)</s
 <p>Mathematically, we have:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbb{V}[X] = \mathbb{E}[X^2] - \mu^2.
+\mathbf{V}[X] = \mathbf{E}[X^2] - \mu^2.
 \]</div>
 <p>Going through the proof of this property can help you develop your understanding
 of the mathematics.
@@ -555,14 +555,14 @@ Here we go:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
-\mathbb{V}[X] &amp;= \mathbb{E}\left[\left(X - \mu\right)^2\right]\\
-&amp;= \mathbb{E}\left[X^2 - 2\mu X + \mu^2\right]\;\text{(expanding the square)}\\
-&amp;= \mathbb{E}[X^2 - 2\mu X] + \mu^2\;\text{(expectation property)}\\
-&amp;= \mathbb{E}[X^2] - \mathbb{E}[2\mu X] + \mu^2\;\text{(expectation property)}\\
-&amp;= \mathbb{E}[X^2] - 2\mu\mathbb{E}[X] + \mu^2\;\text{(expectation property)}\\
-&amp;= \mathbb{E}[X^2] - 2\mu \cdot \mu + \mu^2\;\text{(definition of expectation)}\\
-&amp;= \mathbb{E}[X^2] - 2\mu^2 + \mu^2\\
-&amp;= \mathbb{E}[X^2] - \mu^2.
+\mathbf{V}[X] &amp;= \mathbf{E}\left[\left(X - \mu\right)^2\right]\\
+&amp;= \mathbf{E}\left[X^2 - 2\mu X + \mu^2\right]\;\text{(expanding the square)}\\
+&amp;= \mathbf{E}[X^2 - 2\mu X] + \mu^2\;\text{(expectation property)}\\
+&amp;= \mathbf{E}[X^2] - \mathbf{E}[2\mu X] + \mu^2\;\text{(expectation property)}\\
+&amp;= \mathbf{E}[X^2] - 2\mu\mathbf{E}[X] + \mu^2\;\text{(expectation property)}\\
+&amp;= \mathbf{E}[X^2] - 2\mu \cdot \mu + \mu^2\;\text{(definition of expectation)}\\
+&amp;= \mathbf{E}[X^2] - 2\mu^2 + \mu^2\\
+&amp;= \mathbf{E}[X^2] - \mu^2.
 \end{split}
 \end{split}\]</div>
 <p>Now you may wonder why on Earth you need to know this property.

@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -505,7 +505,7 @@ as:</p>
 \[
 p(X_i = x_i|\theta) = \theta^{x_i}(1-\theta)^{1-x_i}.
 \]</div>
-<p>Mediate a bit on this.
+<p>Meditate a bit on this.
 If <span class="math notranslate nohighlight">\(x_i = 1\)</span>, then <span class="math notranslate nohighlight">\(1-x_i=0\)</span> so the second part of the product becomes
 <span class="math notranslate nohighlight">\((1-\theta)^0 = 1\)</span> and you get <span class="math notranslate nohighlight">\(\theta\)</span>.
 Similarly, if <span class="math notranslate nohighlight">\(x_i=0\)</span>, the first part of the product becomes <span class="math notranslate nohighlight">\(\theta^0=1\)</span> and thus you get <span class="math notranslate nohighlight">\(1-\theta\)</span>.
@@ -531,7 +531,7 @@ p(x_{1:N}|\theta) &amp;= \prod_{i=1}^Np(x_i|\theta)\\
 <p>This has a nice intuitive meaning.
 Note that <span class="math notranslate nohighlight">\(\sum_{i=1}^Nx_i\)</span> is the number of successes in <span class="math notranslate nohighlight">\(N\)</span> experiments.
 Similarly, <span class="math notranslate nohighlight">\(N - \sum_{i=1}^Nx_i\)</span> is the number of failures in <span class="math notranslate nohighlight">\(N\)</span> experiments.</p>
-<p>Want to find the maximum likelihood estimator of the parameter <span class="math notranslate nohighlight">\(\theta\)</span>.
+<p>We want to find the maximum likelihood estimate of the parameter <span class="math notranslate nohighlight">\(\theta\)</span>.
 Just like before, we will maximize the logarithm of the likelihood:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}

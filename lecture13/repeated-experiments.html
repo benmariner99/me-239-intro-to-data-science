@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -495,7 +495,8 @@ p(x_1,\dots,x_N|I) = p(x_1|I)\dots p(x_N|I) = \prod_{i=1}^Np(x_i|I).
 <p>Let’s introduce the shortcut notation:</p>
 <div class="math notranslate nohighlight">
 \[
-x_{1:N} = (x_1,\dots,x_N).
+x_{1:N} = (x_
+1,\dots,x_N).
 \]</div>
 <p>We can rewrite the independence property as:</p>
 <div class="math notranslate nohighlight">
@@ -504,7 +505,7 @@ p(x_{1:N}|I) = \prod_{i=1}^Np(x_i|I).
 \]</div>
 <p>Remember this:</p>
 <blockquote>
-<div><p>If you data coming from independent measurements, then their joint PDF factorizes conditioned on the background information.</p>
+<div><p>If your data are coming from independent measurements, then their joint PDF factorizes conditioned on the background information.</p>
 </div></blockquote>
 <p>Why is this important?
 Well, it is important because it allows you to describe a supercomplicated object

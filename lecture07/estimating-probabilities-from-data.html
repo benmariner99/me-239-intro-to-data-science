@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -548,7 +548,7 @@ p(A|I) \approx \frac{\text{Number of times}\;A\;\text{is True under}\;I\;\text{i
 \]</div>
 <p>There is a catch here.
 The experiments must be <em>independently</em> done.
-This means that you should prepare any apparatous you are using in exactly the same way for all experiments and that no experiment should affect any other in any way.
+This means that you should prepare any apparatus you are using in exactly the same way for all experiments and that no experiment should affect any other in any way.
 Most of the experiments we run in a lab are independent.
 However, this assumption may be wrong for data collected in the wild.</p>
 <section id="example-estimating-the-probability-of-excessive-energy-use">
@@ -561,35 +561,118 @@ I’m importing the libraries and loading the data below.</p>
 <span class="collapsed">Show code cell source</span>
 <span class="expanded">Hide code cell source</span>
 </summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="cell_input above-output-prompt docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MAKE_BOOK_FIGURES</span><span class="o">=</span><span class="kc">False</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib_inline</span>
+<span class="n">matplotlib_inline</span><span class="o">.</span><span class="n">backend_inline</span><span class="o">.</span><span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;figure.dpi&quot;</span><span class="p">:</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;savefig.dpi&#39;</span><span class="p">:</span><span class="mi">300</span><span class="p">})</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s1">&#39;notebook&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;paper&quot;</span><span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;ticks&quot;</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">set_matplotlib_formats</span>
-<span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s1">&#39;retina&#39;</span><span class="p">,</span> <span class="s1">&#39;svg&#39;</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">local_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="nf">set_book_style</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8-white&#39;</span><span class="p">)</span> 
+    <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;ticks&quot;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s2">&quot;deep&quot;</span><span class="p">)</span>
+
+    <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+        <span class="c1"># Font settings</span>
+        <span class="s1">&#39;font.family&#39;</span><span class="p">:</span> <span class="s1">&#39;serif&#39;</span><span class="p">,</span>  <span class="c1"># For academic publishing</span>
+        <span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>  <span class="c1"># As requested, 10pt font</span>
+        <span class="s1">&#39;axes.labelsize&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="s1">&#39;axes.titlesize&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="s1">&#39;xtick.labelsize&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>  <span class="c1"># Slightly smaller for better readability</span>
+        <span class="s1">&#39;ytick.labelsize&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+        <span class="s1">&#39;legend.fontsize&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+        
+        <span class="c1"># Line and marker settings for consistency</span>
+        <span class="s1">&#39;axes.linewidth&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s1">&#39;grid.linewidth&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s1">&#39;lines.linewidth&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="s1">&#39;lines.markersize&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        
+        <span class="c1"># Layout to prevent clipped labels</span>
+        <span class="s1">&#39;figure.constrained_layout.use&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        
+        <span class="c1"># Default DPI (will override when saving)</span>
+        <span class="s1">&#39;figure.dpi&#39;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+        <span class="s1">&#39;savefig.dpi&#39;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+        
+        <span class="c1"># Despine - remove top and right spines</span>
+        <span class="s1">&#39;axes.spines.top&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">&#39;axes.spines.right&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        
+        <span class="c1"># Remove legend frame</span>
+        <span class="s1">&#39;legend.frameon&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        
+        <span class="c1"># Additional trim settings</span>
+        <span class="s1">&#39;figure.autolayout&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Alternative to constrained_layout</span>
+        <span class="s1">&#39;savefig.bbox&#39;</span><span class="p">:</span> <span class="s1">&#39;tight&#39;</span><span class="p">,</span>    <span class="c1"># Trim when saving</span>
+        <span class="s1">&#39;savefig.pad_inches&#39;</span><span class="p">:</span> <span class="mf">0.1</span>   <span class="c1"># Small padding to ensure nothing gets cut off</span>
+    <span class="p">})</span>
+
+<span class="k">def</span> <span class="nf">save_for_book</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">is_vector</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Downloads the file in the ``url`` and saves it in the current working directory.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">local_filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">local_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">local_filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
-        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<span class="sd">    Save a figure with book-optimized settings.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    fig : matplotlib figure</span>
+<span class="sd">        The figure to save</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        Filename without extension</span>
+<span class="sd">    is_vector : bool</span>
+<span class="sd">        If True, saves as vector at 1000 dpi. If False, saves as raster at 600 dpi.</span>
+<span class="sd">    **kwargs : dict</span>
+<span class="sd">        Additional kwargs to pass to savefig</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+    <span class="c1"># Set appropriate DPI and format based on figure type</span>
+    <span class="k">if</span> <span class="n">is_vector</span><span class="p">:</span>
+        <span class="n">dpi</span> <span class="o">=</span> <span class="mi">1000</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;.pdf&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dpi</span> <span class="o">=</span> <span class="mi">600</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;.tif&#39;</span>
+    
+    <span class="c1"># Save the figure with book settings</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">make_full_width_fig</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.7</span><span class="p">,</span> <span class="mf">2.9</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">make_half_width_fig</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">2.35</span><span class="p">,</span> <span class="mf">1.45</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">MAKE_BOOK_FIGURES</span><span class="p">:</span>
+    <span class="n">set_book_style</span><span class="p">()</span>
+<span class="n">make_full_width_fig</span> <span class="o">=</span> <span class="n">make_full_width_fig</span> <span class="k">if</span> <span class="n">MAKE_BOOK_FIGURES</span> <span class="k">else</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">make_half_width_fig</span> <span class="o">=</span> <span class="n">make_half_width_fig</span> <span class="k">if</span> <span class="n">MAKE_BOOK_FIGURES</span> <span class="k">else</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
    
 <span class="c1"># The url of the file we want to download</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/PurdueMechanicalEngineering/me-297-intro-to-data-science/master/data/temperature_raw.xlsx&#39;</span>
-<span class="n">download</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="o">!</span>curl<span class="w"> </span>-O<span class="w"> </span><span class="s1">&#39;https://raw.githubusercontent.com/PurdueMechanicalEngineering/me-239-intro-to-data-science/master/data/temperature_raw.xlsx&#39;</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;temperature_raw.xlsx&#39;</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<details class="hide below-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell output</span>
+<span class="expanded">Hide code cell output</span>
+</summary>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  277k  100  277k    0     0   959k      0 --:--:-- --:--:-- --:--:--  961k
 </pre></div>
 </div>
 </div>
@@ -609,7 +692,7 @@ weekly average of the external temperature is less than 55 degrees F.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_heating</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_out&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">55</span><span class="p">]</span>
-<span class="n">df_heating</span>
+<span class="n">df_heating</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -646,45 +729,45 @@ weekly average of the external temperature is less than 55 degrees F.</p>
       <td>a1</td>
       <td>2018-01-07</td>
       <td>100.0</td>
-      <td>4.283373</td>
-      <td>66.693229</td>
-      <td>246.473231</td>
+      <td>4.28</td>
+      <td>66.69</td>
+      <td>246.47</td>
     </tr>
     <tr>
       <th>1</th>
       <td>a10</td>
       <td>2018-01-07</td>
       <td>100.0</td>
-      <td>4.283373</td>
-      <td>66.356134</td>
-      <td>5.492116</td>
+      <td>4.28</td>
+      <td>66.36</td>
+      <td>5.49</td>
     </tr>
     <tr>
       <th>2</th>
       <td>a11</td>
       <td>2018-01-07</td>
       <td>58.0</td>
-      <td>4.283373</td>
-      <td>71.549132</td>
-      <td>402.094327</td>
+      <td>4.28</td>
+      <td>71.55</td>
+      <td>402.09</td>
     </tr>
     <tr>
       <th>3</th>
       <td>a12</td>
       <td>2018-01-07</td>
       <td>64.0</td>
-      <td>4.283373</td>
-      <td>73.429514</td>
-      <td>211.692244</td>
+      <td>4.28</td>
+      <td>73.43</td>
+      <td>211.69</td>
     </tr>
     <tr>
       <th>4</th>
       <td>a13</td>
       <td>2018-01-07</td>
       <td>100.0</td>
-      <td>4.283373</td>
-      <td>63.923937</td>
-      <td>0.850536</td>
+      <td>4.28</td>
+      <td>63.92</td>
+      <td>0.85</td>
     </tr>
     <tr>
       <th>...</th>
@@ -700,45 +783,45 @@ weekly average of the external temperature is less than 55 degrees F.</p>
       <td>c44</td>
       <td>2020-02-25</td>
       <td>59.0</td>
-      <td>43.642388</td>
-      <td>76.494637</td>
-      <td>19.135139</td>
+      <td>43.64</td>
+      <td>76.49</td>
+      <td>19.14</td>
     </tr>
     <tr>
       <th>5644</th>
       <td>c45</td>
       <td>2020-02-25</td>
       <td>87.0</td>
-      <td>43.642388</td>
-      <td>71.165052</td>
-      <td>30.794281</td>
+      <td>43.64</td>
+      <td>71.17</td>
+      <td>30.79</td>
     </tr>
     <tr>
       <th>5646</th>
       <td>c47</td>
       <td>2020-02-25</td>
       <td>97.0</td>
-      <td>43.642388</td>
-      <td>68.603287</td>
-      <td>5.339391</td>
+      <td>43.64</td>
+      <td>68.60</td>
+      <td>5.34</td>
     </tr>
     <tr>
       <th>5647</th>
       <td>c48</td>
       <td>2020-02-25</td>
       <td>92.0</td>
-      <td>43.642388</td>
-      <td>73.429239</td>
-      <td>18.040078</td>
+      <td>43.64</td>
+      <td>73.43</td>
+      <td>18.04</td>
     </tr>
     <tr>
       <th>5649</th>
       <td>c50</td>
       <td>2020-02-25</td>
       <td>59.0</td>
-      <td>43.642388</td>
-      <td>77.716955</td>
-      <td>14.405155</td>
+      <td>43.64</td>
+      <td>77.72</td>
+      <td>14.41</td>
     </tr>
   </tbody>
 </table>
@@ -779,63 +862,63 @@ Alright, let’s do it.</p>
 <span class="expanded">Hide code cell output</span>
 </summary>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2587, 1052, 2286, 1129,  583, 1962,  179, 1660, 1036,   22,  798,
-       1486, 2555,  605,  960,  907,  105, 2275, 2717, 2293,  760, 2014,
-       1960, 2534,  672, 2244,  875, 2373, 1688, 1456,   25,  647, 1955,
-        887, 1784, 1329,   26, 2019,  333, 1063,  713, 2602, 1694, 2697,
-        345,  369, 1864, 1355, 2330,  105, 1351, 2659,  264,  777, 1863,
-       1328, 1713,  199, 1993, 1598, 1357, 2070,  424,  515, 2024, 1923,
-        757, 1269, 2137, 1877, 2619, 1754, 2233, 2516,  931, 1339,  304,
-        547,  597,  736, 1059, 1079, 1541,  496,  318,  483, 1882, 2155,
-       1092,  210, 1111, 2350,  341, 1010,  134, 1007, 1998, 1071, 1298,
-       1406,  225, 2002, 1960, 1712,  315, 2054,  807, 2399, 2475, 1145,
-       2593, 1293, 2307,  768, 1102, 2394,  502, 1701, 2720, 1451,  284,
-       1079,  223, 2314, 1349, 1930, 2145, 1038, 1246,  306, 2087,   66,
-       1671, 2360,  885, 1816, 1837,  671, 2528, 1795, 2023,  184,  612,
-       1867, 1180,  409, 1434, 2330, 2267, 1870, 1812,  520, 1173,  968,
-        201,  766,  323,  458, 1432,   70, 1311, 2008, 1693, 1905, 2307,
-       1354,  805, 2534,  964,  625, 1546,  168,  469,  797,   28, 1329,
-        215,  648, 2137, 1204, 2198, 1904,  294, 1253, 1798, 1763, 2130,
-       1195, 2073, 2412, 1217,  743,  771, 2338, 1411, 1097, 2344, 1398,
-       1131, 1614, 1277, 1341,  259, 1855,  522, 1920,  714,  437,   38,
-         83,  664,  902,  433, 1413, 1027, 1935, 1766, 2514, 2064, 2376,
-       1765, 1394,  113,  749,  822, 1531,  916,   46,  179, 2181, 2411,
-        681, 1236,  215, 1563, 2117,  478,  892, 1913,  167,  853, 1243,
-       1621, 1125,  442,  960, 2244, 2404,  922, 1696, 1005,   93, 1945,
-       2196, 1634,  369, 1246, 2478,  831, 1369, 1039, 1795,  664,  706,
-       2608, 1507, 2341, 2519, 1573, 2229,  471, 1521, 2478,  453, 2010,
-       1205,  853, 2107, 1774, 2346, 1776,   75,  252, 1397, 1306, 2326,
-       2365,  271,  146, 2157, 2425, 2601, 2667,  846,  107, 2272, 1683,
-       1147, 2087, 1331,  978,  370,  665,  315, 1044,   13, 1415,  803,
-       1959, 2145, 2073,  628,  860,  512,  657, 1286,  214, 2287, 2450,
-        405, 1160,  764,  800, 1771, 1449, 1912, 2732,  980,   78, 2398,
-       1649, 2410,  555,  526,  132, 2188,   54,  839,  622, 2200,  914,
-       1157, 1922, 1307, 2543, 2480, 1452, 1047,  148, 1562, 2337, 2716,
-       2686, 2307, 1739,  949,  353,  940, 2593,  874,  296, 1520, 1136,
-       1006, 2041, 2078,  758, 1157, 2180, 1622, 1582, 2159, 1610,  179,
-       1149,  176,   18, 1655, 2004,   42, 1495, 2673, 2603, 2455,  607,
-       2334, 1533,  525, 2369, 2713,  371, 2502, 2711,  598,  966,  784,
-       2127,  327,   85, 1084,  782,  157,  469, 1052, 1985,  723, 2277,
-       1844,  572, 2364,  305, 1704,  312, 1868, 1079, 1117,  104,  173,
-       1919,  133, 2174, 2489, 1480,  715,  495, 1236, 1904, 1793, 1795,
-        788, 2179, 2430, 2050, 2604, 1480, 2350,  178, 1094,  101,  491,
-        746, 2193,  775,   98, 2608,  197, 2131,  666, 2560, 2398, 1492,
-       2318, 2320, 2001, 1789, 1245,   79,  223, 1982, 1092,  492, 1187,
-        829, 2647, 1479,  935,  346, 1317,  861, 2406, 2314,  384, 1119,
-        917, 1680, 1030,   75,  798, 1950, 1803, 2295, 1499, 2700,  399,
-       1738, 2056,  231,  454, 2431, 2525, 2372,   81, 2660,  321, 2635,
-       2419, 2252, 1395, 1495, 2243])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2064, 1707, 2158, 2333,  364, 1753, 1175, 1040, 1799,   90,   64,
+       2542, 1198,  151, 2146, 2537, 1999, 2517, 2435, 2260,  158, 1368,
+       2687,  975, 1107,  240, 1830,  457, 2329, 2310, 1545, 1268, 1445,
+        362,  543,  429,  221, 1082,  594,  612, 2600, 1961, 2446, 2508,
+        254, 1148, 2590,  542,   28,   80, 1269, 1490,  573, 2029,  874,
+       2187,  115, 2084, 1988, 2157, 1173,  258, 2566,  479,   43, 1298,
+       1557, 1962, 2584, 2088,  221,  708,  160,  248, 1230, 1189, 2251,
+       1983, 2642,  921, 2224, 2327,   62, 1624, 2727, 1321, 1400,  622,
+       2706, 2614, 1587,  596, 2358,  300, 2233, 1770, 2483, 1724,  736,
+       1529, 2673, 2324,  529, 1096,  685, 1611, 1594, 1936, 1890, 2420,
+       1009,  358, 2567, 2683, 1362, 1695, 2632,  573, 1992, 1486,  806,
+       1834,  262,  805, 1368,  108, 2395, 1193,   33,  233,  942, 2090,
+       1022, 2164,  354,  929, 1400,  343, 1526, 1755, 1323,  389, 1507,
+        595, 2248,   63,  566,  746, 2600, 2499,  914,  854, 1834, 1247,
+       2332, 2308, 1171,  681, 1439, 2669, 1318, 1168,  364, 1326, 1740,
+        866, 1814, 1728, 2465, 1244, 2330, 1139, 1200, 2633, 1970, 2632,
+        649, 1680,  332, 2702,  308, 2602, 2612,  416, 1582, 1082, 2687,
+        327, 1738,  295,  754, 1499,  309,   47, 1496,  966, 2159, 1429,
+       1626,  318,   26, 2429, 1742, 2372, 2560,  127,  433, 1165, 2434,
+       1774, 2221,  957, 1105, 1411,  211,  454,  278, 1846,  304, 1300,
+       2001, 2008, 1359,  777, 2187, 1390,  974, 1443, 2149,  252, 1008,
+       1452, 2511, 2066, 1604,  276,  339, 1552,  355, 2490, 1894,  773,
+        493,  748, 2522, 1235, 2658, 2230, 1257, 1721, 1886,  939, 1198,
+        528, 1395, 1968,  753, 2441,  332,  401,  516,   63, 2119, 2460,
+       2449,  234,  969, 1716, 1993,  396, 1995, 2040, 2217, 1855,  223,
+        424,  114, 1799, 2271,  715, 1006, 1398,  985, 2337, 2095, 2215,
+       1115, 2067, 2714,  314,  145, 2177,  913, 1807, 1638, 1139,  474,
+       1651,  752,  942, 1137,  707,  868, 1745,  696, 1657,  439, 1440,
+       2317, 2304, 1890, 2193,   97,   56,   28,  688, 1480, 1176,  348,
+       1366, 2071,  742, 1363, 2083,  788, 1625, 2402, 2504, 1306,  652,
+       2672, 1223, 1170,   38, 2303, 2356, 2346, 1745, 1334, 2353, 2692,
+       2421,  666, 1523,  960,  138, 2120, 1971,  381,  437, 2005,  904,
+        333, 1217, 1569,  630,  454, 2133,  824,  197,  226, 2114, 1288,
+       1442, 1929, 2617,  353,  362, 2372, 2149, 1448,   79,  375, 1152,
+       1603, 1792, 2215, 2348, 1677, 2478, 2527,  748, 2192,   84, 1019,
+        704,  776, 2436, 1406, 2199,  490, 2703, 1595, 1823,  752, 2487,
+       1798, 2353, 2702, 1509, 1763, 2373,   93,  389, 1418,  722, 2286,
+        180, 1260, 1192, 2089,  247, 1249, 2166,  513, 2699, 2412, 2271,
+       1607, 2137, 1957,  619, 2118, 2260,  417,  554,  601,  414,  645,
+        690, 1284, 2245, 2541, 1106,  882,   12, 2156, 1263,   10, 2501,
+       1677, 2284, 1062,  725, 2035,  160, 1327, 1311,  531, 2616, 2647,
+       2258, 2712,  623, 1340,  105, 1094,  764, 2479, 1805, 2154,  111,
+       2587,  528, 1156,  424, 2527, 1957, 1707, 1716,  555, 1767, 1665,
+       2254, 2235,  410,  394, 2355, 1044,  462, 2669,  555, 1728, 1672,
+       2202, 1275,  634, 2156, 2229, 1403, 2225, 1620, 2659, 1464, 2342,
+       2420, 1376,  743, 2074, 2572])
 </pre></div>
 </div>
 </div>
 </details>
 </div>
 <p>Now we need to pick the rows of <code class="docutils literal notranslate"><span class="pre">df_heating</span></code> that have those indices.
-We can use <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iloc.html">pandas.Dataframe.iloc</a> to do this:</p>
+We can do it like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_heating_exp</span> <span class="o">=</span> <span class="n">df_heating</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">rows</span><span class="p">]</span>
-<span class="n">df_heating_exp</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_heating_exp</span> <span class="o">=</span> <span class="n">df_heating</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_heating</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">rows</span><span class="p">]]</span>
+<span class="n">df_heating_exp</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -868,49 +951,49 @@ We can use <a class="reference external" href="https://pandas.pydata.org/pandas-
   </thead>
   <tbody>
     <tr>
-      <th>5456</th>
-      <td>a15</td>
-      <td>2020-02-09</td>
-      <td>80.0</td>
-      <td>38.123983</td>
-      <td>75.235615</td>
-      <td>103.460516</td>
+      <th>4805</th>
+      <td>a14</td>
+      <td>2019-11-10</td>
+      <td>72.0</td>
+      <td>40.18</td>
+      <td>72.03</td>
+      <td>6.02</td>
     </tr>
     <tr>
-      <th>2384</th>
+      <th>3109</th>
+      <td>a3</td>
+      <td>2019-03-17</td>
+      <td>71.0</td>
+      <td>44.42</td>
+      <td>73.83</td>
+      <td>66.78</td>
+    </tr>
+    <tr>
+      <th>4917</th>
+      <td>b18</td>
+      <td>2019-11-24</td>
+      <td>71.0</td>
+      <td>39.33</td>
+      <td>72.77</td>
+      <td>154.92</td>
+    </tr>
+    <tr>
+      <th>5134</th>
       <td>c35</td>
-      <td>2018-12-02</td>
+      <td>2019-12-22</td>
       <td>98.0</td>
-      <td>36.919444</td>
-      <td>70.374578</td>
-      <td>103.333777</td>
+      <td>29.01</td>
+      <td>69.68</td>
+      <td>127.01</td>
     </tr>
     <tr>
-      <th>5075</th>
-      <td>b26</td>
-      <td>2019-12-15</td>
-      <td>78.0</td>
-      <td>36.130754</td>
-      <td>73.945914</td>
-      <td>75.234305</td>
-    </tr>
-    <tr>
-      <th>2470</th>
-      <td>b21</td>
-      <td>2018-12-16</td>
-      <td>22.0</td>
-      <td>35.100620</td>
-      <td>76.782192</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>645</th>
-      <td>c46</td>
-      <td>2018-04-01</td>
-      <td>77.0</td>
-      <td>45.607391</td>
-      <td>72.822520</td>
-      <td>46.597443</td>
+      <th>400</th>
+      <td>a1</td>
+      <td>2018-03-04</td>
+      <td>90.0</td>
+      <td>45.47</td>
+      <td>71.80</td>
+      <td>24.55</td>
     </tr>
     <tr>
       <th>...</th>
@@ -922,49 +1005,49 @@ We can use <a class="reference external" href="https://pandas.pydata.org/pandas-
       <td>...</td>
     </tr>
     <tr>
-      <th>5243</th>
-      <td>c44</td>
+      <th>5244</th>
+      <td>c45</td>
       <td>2020-01-05</td>
-      <td>53.0</td>
-      <td>42.495313</td>
-      <td>77.833209</td>
-      <td>117.672719</td>
+      <td>65.0</td>
+      <td>42.50</td>
+      <td>72.08</td>
+      <td>81.80</td>
     </tr>
     <tr>
-      <th>5033</th>
-      <td>c34</td>
-      <td>2019-12-08</td>
-      <td>94.0</td>
-      <td>37.535392</td>
-      <td>69.029183</td>
-      <td>173.136284</td>
+      <th>2742</th>
+      <td>c43</td>
+      <td>2019-01-20</td>
+      <td>58.0</td>
+      <td>30.01</td>
+      <td>76.89</td>
+      <td>158.46</td>
     </tr>
     <tr>
-      <th>2763</th>
-      <td>a7</td>
-      <td>2019-01-27</td>
-      <td>45.0</td>
-      <td>21.504117</td>
-      <td>77.148845</td>
-      <td>260.506823</td>
+      <th>823</th>
+      <td>b24</td>
+      <td>2018-04-29</td>
+      <td>96.0</td>
+      <td>53.95</td>
+      <td>74.44</td>
+      <td>51.82</td>
     </tr>
     <tr>
-      <th>2877</th>
-      <td>b28</td>
-      <td>2019-02-10</td>
-      <td>49.0</td>
-      <td>38.192808</td>
-      <td>73.968347</td>
-      <td>12.313202</td>
+      <th>4816</th>
+      <td>b17</td>
+      <td>2019-11-10</td>
+      <td>86.0</td>
+      <td>40.18</td>
+      <td>69.42</td>
+      <td>185.45</td>
     </tr>
     <tr>
-      <th>5022</th>
-      <td>b23</td>
-      <td>2019-12-08</td>
-      <td>66.0</td>
-      <td>37.535392</td>
-      <td>77.679315</td>
-      <td>73.887601</td>
+      <th>5434</th>
+      <td>c35</td>
+      <td>2020-02-02</td>
+      <td>97.0</td>
+      <td>33.66</td>
+      <td>69.86</td>
+      <td>89.17</td>
     </tr>
   </tbody>
 </table>
@@ -980,17 +1063,17 @@ We can use <a class="reference external" href="https://pandas.pydata.org/pandas-
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5456    False
-2384    False
-5075    False
-2470    False
-645     False
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4805    False
+3109    False
+4917    False
+5134    False
+400     False
         ...  
-5243    False
-5033    False
-2763    False
-2877    False
-5022    False
+5244    False
+2742    False
+823     False
+4816    False
+5434    False
 Name: hvac, Length: 500, dtype: bool
 </pre></div>
 </div>
@@ -1006,9 +1089,10 @@ We can do this either with the function <a class="reference external" href="http
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False    466
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hvac
+False    466
 True      34
-Name: hvac, dtype: int64
+Name: count, dtype: int64
 </pre></div>
 </div>
 </div>
@@ -1033,7 +1117,7 @@ We get this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p_A_g_I</span> <span class="o">=</span> <span class="n">number_of_A_true</span> <span class="o">/</span> <span class="n">N</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;p(A|I) ~= </span><span class="si">{0:1.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p_A_g_I</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;p(A|I) ~= </span><span class="si">{</span><span class="n">p_A_g_I</span><span class="si">:</span><span class="s1">1.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1046,8 +1130,8 @@ We get this:</p>
 <p>Nice!
 This was easy.
 Now, you may say why didn’t you pick all rows?
-I could have, and if I had a really really big number of rows I would be getting something very good estimate of the probability.
-But you never know if you have enough data…
+I could have, and if I had a really really big number of rows I would be getting a very good estimate of the probability.
+But you never know if you have enough data.
 It is not like the simulated experiment where we could do as many runs as we liked.
 Most of the times, we have a finite amount of data that is not good enough for an accurate estimate.
 In other words, there is a bit of epistemic uncertainty in our estimate of the probability.
@@ -1057,8 +1141,7 @@ Let me show you.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">estimate_p_A_g_I</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">df_heating</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Estimates the probability of A given I by randomly picking N rows</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimates the probability of A given I by randomly picking N rows</span>
 <span class="sd">    from the data frame df_heating.</span>
 <span class="sd">    </span>
 <span class="sd">    Arguments:</span>
@@ -1068,7 +1151,7 @@ Let me show you.</p>
 <span class="sd">    Returns: The number of rows with A True divided by N.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">df_heating</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
-    <span class="n">df_heating_exp</span> <span class="o">=</span> <span class="n">df_heating</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">rows</span><span class="p">]</span>
+    <span class="n">df_heating_exp</span> <span class="o">=</span> <span class="n">df_heating</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_heating</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">rows</span><span class="p">]]</span>
     <span class="n">df_heating_exp_A</span> <span class="o">=</span> <span class="n">df_heating_exp</span><span class="p">[</span><span class="s1">&#39;hvac&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">300</span>
     <span class="n">df_heating_exp_A_counts</span> <span class="o">=</span> <span class="n">df_heating_exp_A</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
     <span class="n">number_of_A_true</span> <span class="o">=</span> <span class="n">df_heating_exp_A_counts</span><span class="p">[</span><span class="kc">True</span><span class="p">]</span> <span class="k">if</span> <span class="kc">True</span> <span class="ow">in</span> <span class="n">df_heating_exp_A_counts</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="mi">0</span>
@@ -1086,20 +1169,20 @@ Here it is 10 times:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
     <span class="n">p_A_g_I</span> <span class="o">=</span> <span class="n">estimate_p_A_g_I</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="n">df_heating</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0:d}</span><span class="s1"> estimate of p(A|I): </span><span class="si">{1:1.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">p_A_g_I</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">:</span><span class="s1">d</span><span class="si">}</span><span class="s1"> estimate of p(A|I): </span><span class="si">{</span><span class="n">p_A_g_I</span><span class="si">:</span><span class="s1">1.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 estimate of p(A|I): 0.064
-2 estimate of p(A|I): 0.076
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 estimate of p(A|I): 0.092
+2 estimate of p(A|I): 0.062
 3 estimate of p(A|I): 0.058
-4 estimate of p(A|I): 0.058
-5 estimate of p(A|I): 0.058
-6 estimate of p(A|I): 0.062
-7 estimate of p(A|I): 0.086
-8 estimate of p(A|I): 0.096
-9 estimate of p(A|I): 0.070
+4 estimate of p(A|I): 0.072
+5 estimate of p(A|I): 0.062
+6 estimate of p(A|I): 0.082
+7 estimate of p(A|I): 0.056
+8 estimate of p(A|I): 0.050
+9 estimate of p(A|I): 0.064
 10 estimate of p(A|I): 0.068
 </pre></div>
 </div>
@@ -1119,16 +1202,17 @@ Like this:</p>
     <span class="n">p_A_g_I</span> <span class="o">=</span> <span class="n">estimate_p_A_g_I</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">df_heating</span><span class="p">)</span>
     <span class="n">p_A_g_Is</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p_A_g_I</span><span class="p">)</span>
 <span class="c1"># And now do the histogram</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_full_width_fig</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">p_A_g_Is</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$p(A|I)$&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Count&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Bootstrap estimate $N = </span><span class="si">{0:d}</span><span class="s1">$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">N</span><span class="p">));</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Bootstrap estimate $N = </span><span class="si">{</span><span class="n">N</span><span class="si">:</span><span class="s1">d</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">);</span>
+<span class="n">save_for_book</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s1">&#39;ch7.fig2&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f35ceddb7564274f0b76b1bcf837e579d6c27421015c758a5a2e5fa96da3919d.svg" src="../_images/f35ceddb7564274f0b76b1bcf837e579d6c27421015c758a5a2e5fa96da3919d.svg" />
+<img alt="../_images/519cdf4312a0ab8a0ca117b8a7917fa053d00c981a6f91f799cb5b7043bd50cb.svg" src="../_images/519cdf4312a0ab8a0ca117b8a7917fa053d00c981a6f91f799cb5b7043bd50cb.svg" />
 </div>
 </div>
 <p>So looking at this, we can say that the <span class="math notranslate nohighlight">\(p(A|I)\)</span> is around 7%, but it could be as low as 5% or as high as 9%.

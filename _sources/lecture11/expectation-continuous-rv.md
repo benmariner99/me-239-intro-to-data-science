@@ -1,7 +1,7 @@
 (lecture11:expectation-continuous-rv)=
 # Expectation of a continuous random variable
 
-Let $X$ be a discrete random variable taking real values.
+Let $X$ be a continuous random variable taking real values.
 The *expectation* of $X$ is defined by:
 
 $$

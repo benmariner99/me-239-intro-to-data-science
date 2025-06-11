@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -526,7 +526,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#student-details">Student details</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1-blackjack-probabilities">Problem 1 - Blackjack probabilities</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-finding-the-probability-of-a-using-the-principle-of-inssuficient-reason">2.A - Finding the probability of <span class="math notranslate nohighlight">\(A\)</span> using the principle of inssuficient reason</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-estimating-the-probability-of-a-by-simmulation">2.B - Estimating the probability of A by simmulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-estimating-the-probability-of-a-by-simulation">2.B - Estimating the probability of A by simulation</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2-predicting-the-probability-of-major-earthquakes-in-southern-california">Problem 2 - Predicting the probability of major earthquakes in Southern California</a></li>
@@ -639,8 +639,8 @@ Hint: Google “N choose k”.</p></li>
 <p><strong>Answer:</strong></p>
 <p><em>Your answer here.</em></p>
 </section>
-<section id="b-estimating-the-probability-of-a-by-simmulation">
-<h3>2.B - Estimating the probability of A by simmulation<a class="headerlink" href="#b-estimating-the-probability-of-a-by-simmulation" title="Link to this heading">#</a></h3>
+<section id="b-estimating-the-probability-of-a-by-simulation">
+<h3>2.B - Estimating the probability of A by simulation<a class="headerlink" href="#b-estimating-the-probability-of-a-by-simulation" title="Link to this heading">#</a></h3>
 <p>In this problem, we are going to use Monte Carlo simulations to estimate the probability of picking two cards that sum to 21, i.e., <span class="math notranslate nohighlight">\(p(A|I)\)</span>.
 Basically, we are going to simulate the process of picking these two cards.
 First, let’s start by making all the different cards that appear in a deck of 52.
@@ -696,8 +696,7 @@ It will always use 11 for aces.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_cards</span><span class="p">(</span><span class="n">cards</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Counts cards according to blackjack conventions.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Counts cards according to blackjack conventions.</span>
 <span class="sd">    </span>
 <span class="sd">    Arguments:</span>
 <span class="sd">    cards   -   Two cards. They much be a string from a deck.</span>
@@ -763,7 +762,7 @@ Feel free to experiment with the number of simulations so that you get an accura
     <span class="c1">#                 to result if the sum of cards is 21 and 0 otherwise)</span>
 <span class="n">p_A_g_I</span> <span class="o">=</span> <span class="c1"># YOUR CODE HERE (use result to estimate the probability of getting two</span>
         <span class="c1">#                 cards that sum to 21)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;p(A|I) ~= </span><span class="si">{0:1.5f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p_A_g_I</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;p(A|I) ~= </span><span class="si">{</span><span class="n">p_A_g_I</span><span class="si">:</span><span class="s1">1.5f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -791,8 +790,368 @@ Our goal is to estimate the probability of a major earthquake (to be defined bel
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1932</span><span class="p">,</span> <span class="mi">2021</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloading year&#39;</span><span class="p">,</span> <span class="n">year</span><span class="p">)</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/SCEDC/SCEDC-catalogs/master/SCEC_DC/</span><span class="si">{0:d}</span><span class="s1">.catalog&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">year</span><span class="p">)</span>
-    <span class="n">download</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;https://raw.githubusercontent.com/SCEDC/SCEDC-catalogs/master/SCEC_DC/</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">.catalog&#39;</span>
+    <span class="o">!</span>curl<span class="w"> </span>-O<span class="w"> </span><span class="nv">$url</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading year 1932
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 35589  100 35589    0     0   110k      0 --:--:-- --:--:-- --:--:--  110k
+Downloading year 1933
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 86430  100 86430    0     0   302k      0 --:--:-- --:--:-- --:--:--  301k
+Downloading year 1934
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 49201  100 49201    0     0   204k      0 --:--:-- --:--:-- --:--:--  204k
+Downloading year 1935
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 47807  100 47807    0     0   218k      0 --:--:-- --:--:-- --:--:--  218k
+Downloading year 1936
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 43461  100 43461    0     0  81961      0 --:--:-- --:--:-- --:--:-- 82001
+Downloading year 1937
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 30587  100 30587    0     0   117k      0 --:--:-- --:--:-- --:--:--     0-:--:-- --:--:-- --:--:--  117k
+Downloading year 1938
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 24519  100 24519    0     0  88426      0 --:--:-- --:--:-- --:--:-- 88197
+Downloading year 1939
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 23863  100 23863    0     0   105k      0 --:--:-- --:--:-- --:--:--  105k
+Downloading year 1940
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 25831  100 25831    0     0   119k      0 --:--:-- --:--:-- --:--:--  120k
+Downloading year 1941
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 21157  100 21157    0     0   100k      0 --:--:-- --:--:-- --:--:--  100k
+Downloading year 1942
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 23453  100 23453    0     0   124k      0 --:--:-- --:--:-- --:--:--  124k
+Downloading year 1943
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 20747  100 20747    0     0   113k      0 --:--:-- --:--:-- --:--:--  114k
+Downloading year 1944
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 19025  100 19025    0     0  99908      0 --:--:-- --:--:-- --:--:--   97k
+Downloading year 1945
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 15253  100 15253    0     0  84710      0 --:--:-- --:--:-- --:--:-- 84738
+Downloading year 1946
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 34523  100 34523    0     0   155k      0 --:--:-- --:--:-- --:--:--  156k
+Downloading year 1947
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 50513  100 50513    0     0   227k      0 --:--:-- --:--:-- --:--:--  228k
+Downloading year 1948
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 41001  100 41001    0     0   161k      0 --:--:-- --:--:-- --:--:--  161k
+Downloading year 1949
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 40673  100 40673    0     0   210k      0 --:--:-- --:--:-- --:--:--  211k
+Downloading year 1950
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 42477  100 42477    0     0   161k      0 --:--:-- --:--:-- --:--:--     0 --:--:--  162k
+Downloading year 1951
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 21239  100 21239    0     0   119k      0 --:--:-- --:--:-- --:--:--  119k
+Downloading year 1952
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 46331  100 46331    0     0   189k      0 --:--:-- --:--:-- --:--:--  190k
+Downloading year 1953
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 47643  100 47643    0     0   227k      0 --:--:-- --:--:-- --:--:--  228k
+Downloading year 1954
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 45265  100 45265    0     0   208k      0 --:--:-- --:--:-- --:--:--  209k
+Downloading year 1955
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 29685  100 29685    0     0   123k      0 --:--:-- --:--:-- --:--:--  123k
+Downloading year 1956
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 23699  100 23699    0     0   116k      0 --:--:-- --:--:-- --:--:--     0-- --:--:--  116k
+Downloading year 1957
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 21731  100 21731    0     0   117k      0 --:--:-- --:--:-- --:--:--  117k
+Downloading year 1958
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 19517  100 19517    0     0   106k      0 --:--:-- --:--:-- --:--:--  107k
+Downloading year 1959
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 22879  100 22879    0     0   100k      0 --:--:-- --:--:-- --:--:--  100k
+Downloading year 1960
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 15909  100 15909    0     0  84036      0 --:--:-- --:--:-- --:--:-- 84174
+Downloading year 1961
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 24929  100 24929    0     0   113k      0 --:--:-- --:--:-- --:--:--  113k
+Downloading year 1962
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 22059  100 22059    0     0   104k      0 --:--:-- --:--:-- --:--:--  104k
+Downloading year 1963
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 25011  100 25011    0     0   108k      0 --:--:-- --:--:-- --:--:--  108k
+Downloading year 1964
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 16975  100 16975    0     0  71557      0 --:--:-- --:--:-- --:--:-- 71624
+Downloading year 1965
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 23781  100 23781    0     0   119k      0 --:--:-- --:--:-- --:--:--  119k
+Downloading year 1966
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 27225  100 27225    0     0   124k      0 --:--:-- --:--:-- --:--:--  124k
+Downloading year 1967
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 29439  100 29439    0     0   159k      0 --:--:-- --:--:-- --:--:--  159k
+Downloading year 1968
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 45921  100 45921    0     0   227k      0 --:--:-- --:--:-- --:--:--  227k
+Downloading year 1969
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 50923  100 50923    0     0   201k      0 --:--:-- --:--:-- --:--:--  201k
+Downloading year 1970
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 41985  100 41985    0     0   187k      0 --:--:-- --:--:-- --:--:--  188k
+Downloading year 1971
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 68635  100 68635    0     0   271k      0 --:--:-- --:--:-- --:--:--  270k
+Downloading year 1972
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 58959  100 58959    0     0   243k      0 --:--:-- --:--:-- --:--:--  243k
+Downloading year 1973
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  108k  100  108k    0     0   288k      0 --:--:-- --:--:-- --:--:--  288k
+Downloading year 1974
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 95450  100 95450    0     0   362k      0 --:--:-- --:--:-- --:--:--  364k
+Downloading year 1975
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  226k  100  226k    0     0   793k      0 --:--:-- --:--:-- --:--:--  794k
+Downloading year 1976
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  332k  100  332k    0     0  1239k      0 --:--:-- --:--:-- --:--:-- 1239k
+Downloading year 1977
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  414k  100  414k    0     0   685k      0 --:--:-- --:--:-- --:--:--  686k
+Downloading year 1978
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  501k  100  501k    0     0  1161k      0 --:--:-- --:--:-- --:--:-- 1162k
+Downloading year 1979
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  798k  100  798k    0     0  2216k      0 --:--:-- --:--:-- --:--:-- 2212k
+Downloading year 1980
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  449k  100  449k    0     0   989k      0 --:--:-- --:--:-- --:--:--  991k
+Downloading year 1981
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  856k  100  856k    0     0  1864k      0 --:--:-- --:--:-- --:--:-- 1865k
+Downloading year 1982
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1124k  100 1124k    0     0  2538k      0 --:--:-- --:--:-- --:--:-- 2537k
+Downloading year 1983
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1159k  100 1159k    0     0  3012k      0 --:--:-- --:--:-- --:--:-- 3018k
+Downloading year 1984
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1433k  100 1433k    0     0  2432k      0 --:--:-- --:--:-- --:--:-- 2433k
+Downloading year 1985
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1510k  100 1510k    0     0  3037k      0 --:--:-- --:--:-- --:--:-- 3038k
+Downloading year 1986
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1367k  100 1367k    0     0  2533k      0 --:--:-- --:--:-- --:--:-- 2533k
+Downloading year 1987
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1087k  100 1087k    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0  2322k      0 --:--:-- --:--:-- --:--:-- 2319k
+Downloading year 1988
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  887k  100  887k    0     0  1470k      0 --:--:-- --:--:-- --:--:-- 1468k
+Downloading year 1989
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  927k  100  927k    0     0  1945k      0 --:--:-- --:--:-- --:--:--     0:-- --:--:-- 1947k
+Downloading year 1990
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  900k  100  900k    0     0  2296k      0 --:--:-- --:--:-- --:--:-- 2297k
+Downloading year 1991
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  808k  100  808k    0     0  2058k      0 --:--:-- --:--:-- --:--:-- 2058k
+Downloading year 1992
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 4119k  100 4119k    0     0  6953k      0 --:--:-- --:--:-- --:--:-- 6958k
+Downloading year 1993
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1763k  100 1763k    0     0  3209k      0 --:--:-- --:--:-- --:--:-- 3212k
+Downloading year 1994
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 2263k  100 2263k    0     0  4348k      0 --:--:-- --:--:-- --:--:-- 4352k
+Downloading year 1995
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 2001k  100 2001k    0     0  4343k      0 --:--:-- --:--:-- --:--:-- 4342k
+Downloading year 1996
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1592k  100 1592k    0     0  3034k      0 --:00:13 --:--:--  0:00:13  115k--:-- --:--:-- --:--:-- 3032k
+Downloading year 1997
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1227k  100 1227k    0     0  2901k      0 --:--:-- --:--:-- --:--:--     0-- 2902k
+Downloading year 1998
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1086k  100 1086k    0     0  2833k      0 --:--:-- --:--:-- --:--:-- 2836k
+Downloading year 1999
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1712k  100 1712k    0     0  3403k      0 --:--:-- --:--:-- --:--:-- 3398k
+Downloading year 2000
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1632k  100 1632k    0     0  3418k      0 --:--:-- --:--:-- --:--:-- 3422k
+Downloading year 2001
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1451k  100 1451k    0     0  2864k      0 --:--:-- --:--:-- --:--:-- 2868k
+Downloading year 2002
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  950k  100  950k    0     0  2384k      0 --:--:-- --:--:-- --:--:-- 2387k
+Downloading year 2003
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  925k  100  925k    0     0  2382k      0 --:--:-- --:--:-- --:--:-- 2378k
+Downloading year 2004
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  982k  100  982k    0     0  1357k      0 --:--:-- --:--:-- --:--:-- 1356k
+Downloading year 2005
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1058k  100 1058k    0     0  3181k      0 --:--:-- --:--:-- --:--:-- 3187k
+Downloading year 2006
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  897k  100  897k    0     0  1992k      0 --:--:-- --:--:-- --:--:-- 1989k
+Downloading year 2007
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  920k  100  920k    0     0  2599k      0 --:--:-- --:--:-- --:--:-- 2600k
+Downloading year 2008
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1126k  100 1126k    0     0  3016k      0 --:--:-- --:--:-- --:--:-- 3020k
+Downloading year 2009
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1340k  100 1340k    0     0  3120k      0 --:--:-- --:--:-- --:--:-- 3117k
+Downloading year 2010
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 3360k  100 3360k    0     0  7114k      0 --:--:-- --:--:-- --:--:-- 7105k
+Downloading year 2011
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1247k  100 1247k    0     0  2399k      0 --:--:-- --:--:-- --:--:-- 2403k
+Downloading year 2012
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1375k  100 1375k    0     0  2957k      0 --:--:-- --:--:-- --:--:-- 2963k
+Downloading year 2013
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1485k  100 1485k    0     0  3782k      0 --:--:-- --:--:-- --:--:-- 3780k
+Downloading year 2014
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1156k  100 1156k    0     0  2999k      0 --:--:-- --:--:-- --:--:-- 3003k
+Downloading year 2015
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1248k  100 1248k    0     0  3247k      0 --:--:-- --:--:-- --:--:-- 3252k
+Downloading year 2016
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1284k  100 1284k    0     0  2155k      0 --:--:-- --:--:-- --:--:-- 2154k
+Downloading year 2017
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1309k  100 1309k    0     0  1359k      0 --:--:-- --:--:-- --:--:-- 1358k
+Downloading year 2018
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1660k  100 1660k    0     0  2850k      0 --:--:-- --:--:-- --:--:-- 2853k
+Downloading year 2019
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 5106k  100 5106k    0     0  7809k      0 --:--:-- --:--:-- --:--:-- 7808k
+Downloading year 2020
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 2986k  100 2986k    0     0  5123k      0 --:--:-- --:--:-- --:--:-2 94408- 5122k
 </pre></div>
 </div>
 </div>
@@ -804,9 +1163,9 @@ We will put them all in the same daframe for your convenience:</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">list_of_dfs</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1932</span><span class="p">,</span> <span class="mi">2021</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Reading: &#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
     <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0:d}</span><span class="s1">.catalog&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">year</span><span class="p">)</span>
-    <span class="n">df_year</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;#&#39;</span><span class="p">,</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Reading: &#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="n">df_year</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;#&#39;</span><span class="p">,</span>
                       <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="s1">&#39;Hour&#39;</span><span class="p">,</span> <span class="s1">&#39;ET&#39;</span><span class="p">,</span> <span class="s1">&#39;GT&#39;</span><span class="p">,</span> <span class="s1">&#39;MAG&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;LAT&#39;</span><span class="p">,</span> <span class="s1">&#39;LON&#39;</span><span class="p">,</span>
                                <span class="s1">&#39;DEPTH&#39;</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">,</span> <span class="s1">&#39;EVID&#39;</span><span class="p">,</span> <span class="s1">&#39;NPH&#39;</span><span class="p">,</span> <span class="s1">&#39;NGRM&#39;</span><span class="p">])</span>
     <span class="n">df_year</span><span class="o">.</span><span class="n">Date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_year</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y/%m/</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -816,13 +1175,333 @@ We will put them all in the same daframe for your convenience:</p>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reading:  1932.catalog
+Reading:  1933.catalog
+Reading:  1934.catalog
+Reading:  1935.catalog
+Reading:  1936.catalog
+Reading:  1937.catalog
+Reading:  1938.catalog
+Reading:  1939.catalog
+Reading:  1940.catalog
+Reading:  1941.catalog
+Reading:  1942.catalog
+Reading:  1943.catalog
+Reading:  1944.catalog
+Reading:  1945.catalog
+Reading:  1946.catalog
+Reading:  1947.catalog
+Reading:  1948.catalog
+Reading:  1949.catalog
+Reading:  1950.catalog
+Reading:  1951.catalog
+Reading:  1952.catalog
+Reading:  1953.catalog
+Reading:  1954.catalog
+Reading:  1955.catalog
+Reading:  1956.catalog
+Reading:  1957.catalog
+Reading:  1958.catalog
+Reading:  1959.catalog
+Reading:  1960.catalog
+Reading:  1961.catalog
+Reading:  1962.catalog
+Reading:  1963.catalog
+Reading:  1964.catalog
+Reading:  1965.catalog
+Reading:  1966.catalog
+Reading:  1967.catalog
+Reading:  1968.catalog
+Reading:  1969.catalog
+Reading:  1970.catalog
+Reading:  1971.catalog
+Reading:  1972.catalog
+Reading:  1973.catalog
+Reading:  1974.catalog
+Reading:  1975.catalog
+Reading:  1976.catalog
+Reading:  1977.catalog
+Reading:  1978.catalog
+Reading:  1979.catalog
+Reading:  1980.catalog
+Reading:  1981.catalog
+Reading:  1982.catalog
+Reading:  1983.catalog
+Reading:  1984.catalog
+Reading:  1985.catalog
+Reading:  1986.catalog
+Reading:  1987.catalog
+Reading:  1988.catalog
+Reading:  1989.catalog
+Reading:  1990.catalog
+Reading:  1991.catalog
+Reading:  1992.catalog
+Reading:  1993.catalog
+Reading:  1994.catalog
+Reading:  1995.catalog
+Reading:  1996.catalog
+Reading:  1997.catalog
+Reading:  1998.catalog
+Reading:  1999.catalog
+Reading:  2000.catalog
+Reading:  2001.catalog
+Reading:  2002.catalog
+Reading:  2003.catalog
+Reading:  2004.catalog
+Reading:  2005.catalog
+Reading:  2006.catalog
+Reading:  2007.catalog
+Reading:  2008.catalog
+Reading:  2009.catalog
+Reading:  2010.catalog
+Reading:  2011.catalog
+Reading:  2012.catalog
+Reading:  2013.catalog
+Reading:  2014.catalog
+Reading:  2015.catalog
+Reading:  2016.catalog
+Reading:  2017.catalog
+Reading:  2018.catalog
+Reading:  2019.catalog
+Reading:  2020.catalog
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Hour</th>
+      <th>ET</th>
+      <th>GT</th>
+      <th>MAG</th>
+      <th>M</th>
+      <th>LAT</th>
+      <th>LON</th>
+      <th>DEPTH</th>
+      <th>Q</th>
+      <th>EVID</th>
+      <th>NPH</th>
+      <th>NGRM</th>
+      <th>Year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1932-01-01</td>
+      <td>23:52:07.87</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.00</td>
+      <td>n</td>
+      <td>34.13</td>
+      <td>-117.99</td>
+      <td>6.0</td>
+      <td>D</td>
+      <td>3358386</td>
+      <td>7</td>
+      <td>0</td>
+      <td>1932</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1932-01-02</td>
+      <td>16:42:43.68</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>2.73</td>
+      <td>l</td>
+      <td>33.90</td>
+      <td>-117.64</td>
+      <td>6.0</td>
+      <td>C</td>
+      <td>3358387</td>
+      <td>12</td>
+      <td>0</td>
+      <td>1932</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1932-01-03</td>
+      <td>17:58:10.01</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>3.00</td>
+      <td>h</td>
+      <td>32.00</td>
+      <td>-116.00</td>
+      <td>6.0</td>
+      <td>D</td>
+      <td>3358388</td>
+      <td>7</td>
+      <td>0</td>
+      <td>1932</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1932-01-04</td>
+      <td>21:30:00.96</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>2.00</td>
+      <td>h</td>
+      <td>33.77</td>
+      <td>-117.49</td>
+      <td>6.0</td>
+      <td>C</td>
+      <td>3358396</td>
+      <td>11</td>
+      <td>0</td>
+      <td>1932</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1932-01-05</td>
+      <td>02:37:27.96</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>1.50</td>
+      <td>h</td>
+      <td>33.56</td>
+      <td>-118.44</td>
+      <td>6.0</td>
+      <td>C</td>
+      <td>3358398</td>
+      <td>8</td>
+      <td>0</td>
+      <td>1932</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>818704</th>
+      <td>2020-12-31</td>
+      <td>20:50:40.05</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.33</td>
+      <td>l</td>
+      <td>33.67</td>
+      <td>-116.76</td>
+      <td>14.0</td>
+      <td>A</td>
+      <td>39508231</td>
+      <td>11</td>
+      <td>1933</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>818705</th>
+      <td>2020-12-31</td>
+      <td>21:37:28.19</td>
+      <td>qb</td>
+      <td>l</td>
+      <td>1.23</td>
+      <td>l</td>
+      <td>32.59</td>
+      <td>-116.87</td>
+      <td>-0.3</td>
+      <td>C</td>
+      <td>39508247</td>
+      <td>38</td>
+      <td>2085</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>818706</th>
+      <td>2020-12-31</td>
+      <td>22:15:56.72</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>1.45</td>
+      <td>l</td>
+      <td>33.35</td>
+      <td>-116.42</td>
+      <td>13.4</td>
+      <td>A</td>
+      <td>39508263</td>
+      <td>69</td>
+      <td>2079</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>818707</th>
+      <td>2020-12-31</td>
+      <td>22:21:28.12</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>2.12</td>
+      <td>l</td>
+      <td>33.18</td>
+      <td>-115.60</td>
+      <td>3.9</td>
+      <td>A</td>
+      <td>39508279</td>
+      <td>70</td>
+      <td>2121</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>818708</th>
+      <td>2020-12-31</td>
+      <td>23:04:53.02</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>1.66</td>
+      <td>l</td>
+      <td>36.06</td>
+      <td>-117.38</td>
+      <td>2.7</td>
+      <td>A</td>
+      <td>39508287</td>
+      <td>50</td>
+      <td>1659</td>
+      <td>2020</td>
+    </tr>
+  </tbody>
+</table>
+<p>818709 rows × 14 columns</p>
+</div></div></div>
 </div>
 <p>Each row in this dataframe corresponds to an earthquake event that happened between 1/1/1932 and 12/31/2020. The meaning of the columns is explained <a class="reference external" href="https://service.scedc.caltech.edu/ftp/catalogs/SCEC_DC/README">here</a>.
 But for the purposes of this problem we will only need information from the following columns:</p>
@@ -841,6 +1520,233 @@ Say, year 2019.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Hour</th>
+      <th>ET</th>
+      <th>GT</th>
+      <th>MAG</th>
+      <th>M</th>
+      <th>LAT</th>
+      <th>LON</th>
+      <th>DEPTH</th>
+      <th>Q</th>
+      <th>EVID</th>
+      <th>NPH</th>
+      <th>NGRM</th>
+      <th>Year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>717665</th>
+      <td>2019-01-01</td>
+      <td>01:39:57.67</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.83</td>
+      <td>l</td>
+      <td>33.506</td>
+      <td>-116.794</td>
+      <td>5.0</td>
+      <td>A</td>
+      <td>38412384</td>
+      <td>45</td>
+      <td>1154</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>717666</th>
+      <td>2019-01-01</td>
+      <td>01:43:28.42</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.47</td>
+      <td>l</td>
+      <td>33.484</td>
+      <td>-116.785</td>
+      <td>5.5</td>
+      <td>A</td>
+      <td>38412392</td>
+      <td>36</td>
+      <td>1309</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>717667</th>
+      <td>2019-01-01</td>
+      <td>02:27:57.45</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.98</td>
+      <td>l</td>
+      <td>33.505</td>
+      <td>-116.798</td>
+      <td>3.5</td>
+      <td>A</td>
+      <td>38412416</td>
+      <td>52</td>
+      <td>1410</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>717668</th>
+      <td>2019-01-01</td>
+      <td>02:31:17.10</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.61</td>
+      <td>l</td>
+      <td>33.511</td>
+      <td>-116.794</td>
+      <td>2.7</td>
+      <td>A</td>
+      <td>38412424</td>
+      <td>39</td>
+      <td>825</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>717669</th>
+      <td>2019-01-01</td>
+      <td>02:38:38.38</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.61</td>
+      <td>l</td>
+      <td>33.706</td>
+      <td>-116.808</td>
+      <td>15.3</td>
+      <td>A</td>
+      <td>38412432</td>
+      <td>27</td>
+      <td>1135</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>781419</th>
+      <td>2019-12-31</td>
+      <td>22:47:36.78</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>1.47</td>
+      <td>l</td>
+      <td>35.638</td>
+      <td>-117.460</td>
+      <td>6.9</td>
+      <td>A</td>
+      <td>39019127</td>
+      <td>34</td>
+      <td>1906</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>781420</th>
+      <td>2019-12-31</td>
+      <td>22:52:18.08</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.23</td>
+      <td>l</td>
+      <td>33.589</td>
+      <td>-116.805</td>
+      <td>5.5</td>
+      <td>A</td>
+      <td>39019135</td>
+      <td>38</td>
+      <td>1665</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>781421</th>
+      <td>2019-12-31</td>
+      <td>23:05:39.85</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.94</td>
+      <td>l</td>
+      <td>35.755</td>
+      <td>-117.559</td>
+      <td>6.7</td>
+      <td>A</td>
+      <td>39019143</td>
+      <td>19</td>
+      <td>691</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>781422</th>
+      <td>2019-12-31</td>
+      <td>23:18:31.60</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.74</td>
+      <td>l</td>
+      <td>35.721</td>
+      <td>-117.555</td>
+      <td>3.8</td>
+      <td>A</td>
+      <td>39019151</td>
+      <td>38</td>
+      <td>476</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>781423</th>
+      <td>2019-12-31</td>
+      <td>23:28:38.45</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>1.45</td>
+      <td>l</td>
+      <td>33.018</td>
+      <td>-116.000</td>
+      <td>1.1</td>
+      <td>A</td>
+      <td>39019159</td>
+      <td>41</td>
+      <td>1790</td>
+      <td>2019</td>
+    </tr>
+  </tbody>
+</table>
+<p>63759 rows × 14 columns</p>
+</div></div></div>
 </div>
 <p>Out of these, we only care about earthquake events.
 So, let’s filter out everything else:</p>
@@ -851,12 +1757,255 @@ So, let’s filter out everything else:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Hour</th>
+      <th>ET</th>
+      <th>GT</th>
+      <th>MAG</th>
+      <th>M</th>
+      <th>LAT</th>
+      <th>LON</th>
+      <th>DEPTH</th>
+      <th>Q</th>
+      <th>EVID</th>
+      <th>NPH</th>
+      <th>NGRM</th>
+      <th>Year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>717665</th>
+      <td>2019-01-01</td>
+      <td>01:39:57.67</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.83</td>
+      <td>l</td>
+      <td>33.506</td>
+      <td>-116.794</td>
+      <td>5.0</td>
+      <td>A</td>
+      <td>38412384</td>
+      <td>45</td>
+      <td>1154</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>717666</th>
+      <td>2019-01-01</td>
+      <td>01:43:28.42</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.47</td>
+      <td>l</td>
+      <td>33.484</td>
+      <td>-116.785</td>
+      <td>5.5</td>
+      <td>A</td>
+      <td>38412392</td>
+      <td>36</td>
+      <td>1309</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>717667</th>
+      <td>2019-01-01</td>
+      <td>02:27:57.45</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.98</td>
+      <td>l</td>
+      <td>33.505</td>
+      <td>-116.798</td>
+      <td>3.5</td>
+      <td>A</td>
+      <td>38412416</td>
+      <td>52</td>
+      <td>1410</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>717668</th>
+      <td>2019-01-01</td>
+      <td>02:31:17.10</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.61</td>
+      <td>l</td>
+      <td>33.511</td>
+      <td>-116.794</td>
+      <td>2.7</td>
+      <td>A</td>
+      <td>38412424</td>
+      <td>39</td>
+      <td>825</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>717669</th>
+      <td>2019-01-01</td>
+      <td>02:38:38.38</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.61</td>
+      <td>l</td>
+      <td>33.706</td>
+      <td>-116.808</td>
+      <td>15.3</td>
+      <td>A</td>
+      <td>38412432</td>
+      <td>27</td>
+      <td>1135</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>781419</th>
+      <td>2019-12-31</td>
+      <td>22:47:36.78</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>1.47</td>
+      <td>l</td>
+      <td>35.638</td>
+      <td>-117.460</td>
+      <td>6.9</td>
+      <td>A</td>
+      <td>39019127</td>
+      <td>34</td>
+      <td>1906</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>781420</th>
+      <td>2019-12-31</td>
+      <td>22:52:18.08</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.23</td>
+      <td>l</td>
+      <td>33.589</td>
+      <td>-116.805</td>
+      <td>5.5</td>
+      <td>A</td>
+      <td>39019135</td>
+      <td>38</td>
+      <td>1665</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>781421</th>
+      <td>2019-12-31</td>
+      <td>23:05:39.85</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.94</td>
+      <td>l</td>
+      <td>35.755</td>
+      <td>-117.559</td>
+      <td>6.7</td>
+      <td>A</td>
+      <td>39019143</td>
+      <td>19</td>
+      <td>691</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>781422</th>
+      <td>2019-12-31</td>
+      <td>23:18:31.60</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>0.74</td>
+      <td>l</td>
+      <td>35.721</td>
+      <td>-117.555</td>
+      <td>3.8</td>
+      <td>A</td>
+      <td>39019151</td>
+      <td>38</td>
+      <td>476</td>
+      <td>2019</td>
+    </tr>
+    <tr>
+      <th>781423</th>
+      <td>2019-12-31</td>
+      <td>23:28:38.45</td>
+      <td>eq</td>
+      <td>l</td>
+      <td>1.45</td>
+      <td>l</td>
+      <td>33.018</td>
+      <td>-116.000</td>
+      <td>1.1</td>
+      <td>A</td>
+      <td>39019159</td>
+      <td>41</td>
+      <td>1790</td>
+      <td>2019</td>
+    </tr>
+  </tbody>
+</table>
+<p>63108 rows × 14 columns</p>
+</div></div></div>
 </div>
 <p>Now, let’s see if there was at least one major earthquake during 2019:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_mag</span> <span class="o">=</span> <span class="n">df_2019_eq</span><span class="p">[</span><span class="s1">&#39;MAG&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">6</span>
 <span class="n">test_mag</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>717665    False
+717666    False
+717667    False
+717668    False
+717669    False
+          ...  
+781419    False
+781420    False
+781421    False
+781422    False
+781423    False
+Name: MAG, Length: 63108, dtype: bool
 </pre></div>
 </div>
 </div>
@@ -868,12 +2017,25 @@ So, let’s filter out everything else:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MAG
+False    63106
+True         2
+Name: count, dtype: int64
+</pre></div>
 </div>
-<p>There are exactly 5 major earthquakes.
+</div>
+</div>
+<p>There are exactly 2 major earthquakes.
 You can extract the number like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_mag</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[</span><span class="kc">True</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
 </pre></div>
 </div>
 </div>
@@ -882,6 +2044,11 @@ You can extract the number like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span> <span class="ow">in</span> <span class="n">test_mag</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
 </pre></div>
 </div>
 </div>
@@ -928,7 +2095,7 @@ We run it 10 times. Notice that everytime you get a slighlty different estimate.
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
     <span class="n">p_major_eq</span> <span class="o">=</span> <span class="n">estimate_probability_of_major_earthquake_during_year</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;p_major_eq = </span><span class="si">{0:1.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p_major_eq</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;p_major_eq = </span><span class="si">{</span><span class="n">p_major_eq</span><span class="si">:</span><span class="s1">1.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1021,7 +2188,7 @@ We run it 10 times. Notice that everytime you get a slighlty different estimate.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#student-details">Student details</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1-blackjack-probabilities">Problem 1 - Blackjack probabilities</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-finding-the-probability-of-a-using-the-principle-of-inssuficient-reason">2.A - Finding the probability of <span class="math notranslate nohighlight">\(A\)</span> using the principle of inssuficient reason</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-estimating-the-probability-of-a-by-simmulation">2.B - Estimating the probability of A by simmulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-estimating-the-probability-of-a-by-simulation">2.B - Estimating the probability of A by simulation</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2-predicting-the-probability-of-major-earthquakes-in-southern-california">Problem 2 - Predicting the probability of major earthquakes in Southern California</a></li>

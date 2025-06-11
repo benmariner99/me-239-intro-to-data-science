@@ -17,11 +17,15 @@ $$
 
 You can think of the variance as the measure of the spread of the random
 variable around its expected value.
-See {numref}`variance_comparison` for a visualization.
+See {numref}`variance_comparison_1` and {numref}`variance_comparison_2` for a visualization.
 
-```{figure} variance_comparison.png
+```{figure} ch11.fig7.png
 :height: 400px
-:name: variance_comparison
+:name: variance_comparison_1
+
+```{figure} ch11.fig8.png
+:height: 400px
+:name: variance_comparison_2
 
 Comparison of the variance of two arbitrary random variables.
 We show the PDF of the random variables (blue shaded area) and the expectation
